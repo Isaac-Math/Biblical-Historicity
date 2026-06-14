@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>성경 속 역사성 논쟁 — 버전 선택</title>
+<style>
+  :root {
+    --bh: #8b5e3c;
+    --bh-dark: #4a2d0e;
+    --bh-light: #c8956a;
+    --bh-xlight: #faf0e6;
+    --primary: #2d6a4f;
+    --primary-light: #52b788;
+    --gold: #f4a261;
+    --bg: #f9fafb;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6c757d;
+    --radius: 16px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    background: linear-gradient(135deg, #2c1a0a 0%, #4a2d0e 40%, #8b5e3c 100%);
+    color: #fff;
+    padding: 56px 24px 44px;
+    text-align: center;
+  }
+  header .icon { font-size: 3.2rem; display: block; margin-bottom: 14px; }
+  header h1 { font-size: 2.1rem; font-weight: 800; margin-bottom: 10px; }
+  header p { opacity: .85; font-size: 1.05rem; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+  .badge-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+  .badge { background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.3); border-radius: 20px; padding: 4px 14px; font-size: .82rem; }
+  .series-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 22px;
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.35);
+    border-radius: 20px; padding: 6px 16px; font-size: .83rem;
+    color: #fff; text-decoration: none; transition: background .2s;
+  }
+  .series-link:hover { background: rgba(255,255,255,.25); }
+  main {
+    flex: 1; max-width: 820px; margin: 0 auto;
+    padding: 52px 20px 80px; width: 100%;
+  }
+  .choose-label {
+    text-align: center; font-size: .88rem; font-weight: 700;
+    color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 28px;
+  }
+  .version-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 620px) { .version-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) {
+    header { padding: 36px 16px 28px; }
+    header h1 { font-size: 1.6rem; }
+    main { padding: 32px 14px 60px; }
+    .version-card { padding: 24px 18px 20px; }
+    .v-title { font-size: 1.1rem; }
+    .v-desc { font-size: .88rem; }
+    .v-features li { font-size: .82rem; }
+    .info-box { padding: 16px; flex-direction: column; gap: 10px; }
+  }
+  .version-card {
+    background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: 36px 28px 32px; text-decoration: none; color: var(--text);
+    display: flex; flex-direction: column; gap: 14px;
+    border: 2px solid transparent; transition: all .22s;
+    position: relative; overflow: hidden;
+  }
+  .version-card:hover { transform: translateY(-4px); box-shadow: 0 8px 36px rgba(0,0,0,0.14); }
+  .version-card.middle { border-color: var(--bh-light); }
+  .version-card.middle:hover { border-color: var(--bh); }
+  .version-card.high { border-color: var(--bh); }
+  .version-card.high:hover { border-color: var(--bh-dark); }
+  .version-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  }
+  .version-card.middle::before { background: linear-gradient(90deg, var(--bh-light), var(--bh)); }
+  .version-card.high::before { background: linear-gradient(90deg, var(--bh), var(--bh-dark)); }
+  .v-emoji { font-size: 2.8rem; }
+  .v-level { font-size: .78rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+  .version-card.middle .v-level { color: var(--bh); }
+  .version-card.high .v-level { color: var(--bh-dark); }
+  .v-title { font-size: 1.3rem; font-weight: 800; }
+  .v-desc { font-size: .93rem; color: var(--muted); line-height: 1.7; }
+  .v-features { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .v-features li { font-size: .85rem; display: flex; align-items: flex-start; gap: 7px; }
+  .v-features li::before { content: '✓'; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .version-card.middle .v-features li::before { color: var(--bh); }
+  .version-card.high .v-features li::before { color: var(--bh-dark); }
+  .v-btn {
+    margin-top: auto; display: inline-block; padding: 12px 0; border-radius: 30px;
+    font-size: .92rem; font-weight: 700; text-align: center; transition: opacity .2s;
+  }
+  .version-card.middle .v-btn { background: var(--bh); color: #fff; }
+  .version-card.high .v-btn { background: var(--bh-dark); color: #fff; }
+  .version-card:hover .v-btn { opacity: .88; }
+  .info-box {
+    background: var(--card); border-radius: var(--radius);
+    padding: 24px 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-top: 32px; display: flex; gap: 16px; align-items: flex-start;
+    border-left: 4px solid var(--gold);
+  }
+  .info-box .info-icon { font-size: 1.6rem; flex-shrink: 0; }
+  .info-box p { font-size: .9rem; color: var(--muted); line-height: 1.7; }
+  .info-box strong { color: var(--text); }
+  footer {
+    background: var(--bh-dark); color: rgba(255,255,255,.75);
+    text-align: center; padding: 20px; font-size: .82rem;
+  }
+  footer a { color: rgba(255,255,255,.9); }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="icon">🏛️</span>
+  <h1>성경 속 역사성 논쟁</h1>
+  <p>출애굽, 가나안 정복, 다윗 왕국은 역사적 사건인가?<br>고고학과 성경 본문, 그리고 신앙 사이의 긴장을 탐구합니다.</p>
+  <div class="badge-row">
+    <span class="badge">🏺 고고학</span>
+    <span class="badge">📜 출애굽</span>
+    <span class="badge">🗡️ 가나안 정복</span>
+    <span class="badge">🔍 역사비평</span>
+    <span class="badge">✝️ 신앙과 역사</span>
+  </div>
+</header>
+
+<main>
+  <p class="choose-label">버전 선택</p>
+
+  <div class="version-grid">
+
+    <a href="BH_middle.html" class="version-card middle">
+      <span class="v-emoji">📗</span>
+      <span class="v-level">청소년 버전</span>
+      <span class="v-title">성경의 역사를 어떻게 읽는가</span>
+      <p class="v-desc">고고학과 성경의 관계를 플립카드·탭·퀴즈로 쉽게 탐구합니다. 역사적 의문이 신앙을 흔드는 게 아님을 이해합니다.</p>
+      <ul class="v-features">
+        <li>성경 해석 원리 — 장르와 의도 읽기</li>
+        <li>출애굽 — 고고학적 증거와 역사적 핵심</li>
+        <li>가나안 정복 — 여리고 발굴 이야기</li>
+        <li>족장 내러티브의 역사적 배경</li>
+        <li>요나서 — 문학 장르로 읽기</li>
+        <li>주요 학자 5인 카드 + 퀴즈 10문제</li>
+      </ul>
+      <span class="v-btn">청소년 버전으로 →</span>
+    </a>
+
+    <a href="BH_high.html" class="version-card high">
+      <span class="v-emoji">📘</span>
+      <span class="v-level">대학생 버전</span>
+      <span class="v-title">역사비평과 성경 역사성의 신학</span>
+      <p class="v-desc">자료비평·편집비평·DtrH 이론부터 핀켈스타인의 낮은 연대기와 마자르의 수정 연대기까지. 21세기 성서고고학 논쟁의 최전선을 다룹니다.</p>
+      <ul class="v-features">
+        <li>역사비평 방법론 4가지 (플립카드)</li>
+        <li>출애굽 연대 논쟁 + 에레프 가설(Eleph Hypothesis)</li>
+        <li>핀켈스타인 vs 마자르 — 6방 성문 연대기 논쟁</li>
+        <li>텔 단 석비와 최소주의의 한계</li>
+        <li>DtrH, 얀 아스만 문화기억론</li>
+        <li>학자 9인 카드 + 학술 레퍼런스 + 퀴즈 12문제</li>
+      </ul>
+      <span class="v-btn">대학생 버전으로 →</span>
+    </a>
+
+  </div>
+
+  <div class="info-box">
+    <span class="info-icon">💡</span>
+    <p><strong>이 시리즈에 대해</strong><br>
+    "성경 속 역사성 논쟁"은 고고학이 성경을 어떻게 확인하거나 도전하는지를 다룹니다. 역사적 의문은 신앙의 적이 아닙니다 — 역사 속에서 일하시는 하나님을 더 깊이 이해하기 위한 통로입니다. 청소년 버전으로 핵심 질문을 파악한 뒤, 대학생 버전으로 학문적 논쟁의 깊이에 들어가는 것을 권합니다.</p>
+  </div>
+</main>
+
+<footer>
+  <p>Made by Isaac with Claude | 성경 속 역사성 논쟁 교육자료</p>
+</footer>
+
+</body>
+</html>

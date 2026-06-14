@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>성경 속 역사성 논쟁 — 청소년 버전</title>
+<style>
+  :root {
+    --bh: #8b5e3c;
+    --bh-dark: #4a2d0e;
+    --bh-light: #c8956a;
+    --bh-xlight: #faf0e6;
+    --bg: #f9fafb;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6c757d;
+    --border: #dee2e6;
+    --radius: 12px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+         background: var(--bg); color: var(--text); line-height: 1.7; }
+
+  .site-header { background: linear-gradient(135deg, #4a2d0e 0%, #8b5e3c 100%);
+    color: #fff; padding: 48px 24px 36px; text-align: center; }
+  .site-header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+  .site-header p { opacity: .85; font-size: .98rem; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+  .level-badge { display: inline-block; background: rgba(255,255,255,.2);
+    border: 1px solid rgba(255,255,255,.35); border-radius: 20px;
+    padding: 4px 16px; font-size: .8rem; margin-top: 12px; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: #fff;
+        border-bottom: 2px solid var(--bh-xlight); padding: 0 16px;
+        overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-inner { max-width: 900px; margin: 0 auto; display: flex; gap: 0;
+               overflow-x: auto; scrollbar-width: none; }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  nav a { display: inline-block; padding: 13px 14px; font-size: .83rem; font-weight: 600;
+          color: var(--muted); text-decoration: none; white-space: nowrap;
+          border-bottom: 3px solid transparent; transition: all .2s; }
+  nav a.active, nav a:hover { color: var(--bh); border-bottom-color: var(--bh); }
+
+  .section { max-width: 860px; margin: 0 auto; padding: 48px 20px; }
+  .section + .section { border-top: 1px solid var(--border); }
+  .section-title { font-size: 1.35rem; font-weight: 800; color: var(--bh);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .section-sub { font-size: .9rem; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+
+  .card { background: var(--card); border-radius: var(--radius);
+          box-shadow: var(--shadow); padding: 28px; margin-bottom: 16px; }
+  .highlight-box { background: var(--bh-xlight); border-left: 4px solid var(--bh);
+    border-radius: 0 var(--radius) var(--radius) 0; padding: 16px 20px; margin: 16px 0; font-size: .93rem; }
+  .warn-box { background: #fff3cd; border-left: 4px solid #ffc107;
+    border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 12px 0; font-size: .9rem; }
+  .info-box { background: #e8f4fd; border-left: 4px solid #4895ef;
+    border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 12px 0; font-size: .9rem; }
+
+  .tab-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+             overflow-x: auto; scrollbar-width: none; }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn { background: var(--bg); border: 1px solid var(--border);
+             border-radius: 20px; padding: 8px 16px; font-size: .85rem;
+             font-weight: 600; cursor: pointer; color: var(--muted); transition: .2s; white-space: nowrap; }
+  .tab-btn.active { background: var(--bh); color: #fff; border-color: var(--bh); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .acc-item { border: 1px solid var(--border); border-radius: var(--radius);
+              overflow: hidden; margin-bottom: 8px; }
+  .acc-btn { width: 100%; text-align: left; padding: 16px 18px; background: var(--card);
+             font-size: .95rem; font-weight: 700; border: none; cursor: pointer;
+             display: flex; justify-content: space-between; align-items: center; }
+  .acc-btn:hover { background: #f8f9fa; }
+  .acc-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; padding: 0 18px; }
+  .acc-body.open { max-height: 900px; padding: 16px 18px; }
+  .arrow { font-size: .75rem; color: var(--muted); transition: transform .25s; }
+
+  .flip-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(190px,1fr)); gap: 14px; margin-bottom: 20px; }
+  .flip-card { height: 195px; cursor: pointer; perspective: 1000px; }
+  .flip-inner { width: 100%; height: 100%; transition: transform .5s; transform-style: preserve-3d; position: relative; }
+  .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+  .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+    border-radius: var(--radius); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; padding: 16px; text-align: center; }
+  .flip-front { background: var(--card); border: 2px solid var(--bh-xlight); }
+  .flip-back { background: var(--bh); color: #fff; transform: rotateY(180deg); }
+  .flip-icon { font-size: 2rem; margin-bottom: 8px; }
+  .flip-title { font-size: .95rem; font-weight: 700; }
+  .flip-subtitle { font-size: .74rem; color: var(--muted); margin-top: 3px; }
+  .flip-hint { font-size: .72rem; color: var(--muted); margin-top: 6px; }
+  .flip-back-title { font-size: .95rem; font-weight: 800; margin-bottom: 8px; }
+  .flip-back-text { font-size: .81rem; line-height: 1.6; opacity: .95; }
+
+  .position-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: 14px; margin: 16px 0; }
+  .pos-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+              padding: 20px; border-top: 4px solid var(--bh-light); }
+  .pos-card.supported { border-top-color: var(--bh); background: var(--bh-xlight); }
+  .pos-label { font-size: .72rem; font-weight: 700; text-transform: uppercase;
+               letter-spacing: .5px; color: var(--muted); margin-bottom: 4px; }
+  .pos-card.supported .pos-label { color: var(--bh); }
+  .pos-title { font-size: 1rem; font-weight: 800; margin-bottom: 8px; }
+  .pos-body { font-size: .87rem; color: #444; line-height: 1.65; }
+
+  .person-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: 16px; }
+  .person-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; }
+  .person-emoji { font-size: 2.2rem; margin-bottom: 8px; }
+  .person-name { font-size: 1rem; font-weight: 800; margin-bottom: 2px; }
+  .person-role { font-size: .78rem; color: var(--bh); font-weight: 600; margin-bottom: 8px; }
+  .person-work { font-size: .8rem; color: var(--muted); font-style: italic; margin-bottom: 8px; }
+  .person-desc { font-size: .85rem; color: #444; line-height: 1.6; }
+
+  .quiz-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+               padding: 24px; margin-bottom: 16px; }
+  .q-num { font-size: .75rem; font-weight: 700; color: var(--bh); text-transform: uppercase; margin-bottom: 6px; }
+  .q-text { font-size: 1rem; font-weight: 700; margin-bottom: 14px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 8px; }
+  .q-opt { text-align: left; padding: 12px 16px; border-radius: 8px; border: 1.5px solid var(--border);
+           background: #fff; font-size: .9rem; cursor: pointer; transition: .18s; }
+  .q-opt:hover:not(:disabled) { border-color: var(--bh); background: var(--bh-xlight); }
+  .q-opt.correct { border-color: #2d6a4f; background: #d8f3dc; color: #2d6a4f; font-weight: 700; }
+  .q-opt.wrong { border-color: #e63946; background: #ffe0e3; color: #c1121f; }
+  .q-feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px;
+                background: var(--bh-xlight); font-size: .88rem; border-left: 3px solid var(--bh); }
+  .score-box { background: var(--bh); color: #fff; border-radius: var(--radius);
+               padding: 28px; text-align: center; margin-top: 24px; }
+  .score-num { font-size: 2.8rem; font-weight: 800; margin-bottom: 4px; }
+
+  footer { background: var(--bh-dark); color: rgba(255,255,255,.75);
+           text-align: center; padding: 20px; font-size: .82rem; }
+  footer a { color: rgba(255,255,255,.9); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .site-header h1 { font-size: 1.6rem; }
+    .section { padding: 32px 16px; }
+    .flip-grid { grid-template-columns: 1fr 1fr; }
+    .position-grid { grid-template-columns: 1fr; }
+    .person-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div style="background:#4a2d0e;padding:10px 20px;display:flex;align-items:center;gap:10px;">
+  <a href="index.html" style="color:#fff;text-decoration:none;font-size:.83rem;font-weight:600;
+     display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);
+     border:1px solid rgba(255,255,255,.3);border-radius:16px;padding:4px 12px;">🏠 홈으로</a>
+  <span style="color:rgba(255,255,255,.35);font-size:.8rem;">|</span>
+  <span style="color:rgba(255,255,255,.7);font-size:.82rem;">성경 속 역사성 논쟁 — 청소년 버전</span>
+</div>
+
+<div class="site-header">
+  <h1>🏺 성경 속 역사성 논쟁</h1>
+  <p>성경은 역사책인가? 고고학은 성경을 반증했는가?<br>역사성과 신학적 진리를 구분하며 함께 탐구합니다.</p>
+  <span class="level-badge">청소년 버전</span>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#s0" class="active" onclick="setActive(this)">📋 도입</a>
+    <a href="#s1" onclick="setActive(this)">🔧 해석 원리</a>
+    <a href="#s2" onclick="setActive(this)">📜 출애굽</a>
+    <a href="#s3" onclick="setActive(this)">⚔️ 가나안 정복</a>
+    <a href="#s4" onclick="setActive(this)">🏕️ 족장들</a>
+    <a href="#s5" onclick="setActive(this)">🐋 요나서</a>
+    <a href="#s6" onclick="setActive(this)">🏺 고고학</a>
+    <a href="#s7" onclick="setActive(this)">🙏 역사와 신앙</a>
+    <a href="#s8" onclick="setActive(this)">🧑‍🎓 학자들</a>
+    <a href="#s9" onclick="setActive(this)">❓ 퀴즈</a>
+  </div>
+</nav>
+
+<!-- S0 도입 -->
+<section id="s0" class="section">
+<div class="section-title">📋 도입</div>
+<p class="section-sub">성경의 역사성 논쟁을 탐구하기 전, 핵심 질문부터 살펴봅니다.</p>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('s0','s0t1',this)">역사책인가?</button>
+  <button class="tab-btn" onclick="switchTab('s0','s0t2',this)">왜 중요한가?</button>
+  <button class="tab-btn" onclick="switchTab('s0','s0t3',this)">이 자료의 접근법</button>
+</div>
+<div id="s0t1" class="tab-panel active">
+  <div class="card">
+    <p style="font-size:1.05rem;font-weight:700;color:var(--bh);margin-bottom:14px;">성경은 역사책인가?</p>
+    <p>성경은 역사를 <em>담고</em> 있지만, 현대적 의미의 역사책이 아닙니다. 현대 역사학은 사건을 최대한 객관적으로 기록하려 하지만, 성경의 저자들은 <strong>"하나님이 역사 속에서 어떻게 일하셨는가"</strong>를 전하는 데 초점을 맞췄습니다.</p>
+    <div class="highlight-box" style="margin-top:16px;">
+      <strong>핵심 구분:</strong> 역사적 사실(what happened)과 신학적 해석(what it means)은 다릅니다. 성경은 두 가지를 분리할 수 없는 방식으로 엮습니다. 이것이 바로 <strong>신학적 역사(Theological History)</strong>입니다.
+    </div>
+    <p style="margin-top:14px;">예를 들어 출애굽기는 이스라엘이 이집트에서 탈출했다는 사건을 전하면서, 동시에 <strong>"야훼 하나님이 노예를 해방시키시는 분"</strong>이라는 신학적 선언을 합니다. 사건과 해석이 함께 있습니다.</p>
+  </div>
+</div>
+<div id="s0t2" class="tab-panel">
+  <div class="card">
+    <p style="font-size:1.05rem;font-weight:700;color:var(--bh);margin-bottom:14px;">왜 역사성 논쟁이 중요한가?</p>
+    <div class="warn-box">⚠️ <strong>흔한 오해:</strong> "고고학이 성경을 반증했다"거나 "성경의 모든 내용이 역사적으로 정확하다"는 두 주장 모두 지나치게 단순합니다.</div>
+    <p style="margin-top:14px;">역사성 논쟁이 중요한 이유는 <strong>믿음의 근거</strong>와 연결되기 때문입니다. 출애굽이 전혀 역사적 기반이 없는 신화라면 그 위에 세워진 이스라엘 신앙 전체가 흔들립니다. 반대로, 역사적 세부사항의 일부가 신학적으로 재서술되었다고 해서 신앙의 핵심이 무너지는 것은 아닙니다.</p>
+    <p style="margin-top:12px;">이 자료는 그 사이의 균형점을 찾습니다: <strong>역사적 핵심은 실재하며, 신학적 목적이 서술 방식을 결정했다.</strong></p>
+  </div>
+</div>
+<div id="s0t3" class="tab-panel">
+  <div class="card">
+    <p style="font-size:1.05rem;font-weight:700;color:var(--bh);margin-bottom:14px;">이 자료의 접근법</p>
+    <p>이 자료는 <strong>신학적 역사(Theological History)</strong> 관점을 지지합니다:</p>
+    <ul style="margin:14px 0 14px 20px;display:flex;flex-direction:column;gap:8px;font-size:.93rem;">
+      <li>성경의 역사적 이야기에는 <strong>실제 역사적 핵심</strong>이 있습니다</li>
+      <li>저자들은 그 사건을 <strong>신학적 목적에 맞게</strong> 해석하고 서술했습니다</li>
+      <li>고고학적 침묵이나 불일치는 <strong>사건 자체를 부정하지 않습니다</strong></li>
+      <li>다른 해석들(문자주의·최소주의)도 소개하되, 각각의 한계를 함께 살펴봅니다</li>
+    </ul>
+    <div class="info-box">💡 <strong>장르가 먼저입니다.</strong> 성경 본문이 역사적 사실을 주장하는지, 신학적 진리를 이야기로 전달하는지를 먼저 파악해야 합니다. 다음 섹션에서 이를 다룹니다.</div>
+  </div>
+</div>
+</section>
+
+<!-- S1 해석 원리 -->
+<section id="s1" class="section">
+<div class="section-title">🔧 해석 원리: 장르가 먼저다</div>
+<p class="section-sub">성경의 다양한 글쓰기 방식(장르)을 이해해야 역사성 질문에 정확하게 접근할 수 있습니다. 카드를 탭해 보세요.</p>
+<div class="flip-grid">
+  <div class="flip-card" onclick="this.classList.toggle('flipped')">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <div class="flip-icon">📰</div>
+        <div class="flip-title">역사적 내러티브</div>
+        <div class="flip-subtitle">Historical Narrative</div>
+        <div class="flip-hint">탭하여 설명 보기</div>
+      </div>
+      <div class="flip-back">
+        <div class="flip-back-title">역사적 내러티브</div>
+        <p class="flip-back-text">실제 사건을 기록하는 글. 고대의 역사 기록은 현대 저널리즘이 아니며, 저자의 관점과 신학적 해석이 항상 함께합니다. 예: 열왕기, 역대기</p>
+      </div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <div class="flip-icon">⛪</div>
+        <div class="flip-title">신학적 역사</div>
+        <div class="flip-subtitle">Theological History</div>
+        <div class="flip-hint">탭하여 설명 보기</div>
+      </div>
+      <div class="flip-back">
+        <div class="flip-back-title">신학적 역사</div>
+        <p class="flip-back-text">역사적 사건을 신학적 관점에서 해석한 글. 사건의 '의미'가 세부사항보다 중요합니다. 창세기~신명기가 대표 예시. 역사적 핵심 + 신학적 해석의 결합.</p>
+      </div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <div class="flip-icon">📖</div>
+        <div class="flip-title">비유 / 우화</div>
+        <div class="flip-subtitle">Parable / Fable</div>
+        <div class="flip-hint">탭하여 설명 보기</div>
+      </div>
+      <div class="flip-back">
+        <div class="flip-back-title">비유 / 우화</div>
+        <p class="flip-back-text">진리를 이야기 형식으로 전달합니다. 역사적 사실 여부가 핵심 메시지에 영향을 미치지 않습니다. 예수님의 비유들, 일부 학자들이 주장하는 요나서.</p>
+      </div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <div class="flip-icon">🌙</div>
+        <div class="flip-title">묵시 문학</div>
+        <div class="flip-subtitle">Apocalyptic</div>
+        <div class="flip-hint">탭하여 설명 보기</div>
+      </div>
+      <div class="flip-back">
+        <div class="flip-back-title">묵시 문학</div>
+        <p class="flip-back-text">상징적·환상적 언어로 하나님의 계획을 드러냅니다. 문자적으로 읽으면 오독하기 쉽습니다. 예: 다니엘 7장의 짐승들, 요한계시록의 숫자들.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="highlight-box">
+  <strong>핵심 원리:</strong> 한 본문이 역사적 사실을 주장하는지, 신학적 진리를 이야기로 전달하는지, 상징적 언어로 말하는지를 먼저 파악해야 합니다. 장르를 잘못 읽으면 본문이 실제로 주장하지 않는 것을 주장한다고 오해하게 됩니다.
+</div>
+</section>
+
+<!-- S2 출애굽 -->
+<section id="s2" class="section">
+<div class="section-title">📜 출애굽의 역사성</div>
+<p class="section-sub">이집트 탈출 이야기 — 고고학은 침묵하는데, 신앙은 어디에 서야 할까요?</p>
+
+<div class="card">
+  <p style="font-size:.95rem;font-weight:700;color:var(--bh);margin-bottom:12px;">⚠️ 고고학적 침묵의 문제</p>
+  <p>성경은 이스라엘 백성 약 60만 명(출 12:37)이 이집트를 탈출해 40년을 광야에서 보냈다고 기록합니다. 그러나 이집트 공식 기록 어디에도 이 사건이 등장하지 않으며, 시나이 반도의 광범위한 고고학 조사에서도 대규모 집단 이주의 흔적이 발견되지 않았습니다.</p>
+  <div class="info-box" style="margin-top:14px;">💡 <strong>왜 이집트 기록에 없을까?</strong> 고대 이집트는 파라오의 위대한 승리를 기록하는 전통이 있었습니다. 노예들의 탈출이나 군사적 패배는 공식 비문에 남기지 않는 경향이 있었습니다. 이것은 사건 자체의 부재가 아닌, 이집트 기록 문화의 특성입니다.</div>
+</div>
+
+<p style="font-weight:700;font-size:.92rem;margin:20px 0 12px;color:var(--text);">세 가지 해석 입장</p>
+<div class="position-grid">
+  <div class="pos-card">
+    <div class="pos-label">입장 A</div>
+    <div class="pos-title">문자적 역사</div>
+    <p class="pos-body">성경의 기록은 정확하며, 60만 명 이상이 이집트를 탈출했습니다. 고고학적 증거가 없는 것은 발굴이 완전하지 않기 때문입니다. 하나님의 기적이 개입했으므로 일반 고고학 기준을 적용할 수 없습니다.</p>
+  </div>
+  <div class="pos-card">
+    <div class="pos-label">입장 B</div>
+    <div class="pos-title">역사적 최소주의</div>
+    <p class="pos-body">출애굽은 역사적 근거가 없는 후대 이스라엘의 국가 기원 신화입니다. 이스라엘 민족은 가나안 내부에서 점진적으로 형성되었으며, 출애굽 서사는 정체성 강화를 위해 구성된 것입니다.</p>
+  </div>
+  <div class="pos-card supported">
+    <div class="pos-label">✓ 이 자료의 입장</div>
+    <div class="pos-title">신학적 역사</div>
+    <p class="pos-body">이집트 탈출이라는 역사적 핵심 사건이 있었으나, 60만 명이라는 수치는 신학적 과장일 수 있습니다. 중요한 것은 "야훼께서 노예를 해방하신다"는 신학적 핵심이며, 이것이 이스라엘 신앙의 실제 기초입니다.</p>
+  </div>
+</div>
+
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">📌 출애굽의 신학적 핵심 메시지 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>출애굽 이야기의 신학적 핵심은 역사적 세부사항보다 훨씬 중요합니다. 이스라엘 신앙의 가장 근본적인 고백은 <strong>"야훼는 우리를 이집트에서 인도해 내신 하나님"</strong>(출 20:2)입니다. 이 고백은 시편, 예언서, 신약 전체를 관통합니다.</p>
+    <p style="margin-top:10px;">정확히 몇 명이, 어느 파라오 때, 어떤 경로로 탈출했는지는 신학적 핵심과 분리될 수 있습니다. 하나님이 억압받는 자들의 편에 서셔서 해방하신다는 이 선언이 성경이 주장하는 것입니다.</p>
+  </div>
+</div>
+</section>
+
+<!-- S3 가나안 정복 -->
+<section id="s3" class="section">
+<div class="section-title">⚔️ 가나안 정복과 헤렘 전쟁</div>
+<p class="section-sub">성벽이 무너진 여리고, 진멸 명령 — 고고학과 신학 사이에서 어떻게 이해할 수 있을까요?</p>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('s3','s3t1',this)">여리고 고고학</button>
+  <button class="tab-btn" onclick="switchTab('s3','s3t2',this)">헤렘(חֵרֶם)의 의미</button>
+  <button class="tab-btn" onclick="switchTab('s3','s3t3',this)">대안 이론들</button>
+</div>
+<div id="s3t1" class="tab-panel active">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:12px;">여리고(Jericho) 발굴 결과</p>
+    <p>고고학자 캐슬린 케년(Kathleen Kenyon)의 1952~58년 발굴은 중요한 사실을 밝혔습니다. 여호수아 시대로 추정되는 후기 청동기(BC 1400~1200년) 지층에서 <strong>대규모 성벽의 붕괴 흔적이 발견되지 않았습니다.</strong> 무너진 성벽 흔적은 훨씬 이전 시대(초기 청동기)의 것입니다.</p>
+    <div class="warn-box" style="margin-top:14px;">⚠️ 이것이 여리고 전투가 없었다는 의미인가요? 꼭 그렇지는 않습니다. 발굴이 불완전하거나, 성벽이 있었더라도 흔적이 사라졌을 수 있습니다. 반면 하솔(Hazor)의 경우 이 시기 대규모 화재 파괴의 증거가 확인되었습니다(수 11:11).</div>
+    <p style="margin-top:12px;">결론: 가나안 정복 기사의 고고학 증거는 <strong>장소마다 다릅니다.</strong> 일부는 일치하고(하솔), 일부는 불일치합니다(여리고, 아이). 이를 통해 정복 과정이 일시적·전면적이 아닌 점진적·복합적이었을 가능성을 고려할 수 있습니다.</p>
+  </div>
+</div>
+<div id="s3t2" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:12px;">헤렘(חֵרֶם)이란 무엇인가?</p>
+    <p>히브리어 <strong>חֵרֶם(헤렘)</strong>은 "봉헌된 것" 또는 "바쳐진 것"을 뜻합니다. 가나안 정복 기사에서 "진멸하라"로 번역되는 이 개념의 신학적 기능은 단순한 학살 명령이 아닙니다.</p>
+    <ul style="margin:14px 0 0 20px;display:flex;flex-direction:column;gap:8px;font-size:.9rem;">
+      <li><strong>이방 신들과의 단절:</strong> 가나안 종교와의 완전한 분리를 의미합니다. 이방 물건을 취하는 것은 이방 신을 취하는 것과 같았습니다(수 7장, 아간의 죄).</li>
+      <li><strong>야훼께 대한 전적 헌신:</strong> "헤렘"으로 봉헌된 것은 전리품이 아닌 하나님께 바쳐진 것입니다. 이는 종교적 의식의 언어입니다.</li>
+      <li><strong>수사적 과장:</strong> 고대근동 전쟁 기록에서 "모두 죽였다"는 표현은 관용적 과장인 경우가 많습니다. 실제로 정복 이후 가나안 민족이 계속 등장하는 것은 이 표현이 문자적 전멸을 의미하지 않음을 시사합니다.</li>
+    </ul>
+  </div>
+</div>
+<div id="s3t3" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:12px;">정복 기사를 이해하는 다른 모델들</p>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="toggleAcc(this)">① 군사 정복 모델 (전통적 입장) <span class="arrow">▼</span></button>
+      <div class="acc-body"><p>여호수아서의 기록대로 이스라엘이 군사적으로 가나안을 정복했습니다. 고고학적 불일치는 발굴의 한계 또는 연대 측정의 오류로 설명합니다.</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="toggleAcc(this)">② 평화적 침투 모델 (알트·노트) <span class="arrow">▼</span></button>
+      <div class="acc-body"><p>이스라엘 유목민들이 가나안에 점진적으로 침투·정착했습니다. 정복 이야기는 후대에 특정 지역의 전승들을 모아 서술한 것입니다.</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="toggleAcc(this)">③ 통합 모델 (현재 주류) <span class="arrow">▼</span></button>
+      <div class="acc-body"><p>군사 정복, 평화적 정착, 가나안 내 집단의 합류 등 다양한 방식이 복합적으로 이루어졌습니다. 여호수아서는 이 복잡한 과정을 신학적 통일성 있는 서사로 재구성했습니다.</p></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- S4 족장 내러티브 -->
+<section id="s4" class="section">
+<div class="section-title">🏕️ 족장 내러티브</div>
+<p class="section-sub">아브라함·이삭·야곱 — 이들은 역사적 인물인가, 민족 기원 이야기의 주인공인가?</p>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">📅 족장들의 시대적 배경 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>성경이 제시하는 족장 시대는 대략 BC 2000~1700년(중기 청동기)입니다. 이 시기 가나안과 메소포타미아 사이의 인구 이동, 우르·하란·가나안을 잇는 교역로, 셈족 이름 목록 등이 실제 고고학 증거와 맥락적으로 맞아떨어집니다. 족장 이야기의 배경 자체는 역사적으로 타당합니다.</p>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">📚 고대근동 유사 서사와의 관계 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>메소포타미아 문학에도 족장 이야기와 유사한 요소들이 있습니다 — 신의 부르심에 따른 이주, 언약 맺기, 아이 없는 부부와 기적적 출산 등. 이는 성경이 고대근동 문학 전통 안에서 쓰였음을 보여줍니다.</p>
+    <p style="margin-top:10px;">중요한 점은 성경이 이 공통 형식을 <strong>신학적으로 전환</strong>한다는 것입니다. 단일한 하나님, 보편적 언약, 열방에 대한 축복의 통로라는 개념은 이스라엘만의 독특한 신학입니다(창 12:3).</p>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">🏳️ 민족 정체성 내러티브로 읽기 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>족장 이야기는 단순한 개인 전기가 아닙니다. 아브라함은 믿음으로 부르심에 응답하는 이스라엘의 모습을, 야곱은 씨름 끝에 하나님과 화해하는 이스라엘의 모습을 담습니다. 야곱의 새 이름 "이스라엘"은 이 연결을 명시적으로 보여줍니다.</p>
+    <p style="margin-top:10px;">이러한 읽기는 족장들의 역사적 실존을 부정하지 않습니다. 오히려 이 이야기들이 왜 오랫동안 보존되고 반복되어 왔는지, 신학적 무게감이 어디서 오는지를 설명해 줍니다.</p>
+    <div class="highlight-box" style="margin-top:12px;">
+      "네 씨로 말미암아 천하 만민이 복을 받으리니, 이는 네가 내 말을 준행하였음이니라." — 창세기 22:18
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- S5 요나서 -->
+<section id="s5" class="section">
+<div class="section-title">🐋 요나서: 역사인가, 이야기인가?</div>
+<p class="section-sub">가장 뜨거운 역사성 논쟁 중 하나 — 세 가지 독해 방식을 살펴봅니다.</p>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('s5','s5t1',this)">역사적 독해</button>
+  <button class="tab-btn" onclick="switchTab('s5','s5t2',this)">문학적 독해</button>
+  <button class="tab-btn" onclick="switchTab('s5','s5t3',this)">예수님의 인용</button>
+</div>
+<div id="s5t1" class="tab-panel active">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:12px;">역사적 독해</p>
+    <p>요나서에 등장하는 "요나 벤 아미타이"는 열왕기하 14:25에 실존 예언자로 기록되어 있습니다. 이를 근거로 요나서의 사건들(물고기 뱃속 3일, 니느웨 회개)이 실제로 일어난 역사적 사건이라고 봅니다.</p>
+    <div class="info-box" style="margin-top:12px;">✔️ <strong>강점:</strong> 인물의 역사적 실존이 확인됩니다. 성경 다른 곳에서 역사적 맥락과 연결됩니다. 기적을 부정하지 않는 신앙적 일관성이 있습니다.</div>
+  </div>
+</div>
+<div id="s5t2" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:12px;">문학적 독해 (예언적 단편소설)</p>
+    <p>요나서를 역사가 아닌 신학적 이야기로 읽는 학자들의 근거는 다음과 같습니다:</p>
+    <ul style="margin:12px 0 0 20px;display:flex;flex-direction:column;gap:7px;font-size:.9rem;">
+      <li>극도로 정교한 문학 구조 — 아이러니, 대조, 반전이 예술적으로 배치됨</li>
+      <li>니느웨 전체(12만 명 + 동물까지)가 단 하루 만에 회개하는 비현실적 묘사</li>
+      <li>식물이 하룻밤 사이 자라고 죽는 장치적 요소</li>
+      <li>고대 이스라엘의 배타적 민족주의를 비판하는 풍자적 구조</li>
+    </ul>
+    <div class="highlight-box" style="margin-top:14px;">
+      신학적 핵심은 어느 독해 방식에서나 동일합니다: <strong>하나님의 자비는 이스라엘 너머 원수에게까지 미친다.</strong> 역사성 논쟁이 이 메시지를 바꾸지 않습니다.
+    </div>
+  </div>
+</div>
+<div id="s5t3" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:12px;">예수님의 인용 — 어떻게 이해할까?</p>
+    <p>마태복음 12:40에서 예수님은 말씀하십니다: <em>"요나가 밤낮 사흘을 큰 물고기 배 속에 있었던 것같이 인자도 밤낮 사흘을 땅 속에 있으리라."</em></p>
+    <div class="acc-item" style="margin-top:14px;">
+      <button class="acc-btn" onclick="toggleAcc(this)">해석 ①: 역사성 확증 <span class="arrow">▼</span></button>
+      <div class="acc-body"><p>예수님이 요나의 경험을 역사적 사건으로 언급하셨으므로, 이는 요나서의 역사성을 확인한 것입니다. 예수님이 비역사적 이야기를 역사적 사건처럼 인용하신다면 오류를 범하신 것이 됩니다. (보수적 입장)</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="toggleAcc(this)">해석 ②: 신학적 유형론 사용 <span class="arrow">▼</span></button>
+      <div class="acc-body"><p>예수님은 요나 이야기의 <em>신학적 의미</em>(죽음과 부활의 패턴)를 자신에게 적용하신 것입니다. 성경에서 비유의 등장인물을 역사적 사건처럼 언급하는 선례가 있으며, 예수님은 요나의 역사성보다 그 유형론적 의미에 초점을 두셨을 수 있습니다. (온건한 입장)</p></div>
+    </div>
+    <p style="margin-top:14px;font-size:.88rem;color:var(--muted);">* 진지한 기독교 학자들이 두 해석 모두를 지지합니다. 역사성 여부와 무관하게 예수님의 부활 메시지는 동일합니다.</p>
+  </div>
+</div>
+</section>
+
+<!-- S6 고고학 -->
+<section id="s6" class="section">
+<div class="section-title">🏺 고고학과 성경</div>
+<p class="section-sub">고고학은 성경의 적인가 친구인가? 확인된 것과 침묵하는 것을 구분해 봅니다.</p>
+
+<div class="card" style="margin-bottom:16px;">
+  <p style="font-weight:700;color:#2d6a4f;margin-bottom:12px;">✅ 고고학이 확인한 것들</p>
+  <ul style="display:flex;flex-direction:column;gap:8px;font-size:.9rem;margin-left:4px;">
+    <li>🏛️ <strong>텔 단 비문(1993):</strong> "다윗의 집(בֵּית דָּוִד)"이라는 표현 발견 — 다윗 왕가의 첫 비성경적 증거</li>
+    <li>🗿 <strong>모압 돌(메사 스텔레, BC 840년경):</strong> 이스라엘 왕 오므리(Omri) 명시적 언급</li>
+    <li>🚇 <strong>히스기야의 터널(실로암 터널):</strong> 열왕기하 20:20 기록과 일치하는 BC 700년경 건설 확인</li>
+    <li>🏙️ <strong>라기스·므깃도 발굴:</strong> 솔로몬~히스기야 시대의 건축물·행정 체계 확인</li>
+    <li>📜 <strong>라기스 서신:</strong> 바빌론 침공(BC 587년경) 직전 상황을 보여주는 동시대 기록</li>
+  </ul>
+</div>
+
+<div class="card">
+  <p style="font-weight:700;color:#8b5e3c;margin-bottom:12px;">⚠️ 고고학이 침묵하는 것들</p>
+  <ul style="display:flex;flex-direction:column;gap:8px;font-size:.9rem;margin-left:4px;">
+    <li>📜 출애굽 — 이집트 기록과 시나이 반도 발굴에서 대규모 탈출의 직접 증거 없음</li>
+    <li>🏯 여리고 — 여호수아 시대의 성벽 붕괴 흔적 미발견</li>
+    <li>👑 솔로몬의 영광 — 성경이 묘사하는 규모의 왕국 인프라 증거 논쟁 중</li>
+  </ul>
+  <div class="highlight-box" style="margin-top:14px;">
+    <strong>중요한 원칙:</strong> "증거의 부재(absence of evidence)가 곧 부재의 증거(evidence of absence)는 아닙니다." 발굴되지 않은 지역이 광대하고, 고대 유기물이나 텐트 생활의 흔적은 거의 남지 않습니다. 고고학적 침묵은 신중하게 해석해야 합니다.
+  </div>
+</div>
+
+<div class="acc-item" style="margin-top:8px;">
+  <button class="acc-btn" onclick="toggleAcc(this)">🔍 성경 고고학의 역사와 한계 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>20세기 초 윌리엄 올브라이트(W.F. Albright)는 "성경 고고학"을 발전시키며 성경의 역사성을 확인하려 했습니다. 그러나 1970년대 이후 고고학이 독립 학문으로 성숙하면서, 증거를 더 객관적으로 평가하는 방향으로 발전했습니다.</p>
+    <p style="margin-top:10px;">현재 학계에는 성경을 최대한 역사적으로 읽으려는 <strong>최대주의(Maximalism)</strong>와 성경의 역사성에 회의적인 <strong>최소주의(Minimalism)</strong>가 공존합니다. 대부분의 학자들은 그 사이 어딘가에 위치합니다.</p>
+  </div>
+</div>
+</section>
+
+<!-- S7 역사와 신앙 -->
+<section id="s7" class="section">
+<div class="section-title">🙏 역사성과 신앙</div>
+<p class="section-sub">역사성이 흔들려도 신앙이 서 있을 수 있는가? 이 질문을 정직하게 다뤄 봅니다.</p>
+
+<div class="card" style="border-top:4px solid var(--bh);">
+  <p style="font-weight:800;font-size:1rem;color:var(--bh);margin-bottom:12px;">역사성은 스펙트럼입니다</p>
+  <p>성경의 역사성은 0(완전한 신화) 또는 100(모든 세부사항이 정확)으로 양분되지 않습니다. 다윗 왕가의 실존은 고고학으로 확인되지만, 출애굽의 규모는 논쟁 중이며, 요나서는 장르 자체가 다를 수 있습니다. 본문마다 역사성의 정도와 성격이 다릅니다.</p>
+</div>
+
+<div class="card" style="border-top:4px solid var(--bh);margin-top:12px;">
+  <p style="font-weight:800;font-size:1rem;color:var(--bh);margin-bottom:12px;">C.S. 루이스: "신화가 사실이 되다"</p>
+  <p>C.S. 루이스는 이교 신화에서 반복되는 "죽고 부활하는 신" 이야기가 그리스도에서 <em>역사적 사실로 실현되었다</em>고 주장했습니다. 이야기의 형식이 진리 전달을 방해하지 않으며, 오히려 하나님이 인간의 이야기 감각을 통해 진리를 준비시켰다는 것입니다.</p>
+  <p style="margin-top:10px;">이 관점은 성경의 서사가 신학적으로 목적 있게 구성되었더라도, 그것이 진리 전달의 능력을 약화시키지 않음을 시사합니다.</p>
+</div>
+
+<div class="card" style="border-top:4px solid #e63946;margin-top:12px;">
+  <p style="font-weight:800;font-size:1rem;color:#c1121f;margin-bottom:12px;">⚠️ 역사성이 가장 중요한 지점: 부활</p>
+  <p>사도 바울은 말합니다: <em>"그리스도께서 다시 살아나지 못하셨다면 너희 믿음도 헛되고 너희가 여전히 죄 가운데 있을 것이요."</em>(고전 15:17) 부활은 알레고리로 환원될 수 없는 역사적 사건으로서 기독교 신앙의 핵심입니다.</p>
+  <p style="margin-top:10px;">즉, 출애굽의 정확한 규모나 요나서의 장르는 신앙의 핵심이 아닐 수 있지만, 예수 그리스도의 부활은 역사성이 신앙 자체와 직결됩니다. <strong>역사성 논쟁의 무게는 본문마다 다릅니다.</strong></p>
+</div>
+</section>
+
+<!-- S8 학자들 -->
+<section id="s8" class="section">
+<div class="section-title">🧑‍🎓 주요 학자</div>
+<p class="section-sub">역사성 논쟁을 이끄는 네 명의 학자를 소개합니다.</p>
+<div class="person-grid">
+  <div class="person-card">
+    <div class="person-emoji">🏺</div>
+    <div class="person-name">윌리엄 데버</div>
+    <div class="person-role">고고학자 / 성경학자</div>
+    <div class="person-work">"What Did the Biblical Writers Know?" (2001)</div>
+    <p class="person-desc">미국의 저명한 성경 고고학자. 철기 시대 이스라엘의 실존을 고고학적으로 강력히 지지하면서도, 출애굽·정복 기사의 규모는 과장되었거나 신학적으로 재구성되었을 수 있다고 봅니다. 최소주의에 비판적인 중도 학자.</p>
+  </div>
+  <div class="person-card">
+    <div class="person-emoji">🔬</div>
+    <div class="person-name">이스라엘 핑켈스타인</div>
+    <div class="person-role">고고학자 / 텔아비브대</div>
+    <div class="person-work">"The Bible Unearthed" (2001, 공저)</div>
+    <p class="person-desc">수정주의적 입장의 대표 학자. 출애굽·통일왕국의 규모에 회의적이며, 성경의 많은 부분이 바빌론 포로 이후 신학적 목적으로 편집되었다고 주장합니다. 성경의 역사적 핵심은 인정하지만 서술의 과장에 비판적입니다.</p>
+  </div>
+  <div class="person-card">
+    <div class="person-emoji">📚</div>
+    <div class="person-name">트렘퍼 롱맨 3세</div>
+    <div class="person-role">구약학자 / 복음주의</div>
+    <div class="person-work">"How to Read the Psalms" 외 다수</div>
+    <p class="person-desc">복음주의 구약학의 대표적 학자. 성경의 문학적 장르 분석을 전문으로 하며, 신학적 무오성을 지지하면서도 요나서 등 특정 본문의 문학적 독해에 열린 입장을 보입니다. 역사성과 문학성을 통합적으로 봅니다.</p>
+  </div>
+  <div class="person-card">
+    <div class="person-emoji">✍️</div>
+    <div class="person-name">브루스 월키</div>
+    <div class="person-role">히브리어 학자 / 구약학자</div>
+    <div class="person-work">"Genesis: A Commentary" (2001)</div>
+    <p class="person-desc">북미 복음주의 히브리어 학계의 원로. 고대근동 문학과 성경을 비교하며 신학적 역사 접근법을 제시합니다. 성경의 무오성을 믿으면서도 진화적 창조론을 지지한 학자로, 신앙과 학문의 통합을 보여주는 인물입니다.</p>
+  </div>
+</div>
+</section>
+
+<!-- S9 퀴즈 -->
+<section id="s9" class="section">
+<div class="section-title">❓ 확인 퀴즈</div>
+<p class="section-sub">10문제로 오늘 배운 내용을 점검해 보세요.</p>
+
+<div class="quiz-card" id="q1">
+  <div class="q-num">문제 1</div>
+  <div class="q-text">성경의 역사성을 논할 때 가장 먼저 고려해야 할 것은?</div>
+  <div class="q-options">
+    <button class="q-opt" onclick="checkQ(1,'a','b')">① 고고학 발굴 결과와의 일치 여부</button>
+    <button class="q-opt" onclick="checkQ(1,'b','b')">② 해당 본문의 장르와 신학적 목적</button>
+    <button class="q-opt" onclick="checkQ(1,'c','b')">③ 저자가 사건을 직접 목격했는지 여부</button>
+    <button class="q-opt" onclick="checkQ(1,'d','b')">④ 현대 역사학의 기준에 맞는지 여부</button>
+  </div>
+  <div class="q-feedback" style="display:none;"></div>
+</div>
+
+<div class="quiz-card" id="q2">
+  <div class="q-num">문제 2</div>
+  <div class="q-text">이집트 공식 기록에 출애굽 사건이 없는 이유로 가장 타당한 설명은?</div>
+  <div class="q-options">
+    <button class="q-opt" onclick="checkQ(2,'a','c')">① 출애굽은 역사적 근거가 전혀 없는 신화이기 때문에</button>
+    <button class="q-opt" onclick="checkQ(2,'b','c')">② 이집트 문명이 이 시기 문자를 사용하지 않았기 때문에</button>
+    <button class="q-opt" onclick="checkQ(2,'c','c')">③ 이집트는 자국의 패배나 노예 탈출을 공식 기록에 남기지 않는 경향이 있기 때문에</button>
+    <button class="q-opt" onclick="checkQ(2,'d','c')">④ 해당 파라오의 기록이 모두 소실되었기 때문에</button>
+  </div>
+  <div class="q-feedback" style="display:none;"></div>
+</div>
+
+<div class="quiz-card" id="q3">
+  <div class="q-num">문제 3</div>
+  <div class="q-text">'신학적 역사(Theological History)'가 의미하는 것은?</div>
+  <div class="q-options">
+    <button class="q-opt" onclick="checkQ(3,'a','b')">① 성경은 신학적 내용만 담고 있으며 역사적 사건은 모두 상징이다</button>
+    <button class="q-opt" onclick="checkQ(3,'b','b')">② 역사적 핵심 사건을 신학적 목적과 관점에서 해석하여 서술한 것이다</button>
+    <button class="q-opt" onclick="checkQ(3,'c','b')">③ 현대 역사학의 관점으로 성경을 재해석하는 방법론이다</button>
+    <button class="q-opt" onclick="checkQ(3,'d','b')">④ 역사와 신학은 완전히 분리되어야 한다는 원칙이다</button>
+  </div>
+  <div class="q-feedback" style="display:none;"></div>
+</div>
+
+<div class="quiz-card" id="q4">
+  <div class="q-num">문제 4</div>
+  <div class="q-text">여리고(Jericho) 성벽에 대한 고고학적 발굴의 결론으로 옳은 것은?</div>
+  <div class="q-options">
+    <button class="q-opt" onclick="checkQ(4,'a','c')">① 여호수아 시대(BC 1200년대) 성벽이 붕괴된 흔적이 발견되었다</button>
+    <button class="q-opt" onclick="checkQ(4,'b','c')">② 여리고 도시 자체가 역사적으로 존재하지 않았음이 확인되었다</button>
+    <button class="q-opt" onclick="checkQ(4,'c','c')">③ 여호수아 시대로 추정되는 시기에 대규모 성벽이 없었을 가능성이 높다</button>
+    <button class="q-opt" onclick="checkQ(4,'d','c')">④ 여리고 발굴은 아직 이루어지지 않아 알 수 없다</button>
+  </div>
+  <div class="q-feedback" style="display:none;"></div>
+</div>
+
+<div class="quiz-card" id="q5">
+  <div class="q-num">문제 5</div>
+  <div class="q-text">헤렘(חֵרֶם) 전쟁 명령의 신학적 기능으로 가장 적절한 것은?</div>
+  <div class="q-options">
+    <button class="q-opt" onclick="checkQ(5,'a','c')">① 이스라엘의 군사적 우월성을 과시하기 위함이다</button>
+    <button class="q-opt" onclick="checkQ(5,'b','c')">② 전쟁 포로를 처리하는 법적 기준을 제시하기 위함이다</button>
+    <button class="q-opt" onclick="checkQ(5,'c','c')">③ 이방 신들과의 완전한 단절과 야훼께 대한 전적인 헌신을 표현하기 위함이다</button>
+    <button class="q-opt" onclick="checkQ(5,'d','c')">④ 가나안 민족이 도덕적으로 열등함을 보여주기 위함이다</button>
+  </div>
+  <div class="q-feedback" style="display:none;"></div>
+</div>
+
+<div class="quiz-card" id="q6">
+  <div class="q-num">문제 6</div>
+  <div class="q-text">족장 내러티브를 '민족 정체성 내러티브'로 이해할 때 핵심은?</div>
+  <div class="q-options">
+    <button class="q-opt" onclick="checkQ(6,'a','b')">① 아브라함이 BC 2000년대에 실존했음을 증명한다</button>
+    <button class="q-opt" onclick="checkQ(6,'b','b')">② 개인의 이야기가 이스라엘 민족 전체의 정체성·소명·하나님과의 관계를 표현한다</button>
+    <button class="q-opt" onclick="checkQ(6,'c','b')">③ 족장 이야기는 메소포타미아 신화를 복사한 것이므로 비역사적이다</button>
+    <button class="q-opt" onclick="checkQ(6,'d','b')">④ 족장 내러티브는 고고학으로 완전히 검증되었다</button>
+  </div>
+  <div class="q-feedback" style="display:none;"></div>
+</div>
+
+<div class="quiz-card" id="q7">
+  <div class="q-num">문제 7</div>
+  <div class="q-text">요나서를 '예언적 단편소설'로 읽는 학자들의 근거가 <u>아닌</u> 것은?</div>
+  <div class="q-options">
+    <button class="q-opt" onclick="checkQ(7,'a','c')">① 극도로 정제된 문학적 구조와 아이러니</button>
+    <button class="q-opt" onclick="checkQ(7,'b','c')">② 니느웨 전체가 하루 만에 회개하는 비현실적 서술</button>
+    <button class="q-opt" onclick="checkQ(7,'c','c')">③ 요나 벤 아미타이가 성경 어디에도 등장하지 않기 때문에</button>
+    <button class="q-opt" onclick="checkQ(7,'d','c')">④ 하나님의 보편적 자비라는 일관된 신학 메시지</button>
+  </div>
+  <div class="q-feedback" style="display:none;"></div>
+</div>
+
+<div class="quiz-card" id="q8">
+  <div class="q-num">문제 8</div>
+  <div class="q-text">"증거의 부재가 곧 부재의 증거는 아니다"는 원칙이 역사성 논쟁에서 의미하는 바는?</div>
+  <div class="q-options">
+    <button class="q-opt" onclick="checkQ(8,'a','b')">① 고고학 증거가 없으면 성경을 무조건 믿어야 한다</button>
+    <button class="q-opt" onclick="checkQ(8,'b','b')">② 발굴되지 않은 지역이 많고 고대 흔적은 쉽게 사라지므로, 고고학적 침묵만으로 사건을 부정할 수 없다</button>
+    <button class="q-opt" onclick="checkQ(8,'c','b')">③ 성경의 역사성은 고고학으로 검증할 수 없으므로 무의미하다</button>
+    <button class="q-opt" onclick="checkQ(8,'d','b')">④ 고고학자들이 성경의 역사성에 편향되어 있다</button>
+  </div>
+  <div class="q-feedback" style="display:none;"></div>
+</div>
+
+<div class="quiz-card" id="q9">
+  <div class="q-num">문제 9</div>
+  <div class="q-text">윌리엄 데버(William Dever)의 고고학적 입장을 가장 잘 설명한 것은?</div>
+  <div class="q-options">
+    <button class="q-opt" onclick="checkQ(9,'a','c')">① 성경의 모든 역사적 기록은 고고학적으로 정확하게 확인된다</button>
+    <button class="q-opt" onclick="checkQ(9,'b','c')">② 출애굽·정복 기사는 완전한 신화이며 역사적 근거가 전혀 없다</button>
+    <button class="q-opt" onclick="checkQ(9,'c','c')">③ 이스라엘의 역사적 실존은 확인되나, 출애굽·정복 서술은 과장 또는 신학적 재구성일 수 있다</button>
+    <button class="q-opt" onclick="checkQ(9,'d','c')">④ 고고학은 성경의 역사성과 무관한 독립적 학문이다</button>
+  </div>
+  <div class="q-feedback" style="display:none;"></div>
+</div>
+
+<div class="quiz-card" id="q10">
+  <div class="q-num">문제 10</div>
+  <div class="q-text">역사성과 신앙의 관계에 대해 이 자료가 주장하는 입장은?</div>
+  <div class="q-options">
+    <button class="q-opt" onclick="checkQ(10,'a','c')">① 성경의 모든 역사적 세부사항이 정확해야 신앙이 성립한다</button>
+    <button class="q-opt" onclick="checkQ(10,'b','c')">② 역사성은 신앙과 무관하므로 신경 쓸 필요가 없다</button>
+    <button class="q-opt" onclick="checkQ(10,'c','c')">③ 역사적 핵심은 실재하며, 세부 서술의 신학적 재구성이 신학적 진리를 무효화하지 않는다</button>
+    <button class="q-opt" onclick="checkQ(10,'d','c')">④ 고고학이 성경의 역사성을 반증했으므로 알레고리로만 읽어야 한다</button>
+  </div>
+  <div class="q-feedback" style="display:none;"></div>
+</div>
+
+<div class="score-box" id="score-section" style="display:none;">
+  <div class="score-num" id="score-display"></div>
+  <p style="font-size:1rem;opacity:.9;" id="score-msg"></p>
+</div>
+</section>
+
+<footer>
+  <p>Made by Isaac with Claude | 성경 속 역사성 논쟁 교육자료 — 청소년 버전</p>
+  <p style="margin-top:6px;"><a href="index.html">← 버전 선택으로</a></p>
+</footer>
+
+<script>
+function setActive(el) {
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function switchTab(sectionId, panelId, btn) {
+  const sec = document.getElementById(sectionId);
+  sec.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  sec.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(panelId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const arrow = btn.querySelector('.arrow');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  arrow.textContent = isOpen ? '▼' : '▲';
+}
+
+const answered = {};
+const ANSWERS = {1:'b',2:'c',3:'b',4:'c',5:'c',6:'b',7:'c',8:'b',9:'c',10:'c'};
+const feedbacks = {
+  1:{a:'고고학은 중요하지만, 역사성 논의의 출발점은 본문의 장르와 목적입니다.',b:'정확합니다! 같은 사건이라도 장르에 따라 역사적 주장의 성격이 달라집니다.',c:'저자의 목격 여부도 중요하지만, 더 근본적인 출발점은 해당 본문의 장르입니다.',d:'현대 역사학의 기준은 고대 성경 본문에 그대로 적용하기 어렵습니다. 장르가 먼저입니다.'},
+  2:{a:'이것은 극단적 최소주의 입장입니다. 대부분의 학자들은 역사적 핵심이 있다고 봅니다.',b:'이집트는 이 시기 수천 년의 문자 기록 전통을 이미 가지고 있었습니다.',c:'맞습니다! 고대 이집트는 파라오의 위대한 승리만 기록하는 경향이 있었습니다. 패배나 노예 탈출은 공식 비문에 남기지 않았습니다.',d:'해당 시기의 이집트 기록들이 상당량 남아 있습니다. 완전한 소실은 설명이 되지 않습니다.'},
+  3:{a:'성경에는 역사적 사건도 담겨 있습니다. 신학적 역사는 역사를 배제하지 않습니다.',b:'정확합니다! 역사적 핵심과 신학적 해석이 함께 있는 것이 신학적 역사의 특징입니다.',c:'신학적 역사는 성경을 현대 방법론으로 "재해석"하는 것이 아니라, 성경 자체의 서술 방식을 이해하는 것입니다.',d:'신학적 역사 개념은 역사와 신학을 분리하는 것이 아니라, 그 긴밀한 결합을 인정합니다.'},
+  4:{a:'캐슬린 케년의 발굴은 이 시기 대규모 성벽 붕괴의 증거를 찾지 못했습니다.',b:'여리고 도시는 역사적으로 실존했으며, 청동기를 포함해 오랜 거주 역사가 있습니다.',c:'맞습니다! 1952~58년 발굴 결과, 후기 청동기(여호수아 시대 추정) 지층에서 대규모 성벽 흔적이 발견되지 않았습니다.',d:'여리고(텔 에스-술탄)는 19세기부터 여러 차례 발굴된 가장 잘 연구된 유적 중 하나입니다.'},
+  5:{a:'헤렘은 군사적 우월성 과시가 아닌 종교적 개념입니다.',b:'헤렘은 법적 기준이 아닌 신학적·종교적 개념입니다.',c:'맞습니다! 히브리어 חֵרֶם은 "봉헌된 것"을 뜻하며, 이방 신들과의 단절과 야훼께 대한 전적 헌신을 표현합니다.',d:'헤렘은 특정 민족의 도덕성 판단보다 이스라엘과 이방 종교의 분리에 초점이 있습니다.'},
+  6:{a:'민족 정체성 내러티브로 읽는 것이 아브라함의 역사적 실존을 부정하지는 않습니다.',b:'맞습니다! 족장 개인의 이야기가 이스라엘 민족 전체의 부름·정체성·하나님과의 관계를 표현하는 방식이 핵심입니다.',c:'성경과 메소포타미아 문학 사이에 유사점이 있지만, 단순한 복사가 아닌 신학적 전환이 있습니다.',d:'족장 내러티브는 여전히 역사성 논쟁 중이며 "완전히 검증"되었다고 보기 어렵습니다.'},
+  7:{a:'요나서의 정교한 문학 구조(아이러니, 대조, 반전)는 실제로 문학적 독해의 근거로 사용됩니다.',b:'니느웨의 즉각적이고 전면적인 회개는 문학적 독해를 지지하는 요소 중 하나입니다.',c:'정확합니다! 요나 벤 아미타이는 열왕기하 14:25에 실존 예언자로 언급됩니다. 이 사실은 오히려 역사적 독해를 지지하는 근거입니다.',d:'하나님의 보편적 자비 메시지는 세 가지 독해 방식 모두에서 확인되는 신학적 핵심입니다.'},
+  8:{a:'고고학 증거가 없다는 것 자체가 성경을 무조건 믿어야 한다는 주장의 근거가 되지는 않습니다.',b:'맞습니다! 발굴되지 않은 지역이 광대하고, 고대 유목 생활의 흔적은 거의 남지 않기 때문에 고고학적 침묵만으로 사건을 부정하는 것은 무리입니다.',c:'고고학과 성경 역사성의 관계는 의미 있는 연구 분야이며, 실제로 많은 것들이 확인되고 있습니다.',d:'개별 학자의 편향이 이 원칙의 핵심은 아닙니다.'},
+  9:{a:'데버는 성경의 규모와 세부사항에 대해 상당한 회의를 갖고 있습니다.',b:'이것은 핑켈스타인 같은 최소주의자의 입장에 더 가깝습니다.',c:'맞습니다! 데버는 철기 시대 이스라엘의 실존성을 강력히 지지하면서도, 출애굽과 정복 기사의 규모는 과장되었거나 신학적으로 재구성되었을 수 있다고 봅니다.',d:'데버는 오히려 고고학과 성경 연구의 긴밀한 대화를 주장하는 학자입니다.'},
+  10:{a:'이것은 "강한 무오성" 입장으로, 이 자료의 신학적 역사 관점과 다릅니다.',b:'역사성 논쟁은 신앙의 근거와 연결되므로 완전히 무관할 수 없습니다.',c:'맞습니다! 역사적 핵심에 기반하되, 신학적 목적에 의한 재구성이 신학적 진리를 훼손하지 않는다는 것이 이 자료의 입장입니다.',d:'이것은 이 자료가 비판하는 극단적 최소주의의 결론입니다.'}
+};
+
+function checkQ(qNum, chosen, correctAns) {
+  if (answered[qNum]) return;
+  answered[qNum] = chosen;
+  const letters = ['a','b','c','d'];
+  const card = document.querySelectorAll('#s9 .quiz-card')[qNum - 1];
+  const opts = card.querySelectorAll('.q-opt');
+  opts.forEach((opt, i) => {
+    opt.disabled = true;
+    if (letters[i] === correctAns) opt.classList.add('correct');
+    else if (letters[i] === chosen) opt.classList.add('wrong');
+  });
+  const fb = card.querySelector('.q-feedback');
+  fb.textContent = feedbacks[qNum][chosen] || '';
+  fb.style.display = 'block';
+  if (Object.keys(answered).length === 10) {
+    const score = Object.keys(answered).filter(k => answered[k] === ANSWERS[k]).length;
+    const scoreBox = document.getElementById('score-section');
+    document.getElementById('score-display').textContent = score + ' / 10';
+    const msgs = ['다시 한번 살펴봐요 😊','조금 더 연습해 봐요!','절반은 맞췄어요! 👍','잘 이해하고 있어요!','훌륭합니다! 🎉','완벽해요! 🏆'];
+    document.getElementById('score-msg').textContent = msgs[Math.min(Math.floor(score/2), 5)];
+    scoreBox.style.display = 'block';
+    scoreBox.scrollIntoView({behavior:'smooth'});
+  }
+}
+</script>
+</body>
+</html>

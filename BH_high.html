@@ -105,6 +105,8 @@
 <body>
 
 <div style="background:#4a2d0e;padding:10px 20px;display:flex;align-items:center;gap:10px;">
+  <a href="../index.html" style="color:#fff;text-decoration:none;font-size:.83rem;font-weight:600;display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:4px 12px;">← 전체 시리즈</a>
+  <span style="color:rgba(255,255,255,.35);font-size:.8rem;">|</span>
   <a href="index.html" style="color:#fff;text-decoration:none;font-size:.83rem;font-weight:600;display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:16px;padding:4px 12px;">🏠 홈으로</a>
   <span style="color:rgba(255,255,255,.35);font-size:.8rem;">|</span>
   <span style="color:rgba(255,255,255,.7);font-size:.82rem;">성경 속 역사성 논쟁 — 대학생 버전</span>
@@ -1035,48 +1037,85 @@ function setActive(a){
   document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
   a.classList.add('active');
 }
-function switchTab(sec,panel,btn){
-  document.querySelectorAll('#'+sec+' .tab-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('#'+sec+' .tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById(panel).classList.add('active');
+
+function switchTab(sectionId,panelId,btn){
+  const sec=document.getElementById(sectionId);
+  sec.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  sec.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(panelId).classList.add('active');
   btn.classList.add('active');
 }
+
 function toggleAcc(btn){
   const body=btn.nextElementSibling;
   const arrow=btn.querySelector('.arrow');
   const isOpen=body.classList.contains('open');
   body.classList.toggle('open',!isOpen);
-  if(arrow) arrow.style.transform=isOpen?'':'rotate(180deg)';
+  if(arrow) arrow.textContent=isOpen?'▼':'▲';
+  if(!isOpen) body.style.maxHeight='1800px'; else body.style.maxHeight='0';
 }
-function flipCard(card){card.classList.toggle('flipped');}
-function answerQuiz(sec,qNum,chosen,correct,feedbackHtml){
-  const card=document.querySelectorAll('#'+sec+' .quiz-card')[qNum-1];
+
+function toggleFlip(card){card.classList.toggle('flipped');}
+
+const _ans={};
+function answerQuiz(sec,qNum,chosen,correct,feedback){
+  const key=sec+'_'+qNum;
+  if(_ans[key]) return;
+  _ans[key]={chosen,correct};
+  const cards=document.querySelectorAll('#'+sec+' .quiz-card');
+  const card=cards[qNum-1];
+  if(!card) return;
   card.querySelectorAll('.q-opt').forEach(btn=>{
     btn.disabled=true;
-    if(btn.dataset.val===correct) btn.classList.add('correct');
-    if(btn.dataset.val===chosen && chosen!==correct) btn.classList.add('wrong');
+    const v=btn.getAttribute('data-val');
+    if(v===correct) btn.classList.add('correct');
+    else if(v===chosen) btn.classList.add('wrong');
   });
   let fb=card.querySelector('.q-feedback');
-  if(!fb){fb=document.createElement('div');fb.className='q-feedback';card.appendChild(fb);}
-  fb.innerHTML=feedbackHtml;
-  if(!window._scores) window._scores={};
-  if(!window._scores[sec]) window._scores[sec]={correct:0,total:0};
-  if(!card.dataset.answered){
-    card.dataset.answered='1';
-    window._scores[sec].total++;
-    if(chosen===correct) window._scores[sec].correct++;
-    const totalCards=document.querySelectorAll('#'+sec+' .quiz-card').length;
-    if(window._scores[sec].total===totalCards) showScore(sec);
+  if(!fb){fb=document.createElement('p');fb.className='q-feedback';fb.style.cssText='margin-top:10px;font-size:.88rem;padding:10px;border-radius:8px;background:#f8f9fa;';card.appendChild(fb);}
+  fb.innerHTML=feedback;fb.style.display='block';
+  // 전체 답변 완료 체크
+  const secEl=document.getElementById(sec);
+  const total=secEl.querySelectorAll('.quiz-card').length;
+  const done=Object.keys(_ans).filter(k=>k.startsWith(sec+'_')).length;
+  if(done===total){
+    const btn=secEl.querySelector('.show-score-btn');
+    if(btn) btn.style.display='inline-block';
   }
 }
+
 function showScore(sec){
-  const s=window._scores[sec];
-  let box=document.querySelector('#'+sec+' .score-box');
-  if(!box){box=document.createElement('div');box.className='score-box';document.getElementById(sec).appendChild(box);}
-  const pct=Math.round(s.correct/s.total*100);
-  let msg=pct===100?'완벽합니다! 🎉':pct>=80?'훌륭합니다! 👏':pct>=60?'잘 하셨습니다.':'다시 학습해 보세요.';
-  box.innerHTML='<div class="score-num">'+s.correct+' / '+s.total+'</div><p>'+msg+' ('+pct+'%)</p>';
+  const secEl=document.getElementById(sec);
+  const cards=secEl.querySelectorAll('.quiz-card');
+  let correct=0;
+  cards.forEach((_,i)=>{
+    const k=sec+'_'+(i+1);
+    if(_ans[k]&&_ans[k].chosen===_ans[k].correct) correct++;
+  });
+  const total=cards.length;
+  const pct=Math.round(correct/total*100);
+  let msg='';
+  if(correct===total) msg='🎉 만점! 탁월한 학문적 이해입니다.';
+  else if(correct>=total*0.83) msg='✅ 우수합니다! 핵심 개념을 잘 파악하고 있습니다.';
+  else if(correct>=total*0.58) msg='📚 좋습니다! 부족한 부분을 다시 읽어보세요.';
+  else msg='🔄 자료를 다시 한번 꼼꼼히 읽어보길 권합니다.';
+  let box=secEl.querySelector('.score-box');
+  if(!box){box=document.createElement('div');box.className='score-box';box.style.cssText='margin-top:20px;padding:20px;background:#f8f9fa;border-radius:12px;text-align:center;font-size:1.1rem;font-weight:700;';secEl.querySelector('.card').appendChild(box);}
+  box.textContent=`${correct} / ${total} 정답 (${pct}%) — ${msg}`;
+  box.scrollIntoView({behavior:'smooth'});
 }
+
+// 스크롤 네비게이션
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('nav a[href^="#"]');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{if(s.getBoundingClientRect().top<=120) cur=s.id;});
+  navLinks.forEach(a=>{
+    a.classList.toggle('active',a.getAttribute('href')==='#'+cur);
+  });
+},{passive:true});
 </script>
+
 </body>
 </html>

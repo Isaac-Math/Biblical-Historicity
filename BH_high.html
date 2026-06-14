@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>성경 속 역사성 논쟁 — 대학생 버전</title>
+<style>
+  :root {
+    --bh:#8b5e3c; --bh-dark:#4a2d0e; --bh-light:#c8956a; --bh-xlight:#faf0e6;
+    --bg:#f9fafb; --card:#ffffff; --text:#1a1a2e; --muted:#6c757d;
+    --border:#dee2e6; --radius:12px; --shadow:0 2px 12px rgba(0,0,0,0.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Noto Sans KR','Apple SD Gothic Neo',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;}
+  .site-header{background:linear-gradient(135deg,#4a2d0e 0%,#8b5e3c 100%);color:#fff;padding:48px 24px 36px;text-align:center;}
+  .site-header h1{font-size:2rem;font-weight:800;margin-bottom:8px;}
+  .site-header p{opacity:.85;font-size:.98rem;max-width:520px;margin:0 auto;line-height:1.7;}
+  .level-badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:4px 16px;font-size:.8rem;margin-top:12px;}
+  nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:2px solid var(--bh-xlight);padding:0 16px;overflow-x:auto;scrollbar-width:none;}
+  nav::-webkit-scrollbar{display:none;}
+  .nav-inner{max-width:900px;margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+  .nav-inner::-webkit-scrollbar{display:none;}
+  nav a{display:inline-block;padding:13px 14px;font-size:.83rem;font-weight:600;color:var(--muted);text-decoration:none;white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s;}
+  nav a.active,nav a:hover{color:var(--bh);border-bottom-color:var(--bh);}
+  .section{max-width:860px;margin:0 auto;padding:48px 20px;}
+  .section+.section{border-top:1px solid var(--border);}
+  .section-title{font-size:1.35rem;font-weight:800;color:var(--bh);margin-bottom:6px;}
+  .section-sub{font-size:.9rem;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;margin-bottom:16px;}
+  .highlight-box{background:var(--bh-xlight);border-left:4px solid var(--bh);border-radius:0 var(--radius) var(--radius) 0;padding:16px 20px;margin:16px 0;font-size:.93rem;}
+  .warn-box{background:#fff3cd;border-left:4px solid #ffc107;border-radius:0 8px 8px 0;padding:14px 18px;margin:12px 0;font-size:.9rem;}
+  .info-box{background:#e8f4fd;border-left:4px solid #4895ef;border-radius:0 8px 8px 0;padding:14px 18px;margin:12px 0;font-size:.9rem;}
+  .success-box{background:#d8f3dc;border-left:4px solid #2d6a4f;border-radius:0 8px 8px 0;padding:14px 18px;margin:12px 0;font-size:.9rem;}
+  .tab-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+  .tab-btn{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:8px 16px;font-size:.85rem;font-weight:600;cursor:pointer;color:var(--muted);transition:.2s;white-space:nowrap;}
+  .tab-btn.active{background:var(--bh);color:#fff;border-color:var(--bh);}
+  .tab-panel{display:none;}.tab-panel.active{display:block;}
+  .acc-item{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:8px;}
+  .acc-btn{width:100%;text-align:left;padding:16px 18px;background:var(--card);font-size:.95rem;font-weight:700;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+  .acc-btn:hover{background:#f8f9fa;}
+  .acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease;padding:0 18px;}
+  .acc-body.open{max-height:1800px;padding:16px 18px;}
+  .arrow{font-size:.75rem;color:var(--muted);transition:transform .25s;}
+  .flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:20px;}
+  .flip-card{height:210px;cursor:pointer;perspective:1000px;}
+  .flip-inner{width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;position:relative;}
+  .flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+  .flip-front,.flip-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;}
+  .flip-front{background:var(--card);border:2px solid var(--bh-xlight);}
+  .flip-back{background:var(--bh);color:#fff;transform:rotateY(180deg);}
+  .flip-icon{font-size:2rem;margin-bottom:8px;}
+  .flip-title{font-size:.95rem;font-weight:700;}
+  .flip-subtitle{font-size:.74rem;color:var(--muted);margin-top:3px;}
+  .flip-hint{font-size:.72rem;color:var(--muted);margin-top:6px;}
+  .flip-back-title{font-size:.88rem;font-weight:800;margin-bottom:6px;}
+  .flip-back-text{font-size:.79rem;line-height:1.6;opacity:.95;}
+  .position-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:16px 0;}
+  .pos-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;border-top:4px solid var(--bh-light);}
+  .pos-card.neutral{border-top-color:var(--muted);}
+  .pos-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px;}
+  .pos-title{font-size:1rem;font-weight:800;margin-bottom:8px;}
+  .pos-body{font-size:.87rem;color:#444;line-height:1.65;}
+  .person-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;}
+  .person-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;}
+  .person-emoji{font-size:2.2rem;margin-bottom:8px;}
+  .person-name{font-size:1rem;font-weight:800;margin-bottom:2px;}
+  .person-role{font-size:.78rem;color:var(--bh);font-weight:600;margin-bottom:8px;}
+  .person-work{font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:8px;}
+  .person-desc{font-size:.85rem;color:#444;line-height:1.6;}
+  .heb{font-family:'Noto Serif Hebrew','SBL Hebrew',serif;font-size:1.15em;direction:rtl;display:inline-block;color:var(--bh-dark);font-weight:700;}
+  .gloss-item{border-bottom:1px solid var(--border);padding:14px 0;}
+  .gloss-item:last-child{border-bottom:none;}
+  .gloss-term{font-size:1rem;font-weight:800;color:var(--bh-dark);margin-bottom:2px;}
+  .gloss-orig{font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:6px;}
+  .gloss-def{font-size:.88rem;line-height:1.65;}
+  .ref-list{list-style:none;padding:0;}
+  .ref-list li{font-size:.87rem;line-height:1.75;padding:6px 0;border-bottom:1px solid var(--border);}
+  .ref-list li:last-child{border-bottom:none;}
+  .disc-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:12px;border-left:4px solid var(--bh-light);}
+  .disc-num{font-size:.75rem;font-weight:700;color:var(--bh);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+  .disc-q{font-size:1rem;font-weight:700;margin-bottom:10px;}
+  .disc-hint{font-size:.86rem;color:#555;line-height:1.6;}
+  .quiz-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;}
+  .q-num{font-size:.75rem;font-weight:700;color:var(--bh);text-transform:uppercase;margin-bottom:6px;}
+  .q-text{font-size:1rem;font-weight:700;margin-bottom:14px;line-height:1.5;}
+  .q-options{display:flex;flex-direction:column;gap:8px;}
+  .q-opt{text-align:left;padding:12px 16px;border-radius:8px;border:1.5px solid var(--border);background:#fff;font-size:.9rem;cursor:pointer;transition:.18s;}
+  .q-opt:hover:not(:disabled){border-color:var(--bh);background:var(--bh-xlight);}
+  .q-opt.correct{border-color:#2d6a4f;background:#d8f3dc;color:#2d6a4f;font-weight:700;}
+  .q-opt.wrong{border-color:#e63946;background:#ffe0e3;color:#c1121f;}
+  .q-feedback{margin-top:12px;padding:10px 14px;border-radius:8px;background:var(--bh-xlight);font-size:.88rem;border-left:3px solid var(--bh);}
+  .score-box{background:var(--bh);color:#fff;border-radius:var(--radius);padding:28px;text-align:center;margin-top:24px;}
+  .score-num{font-size:2.8rem;font-weight:800;margin-bottom:4px;}
+  footer{background:var(--bh-dark);color:rgba(255,255,255,.75);text-align:center;padding:20px;font-size:.82rem;}
+  footer a{color:rgba(255,255,255,.9);text-decoration:none;}
+  @media(max-width:600px){
+    .site-header h1{font-size:1.6rem;}
+    .section{padding:32px 16px;}
+    .flip-grid{grid-template-columns:1fr 1fr;}
+    .position-grid{grid-template-columns:1fr;}
+    .person-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div style="background:#4a2d0e;padding:10px 20px;display:flex;align-items:center;gap:10px;">
+  <a href="index.html" style="color:#fff;text-decoration:none;font-size:.83rem;font-weight:600;display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:16px;padding:4px 12px;">🏠 홈으로</a>
+  <span style="color:rgba(255,255,255,.35);font-size:.8rem;">|</span>
+  <span style="color:rgba(255,255,255,.7);font-size:.82rem;">성경 속 역사성 논쟁 — 대학생 버전</span>
+</div>
+
+<div class="site-header">
+  <h1>🏺 성경 속 역사성 논쟁</h1>
+  <p>고대 문헌, 고고학, 역사비평학의 교차점에서<br>성경 역사 기사의 진정성을 학술적으로 탐구합니다.</p>
+  <span class="level-badge">대학생 버전</span>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#s0" class="active" onclick="setActive(this)">소개</a>
+    <a href="#s1" onclick="setActive(this)">역사비평 방법론</a>
+    <a href="#s2" onclick="setActive(this)">출애굽 연대 논쟁</a>
+    <a href="#s3" onclick="setActive(this)">출애굽 역사성</a>
+    <a href="#s4" onclick="setActive(this)">가나안 정복</a>
+    <a href="#s5" onclick="setActive(this)">족장 내러티브</a>
+    <a href="#s6" onclick="setActive(this)">요나서</a>
+    <a href="#s7" onclick="setActive(this)">DtrH</a>
+    <a href="#s8" onclick="setActive(this)">기억과 역사</a>
+    <a href="#s9" onclick="setActive(this)">역사성과 신학</a>
+    <a href="#s10" onclick="setActive(this)">주요학자</a>
+    <a href="#s11" onclick="setActive(this)">용어사전</a>
+    <a href="#s12" onclick="setActive(this)">토론</a>
+    <a href="#s13" onclick="setActive(this)">레퍼런스</a>
+    <a href="#s14" onclick="setActive(this)">퀴즈</a>
+  </div>
+</nav>
+
+<!-- S0 소개 -->
+<section id="s0" class="section">
+<div class="section-title">소개</div>
+<p class="section-sub">역사비평학, 고고학, 성서신학이 만나는 지점에서 성경 역사 기사를 학술적으로 탐구합니다.</p>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('s0','s0t1',this)">학문적 전제</button>
+  <button class="tab-btn" onclick="switchTab('s0','s0t2',this)">이 자료의 입장</button>
+  <button class="tab-btn" onclick="switchTab('s0','s0t3',this)">핵심 질문들</button>
+</div>
+<div id="s0t1" class="tab-panel active">
+  <div class="card">
+    <p style="font-size:1.05rem;font-weight:700;color:var(--bh);margin-bottom:12px;">성경을 역사적으로 읽는다는 것</p>
+    <p>성경 역사 기사를 학술적으로 탐구할 때 세 가지 학문 분야가 교차합니다. <strong>역사비평학</strong>은 텍스트의 저자, 편집 과정, 역사적 맥락을 분석합니다. <strong>고고학</strong>은 물질 문화의 증거로 텍스트와 대화합니다. <strong>성서신학</strong>은 본문이 전달하려는 신학적 메시지를 묻습니다.</p>
+    <div class="highlight-box" style="margin-top:14px;">
+      <strong>중요한 구분:</strong> 고고학은 사건의 발생을 <em>확인</em>하거나 <em>반증</em>하는 데 한계가 있습니다. 고고학적 침묵(absence of evidence)은 역사적 부재(evidence of absence)와 다릅니다.
+    </div>
+    <p style="margin-top:12px;">또한 학자들의 전제(presupposition)가 결론에 영향을 미칩니다. 초자연적 사건을 원칙적으로 배제하는 방법론적 자연주의와, 기적 가능성을 열어두는 접근은 동일한 증거에서 다른 결론에 도달할 수 있습니다.</p>
+  </div>
+</div>
+<div id="s0t2" class="tab-panel">
+  <div class="card">
+    <p style="font-size:1.05rem;font-weight:700;color:var(--bh);margin-bottom:12px;">이 자료의 입장: 합리적 보수주의</p>
+    <p>이 자료는 두 극단을 거부합니다. 성경의 모든 세부사항이 현대 역사학적 기준을 충족해야 한다는 <strong>최대주의(Maximalism)</strong>와, 성경 역사 기사에 실질적인 역사적 근거가 없다는 <strong>최소주의(Minimalism)</strong> 모두에 동의하지 않습니다.</p>
+    <div class="success-box" style="margin-top:14px;">
+      <strong>핵심 입장:</strong> 성경의 역사 기사에는 실재하는 역사적 핵심(historical kernel)이 있으며, 그 핵심은 신학적 목적에 따라 선택·재구성·해석되었습니다. 역사성의 정도는 본문마다 다르며, 이를 구분하는 것이 학문적 과제입니다.
+    </div>
+    <p style="margin-top:12px;">이는 신앙을 약화시키기 위한 입장이 아닙니다. 오히려 성경이 다루는 역사적·문화적 현실을 진지하게 받아들이는 태도이며, 하나님이 실제 역사 속에서 일하신다는 신학적 주장을 옹호합니다.</p>
+  </div>
+</div>
+<div id="s0t3" class="tab-panel">
+  <div class="card">
+    <p style="font-size:1.05rem;font-weight:700;color:var(--bh);margin-bottom:12px;">이 자료가 다루는 핵심 질문들</p>
+    <ul style="padding-left:20px;line-height:2.1;font-size:.93rem;">
+      <li><strong>출애굽:</strong> 언제 일어났는가? (BC 1446 vs 1250) 60만 장정은 어떻게 이해해야 하는가?</li>
+      <li><strong>가나안 정복:</strong> 말 그대로의 전면 정복인가, 단계적 정착인가? 여리고 성벽은?</li>
+      <li><strong>헤렘(진멸 명령):</strong> 어떻게 신학적으로 이해할 것인가?</li>
+      <li><strong>족장 내러티브:</strong> 아브라함·이삭·야곱은 역사적 인물인가?</li>
+      <li><strong>요나서:</strong> 역사적 보고인가, 예언적 이야기(didactic narrative)인가?</li>
+      <li><strong>DtrH:</strong> 신명기 역사서 이론이 정복 기사의 역사성에 어떤 함의를 갖는가?</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- S1 역사비평 방법론 -->
+<section id="s1" class="section">
+<div class="section-title">역사비평 방법론</div>
+<p class="section-sub">성경 역사 기사를 분석하는 학술적 도구들. 각 카드를 클릭하면 설명이 나타납니다.</p>
+<div class="flip-grid">
+  <div class="flip-card" onclick="flipCard(this)">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <div class="flip-icon">📚</div>
+        <div class="flip-title">자료비평</div>
+        <div class="flip-subtitle">Source Criticism</div>
+        <div class="flip-hint">클릭하여 설명 보기</div>
+      </div>
+      <div class="flip-back">
+        <div class="flip-back-title">JEDP 가설</div>
+        <div class="flip-back-text">벨하우젠(Wellhausen, 1878) — 오경이 야훼주의자(J), 엘로힘주의자(E), 신명기 자료(D), 제사장 자료(P)의 4개 독립 자료로 편집됨. 창세기의 두 창조 기사(1:1-2:3 vs 2:4~), 홍수 이야기의 이중 전승 등이 근거.</div>
+      </div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="flipCard(this)">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <div class="flip-icon">🗣️</div>
+        <div class="flip-title">양식비평</div>
+        <div class="flip-subtitle">Form Criticism</div>
+        <div class="flip-hint">클릭하여 설명 보기</div>
+      </div>
+      <div class="flip-back">
+        <div class="flip-back-title">삶의 자리 (Sitz im Leben)</div>
+        <div class="flip-back-text">궁켈(Gunkel, 1901) — 텍스트를 개별 구전 단위(전설, 사가, 찬가)로 분해하고 각 장르가 사용된 사회적·종교적 맥락을 탐구. 성경 이전 구전 전승의 특성 파악.</div>
+      </div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="flipCard(this)">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <div class="flip-icon">✂️</div>
+        <div class="flip-title">편집비평</div>
+        <div class="flip-subtitle">Redaction Criticism</div>
+        <div class="flip-hint">클릭하여 설명 보기</div>
+      </div>
+      <div class="flip-back">
+        <div class="flip-back-title">편집자의 신학</div>
+        <div class="flip-back-text">1950-60년대 본격화 — 최종 편집자가 원자료를 어떻게 선택·수정·배열했는지 분석. 노트(Noth)의 DtrH(신명기 역사서) 이론이 OT 편집비평의 가장 영향력 있는 성과.</div>
+      </div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="flipCard(this)">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <div class="flip-icon">🧵</div>
+        <div class="flip-title">전승사비평</div>
+        <div class="flip-subtitle">Tradition-Historical Criticism</div>
+        <div class="flip-hint">클릭하여 설명 보기</div>
+      </div>
+      <div class="flip-back">
+        <div class="flip-back-title">기억의 역사</div>
+        <div class="flip-back-text">알트(Alt), 노트(Noth) 주도 — 기록 이전 구전 전승의 형성·변형 과정 추적. 역사적 사건이 수백 년 구전 후 어떻게 재형성되었는지 분석. 신학적 목적에 따른 선택적 기억 탐구.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="warn-box">⚠️ <strong>방법론의 한계:</strong> 역사비평학의 각 방법론은 자체 전제를 가지며, 결론은 연구자의 신학적 입장에 따라 다를 수 있습니다. 이 도구들은 성경의 인간적 측면을 분석하지만, 신학적 진리를 판단하는 유일한 기준은 아닙니다.</div>
+</section>
+
+<!-- S2 출애굽 연대 논쟁 -->
+<section id="s2" class="section">
+<div class="section-title">출애굽 연대 논쟁</div>
+<p class="section-sub">출애굽은 언제 일어났는가? 학계의 두 주요 입장과 최소주의 입장을 비교합니다.</p>
+<div class="position-grid">
+  <div class="pos-card">
+    <div class="pos-label">성서 연대기 기반</div>
+    <div class="pos-title">초기 연대 — BC 1446</div>
+    <div class="pos-body">근거: 왕상 6:1 — "이스라엘 자손이 이집트를 떠난 지 480년, 솔로몬 즉위 4년." 솔로몬 성전 착공 BC 966년에서 역산하면 BC 1446. 아멘호텝 2세 시대에 해당. 키친(Kitchen), 호프마이어(Hoffmeier) 지지.</div>
+  </div>
+  <div class="pos-card">
+    <div class="pos-label">고고학·텍스트 기반</div>
+    <div class="pos-title">후기 연대 — BC 1250</div>
+    <div class="pos-body">근거: 출 1:11의 "라암셋"(Pi-Ramesses) 성은 람세스 2세(BC 1279-1213)가 건설. 메르넵타 비석(BC 1208)에 가나안 내 이스라엘 존재. 13세기의 가나안 도시 파괴층. 비평학자 다수 지지.</div>
+  </div>
+  <div class="pos-card neutral">
+    <div class="pos-label">최소주의 입장</div>
+    <div class="pos-title">역사적 핵심 없음</div>
+    <div class="pos-body">핀켈스타인(Finkelstein) 등 — 이스라엘 민족은 이집트에서 이주한 것이 아니라 가나안 내에서 자생적으로 발생. 출애굽 기사는 후기 문학적 구성. 이집트·시나이 고고학적 증거 전무가 핵심 논거.</div>
+  </div>
+</div>
+
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">
+    초기 연대(BC 1446)의 근거와 약점 <span class="arrow">▼</span>
+  </button>
+  <div class="acc-body">
+    <p><strong>주요 근거:</strong></p>
+    <ul style="padding-left:18px;margin:8px 0;line-height:2;">
+      <li>왕상 6:1의 480년 수치 — 성경 내적 연대기의 일관성</li>
+      <li>삿 11:26 — 이스라엘의 헤스본 점령 300년 언급 (BC 1100년대 + 300 = BC 1400년대)</li>
+      <li>이집트 아케나텐(Akhenaten) 시대(BC 1352-1336)의 아마르나 편지: 가나안 도시국가들이 이집트에 "하비루"(Habiru) 침략을 호소</li>
+    </ul>
+    <p style="margin-top:10px;"><strong>약점:</strong></p>
+    <ul style="padding-left:18px;margin:8px 0;line-height:2;">
+      <li>480년을 12세대 × 40년의 신학적 수치로 볼 수 있음</li>
+      <li>BC 1446 기준 여리고·아이·라기스 파괴층과 고고학적 정합성 문제</li>
+      <li>"아케나텐 시대 하비루"가 히브리인이라는 직접 증거 없음</li>
+    </ul>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">
+    후기 연대(BC 1250)의 근거와 약점 <span class="arrow">▼</span>
+  </button>
+  <div class="acc-body">
+    <p><strong>주요 근거:</strong></p>
+    <ul style="padding-left:18px;margin:8px 0;line-height:2;">
+      <li>출 1:11의 "라암셋(Rameses)"과 "비돔(Pithom)" 성 — Pi-Ramesses는 람세스 2세 시대(BC 1279-1213) 건설</li>
+      <li>메르넵타 비석(BC 1208): 가나안에 이미 "이스라엘"이 존재 → 출애굽은 BC 1208 이전</li>
+      <li>하솔·라기스 등 BC 13세기 가나안 도시 파괴층이 이 시기와 일치</li>
+    </ul>
+    <p style="margin-top:10px;"><strong>약점:</strong></p>
+    <ul style="padding-left:18px;margin:8px 0;line-height:2;">
+      <li>왕상 6:1의 480년 수치를 설명해야 함 (신학적 상징수로 재해석 필요)</li>
+      <li>BC 1250 출애굽 → BC 1210 가나안 도착의 짧은 광야 기간 문제</li>
+      <li>람세스 2세 시대 이집트 탈출 기록 없음 (단, 이집트는 군사적 패배를 기록하지 않음)</li>
+    </ul>
+  </div>
+</div>
+<div class="highlight-box">
+  <strong>결론:</strong> 두 연대 모두 합리적 근거가 있으며, 각자 해결해야 할 약점이 있습니다. 이 자료는 특정 연대를 확정하기보다 <strong>출애굽의 역사적 핵심이 실재함</strong>에 초점을 맞춥니다. 연대 문제는 계속되는 학문적 토론 중입니다.
+</div>
+</section>
+
+<!-- S3 출애굽 역사성 -->
+<section id="s3" class="section">
+<div class="section-title">출애굽 역사성</div>
+<p class="section-sub">고고학·문헌 증거와 히브리어 원문 분석으로 출애굽 역사성 문제를 탐구합니다.</p>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('s3','s3t1',this)">이집트 문헌의 침묵</button>
+  <button class="tab-btn" onclick="switchTab('s3','s3t2',this)">고고학적 증거</button>
+  <button class="tab-btn" onclick="switchTab('s3','s3t3',this)">אֶלֶף 수치 논쟁</button>
+  <button class="tab-btn" onclick="switchTab('s3','s3t4',this)">역사적 핵심 평가</button>
+</div>
+<div id="s3t1" class="tab-panel active">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;">이집트는 왜 출애굽을 기록하지 않았는가?</p>
+    <p>이집트 문헌에 히브리인의 대탈출이 등장하지 않는다는 사실은 흔히 출애굽 역사성에 대한 반증으로 제시됩니다. 하지만 이 "침묵"에는 맥락이 필요합니다.</p>
+    <div class="info-box" style="margin-top:12px;">
+      <strong>이집트는 패배를 기록하지 않는다:</strong> 카데시 전투(BC 1274, 람세스 2세 vs 히타이트)는 실제로 이집트의 패배 또는 무승부였지만, 이집트 기록은 이를 대승리로 묘사합니다. 이집트 역사 기록은 본질적으로 선전(propaganda) 문서입니다.
+    </div>
+    <p style="margin-top:12px;"><strong>아피루/하비루(Apiru/'Apiru):</strong> 이집트 신왕국 시대(BC 1550-1070) 문헌에는 강제 노동에 동원된 "아피루"(Apiru) 계층이 등장합니다. 이들이 히브리인과 같은 집단인지는 학계에서 논쟁 중이나, 어원적·사회적 유사성이 있습니다.</p>
+    <p style="margin-top:12px;"><strong>메르넵타 비석(Merneptah Stele, BC 1208):</strong> "이스라엘은 황폐해졌으며 그 씨가 없어졌다(Israel is wasted, its seed is no more)"는 문구가 가나안 원정 보고서에 등장합니다. 이는 BC 1208년에 이미 이스라엘이 가나안에 집단으로 존재했음을 보여주는 최초의 외부 기록입니다.
+    </p>
+  </div>
+</div>
+<div id="s3t2" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;">시나이와 가나안의 고고학</p>
+    <div class="warn-box">⚠️ 시나이 반도에서 수십만 명의 대규모 이동을 보여주는 고고학적 흔적이 발견되지 않았습니다. 또한 카데스 바네아(Kadesh-Barnea, 신 1:2)에서 이스라엘 정착 흔적이 없습니다.</div>
+    <p style="margin-top:12px;"><strong>반론:</strong> 유목민과 반유목민은 고고학적으로 거의 흔적을 남기지 않습니다. 텐트와 가죽 부대로 이동하는 집단은 물질 문화를 최소화합니다. 오늘날의 베두인도 수천 년 후 고고학자들이 추적하기 어려운 수준의 흔적만 남깁니다.</p>
+    <p style="margin-top:12px;"><strong>파피루스 레이덴 348(Papyrus Leiden 348, BC 13세기):</strong> 이집트 문헌에는 피타이(Pitai/Pithom)의 건설 현장에 아피루 인부들이 동원된 기록이 있어 출 1:11의 비돔 성 노역과 개연성 있는 접점을 제공합니다.</p>
+  </div>
+</div>
+<div id="s3t3" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;">히브리어 원문: <span class="heb">שֵׁשׁ-מֵאוֹת אֶלֶף</span> 재분석</p>
+    <p>출 12:37: "이스라엘 자손이 라암셋에서 숙곳으로 행진하니 유아 외에 보행하는 장정이 약 <span class="heb">שֵׁשׁ-מֵאוֹת אֶלֶף</span>(육백 엘레프)이요." 총 인구 200만 명 이상의 이동은 역사적·물류적으로 극히 어렵습니다.</p>
+    <p style="margin-top:12px;"><strong>핵심 단어: <span class="heb">אֶלֶף</span>(엘레프)</strong></p>
+    <ul style="padding-left:18px;margin:8px 0;line-height:2;font-size:.93rem;">
+      <li>기본 의미: "천(1,000)" — 가장 일반적인 용례</li>
+      <li>대안 의미 1: "군사 분대(military unit)" — 수십 명 규모의 전투 단위 (삿 6:15, 미 5:2에서 씨족 단위로 사용)</li>
+      <li>대안 의미 2: "씨족장(chief/leader)" — 일부 이름 목록에서 직위를 의미</li>
+    </ul>
+    <div class="highlight-box">
+      <strong>에레프 가설(Eleph Hypothesis):</strong> 멘든홀(Mendenhall, 1958)과 험프리(Humphreys, 2003)를 비롯한 학자들은 민수기 1장의 인구조사를 "600개의 씨족/분대"로 재해석합니다. 이 경우 전체 장정은 약 5,500명, 여성·노인·아이를 포함한 총 이주 인구는 <strong>약 2만~3만 명</strong>이 됩니다. 이는 역사적·지리적·물류적으로 충분히 수용 가능하며, 시나이 반도의 고고학적 흔적 부재와도 모순되지 않습니다.
+    </div>
+    <p style="margin-top:10px;font-size:.88rem;color:var(--muted);">단, <span class="heb">אֶלֶף</span>의 대안 해석은 소수 학자 의견이며 학계의 합의는 아닙니다. 본문 자체는 "육십만"을 가리키는 것이 자연스러운 독해입니다.</p>
+  </div>
+</div>
+<div id="s3t4" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;">역사적 핵심에 대한 총체적 평가</p>
+    <p>이 자료가 지지하는 "합리적 보수주의" 입장을 정리합니다.</p>
+    <div class="success-box" style="margin-top:12px;">
+      <strong>역사적 핵심은 실재한다:</strong> 소수 집단(혹은 야훼 신앙의 핵심 집단)이 이집트에서 탈출하여 가나안에 정착한 사건이 이스라엘 야훼 신앙의 기원이 되었다. 메르넵타 비석(BC 1208)은 그 결과물인 "이스라엘"이 이미 가나안에 존재했음을 확인해준다.
+    </div>
+    <p style="margin-top:12px;"><strong>신학적 재서술이 일어났다:</strong> 그 사건은 이스라엘 전체의 구원 내러티브로 확장·재구성되었습니다. 인원 수치, 기적의 규모, 전체 열두 지파의 참여 등은 신학적 목적(하나님의 전능함, 이스라엘의 선택)을 강조하기 위해 극적으로 표현되었을 수 있습니다.</p>
+    <p style="margin-top:10px;"><strong>데버(Dever)의 입장:</strong> "이집트 경험이 역사적 핵심 없이 이스라엘 종교의 심장부가 되었다는 것은 설명하기 어렵다. 무언가가 실제로 일어났다."</p>
+  </div>
+</div>
+</section>
+
+<!-- S4 가나안 정복 -->
+<section id="s4" class="section">
+<div class="section-title">가나안 정복</div>
+<p class="section-sub">고고학적 증거와 신학적 해석의 긴장 — 여리고 논쟁부터 헤렘 신학까지.</p>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('s4','s4t1',this)">여리고 논쟁</button>
+  <button class="tab-btn" onclick="switchTab('s4','s4t2',this)">하솔·아이·기타 유적</button>
+  <button class="tab-btn" onclick="switchTab('s4','s4t3',this)">헤렘 신학 심화</button>
+</div>
+<div id="s4t1" class="tab-panel active">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;">케년(Kenyon) vs 우드(Wood): 여리고 논쟁</p>
+    <p><strong>캐슬린 케년(1952-1958 발굴)의 결론:</strong> 후기 청동기 시대(LBA, BC 1550-1200) 여리고에는 도시가 사실상 존재하지 않았습니다. 인상적인 성벽 붕괴층은 중기 청동기 시대(MBA IIA, ~BC 1550)의 것으로, 이것이 "여호수아의 여리고"라고 볼 수 없다고 결론 내렸습니다.</p>
+    <div class="warn-box">⚠️ 케년의 결론은 현재까지 고고학계의 주류 견해입니다. 두 연대(초기·후기) 중 어느 쪽으로도 여리고의 고고학적 증거는 정복 기사와 완전히 일치하지 않습니다.</div>
+    <p style="margin-top:12px;"><strong>브라이언트 우드(1990)의 반론:</strong> 케년이 발굴한 MBA IIA 파괴층(City IV)의 도자기를 재분석한 결과, 이를 LBA 초기(~BC 1400)로 재편년해야 한다고 주장했습니다. 이는 초기 연대(BC 1446)와 정합성을 갖습니다. 또한 그는 곡식이 가득 담긴 항아리를 발견했는데, 이는 성경의 "6일 만의 급격한 함락"(오랜 포위전이 아님)과 일치한다고 주장합니다.</p>
+    <p style="margin-top:10px;font-size:.88rem;color:var(--muted);">주류 고고학계는 우드의 재편년을 받아들이지 않고 있으나, 논쟁은 계속되고 있습니다. 케년의 방법론과 결론 자체도 여전히 검토의 대상입니다.</p>
+  </div>
+</div>
+<div id="s4t2" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;">다른 유적들의 고고학</p>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="toggleAcc(this)">하솔(Hazor) — 가장 강력한 증거 <span class="arrow">▼</span></button>
+      <div class="acc-body">
+        <p>야딘(Yigael Yadin, 1955-1958) 발굴. 하솔은 가나안 최대 도시 중 하나(수 11:10 "열국의 머리")로, BC 13세기 말에 대규모로 파괴되었습니다. 불탄 층과 이집트 조각상 파손이 발견되었습니다. 후기 연대(BC 1250)와 잘 일치합니다. 다만 이 파괴가 이스라엘의 소행인지 확증할 수 없습니다.</p>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="toggleAcc(this)">아이(Ai, et-Tell) — 가장 어려운 문제 <span class="arrow">▼</span></button>
+      <div class="acc-body">
+        <p>수 8장에서 아이 정복이 상세히 묘사됩니다. 그러나 et-Tell(일반적으로 아이로 비정)은 초기 청동기 시대(BC 3100-2400) 이후 거의 거주되지 않다가 BC 12세기에 재정착됩니다. 두 출애굽 연대 어느 것과도 맞지 않습니다. 가능한 설명: ① 아이의 위치 비정이 틀림 ② 저자가 이미 폐허가 된 유적을 배경으로 신학적 이야기를 구성 ③ 아이와 벧엘(인근, BC 13세기 파괴층 있음)의 이야기가 혼합됨.</p>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="toggleAcc(this)">라기스(Lachish)와 기타 <span class="arrow">▼</span></button>
+      <div class="acc-body">
+        <p>라기스는 수 10:31-32에서 이틀 만에 함락된 것으로 기록됩니다. 고고학적으로 BC 13세기 말(Level VI)의 파괴층이 있어 후기 연대를 지지합니다. 드비르(Debir), 에글론(Eglon) 등은 고고학적 비정 자체가 불확실합니다. 전반적으로 가나안 도시들의 파괴 흔적은 BC 13-12세기에 집중되어 있으나, 이를 단일 군사 정복의 결과로 보기는 어렵습니다. "해양 민족"(Sea Peoples)의 침략, 이집트의 쇠퇴, 내부 반란 등 복합 요인이 관련되었을 것입니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="s4t3" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;"><span class="heb">חֵרֶם</span>(헤렘) — 신학적 심화</p>
+    <p>헤렘(חֵרֶם)은 전쟁 포획물을 전적으로 야훼께 드리는 행위로, 가나안 주민의 완전한 진멸을 의미하기도 합니다(수 6:17-21, 신 7:2). 이 명령의 신학적·윤리적 처리는 성경 해석학의 가장 어려운 과제 중 하나입니다.</p>
+    <div class="acc-item" style="margin-top:14px;">
+      <button class="acc-btn" onclick="toggleAcc(this)">에릭 사이버트(Eric Seibert): 텍스트의 인간성 <span class="arrow">▼</span></button>
+      <div class="acc-body">
+        <p>《불편한 신적 행동》(2009) — 이 본문들은 하나님의 실제 명령이 아니라 고대 이스라엘 인들이 하나님의 뜻을 이해한 방식을 반영합니다. "예수 기준(Christological criterion)"을 적용하여, 예수의 하나님 이해와 모순되는 본문은 하나님에 대한 인간적 오해의 기록으로 볼 수 있다고 주장합니다.</p>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="toggleAcc(this)">크리스토퍼 라이트(Christopher Wright): 특정 역사적 심판 <span class="arrow">▼</span></button>
+      <div class="acc-body">
+        <p>《내가 이해하지 못하는 하나님》(2008) — 헤렘 명령은 특정 역사적 맥락에서 가나안 족속들의 만연한 악(인신제사, 성적 문란)에 대한 신적 심판의 유일한 사례로, 보편적 원리로 확장될 수 없습니다. 또한 가나안 족속에게도 회개의 기회가 있었다는 라합 이야기가 이를 보여줍니다.</p>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="toggleAcc(this)">폴 코판(Paul Copan): 고대근동 과장법 <span class="arrow">▼</span></button>
+      <div class="acc-body">
+        <p>《하나님은 도덕적 괴물인가?》(2011) — 고대근동 전쟁 문학에서 "모두 죽였다"는 표현은 표준적 과장법(hyperbole)입니다. 이집트 파라오들도 "씨가 없도록 전멸시켰다"고 반복 기록합니다. 수 10-12장의 "진멸" 기사는 사사기에서 가나안 족속이 여전히 살아있는 것으로 다시 등장합니다. 따라서 헤렘 명령은 문자적 실행보다는 종교적·문화적 분리를 강조하는 수사로 이해할 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- S5 족장 내러티브 -->
+<section id="s5" class="section">
+<div class="section-title">족장 내러티브</div>
+<p class="section-sub">아브라함·이삭·야곱의 역사성 — 고대근동 비교 연구의 시각.</p>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">족장 연대와 역사적 배경 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>족장들의 연대는 대체로 중기 청동기 시대 II(MB IIA, BC 2000-1550)로 추정됩니다. 이 시기는 반유목 씨족들의 이동, 메소포타미아-가나안-이집트 간 활발한 교류가 특징입니다. 창세기의 족장들이 묘사된 생활 방식(씨족 이동, 우물 분쟁, 조약 체결)은 이 시기 고대근동 자료들과 잘 부합합니다.</p>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">마리(Mari) 문서와 족장 이름들 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>시리아 마리(Tell Hariri)에서 발굴된 BC 18세기 쐐기문자 문서(약 23,000점)에서 아쿠브-엘(Yaqub-El = 야곱+엘), 이스마엘, 아브-라미(Abram과 유사) 등의 이름이 발견됩니다. 또한 마리 문서는 서부 셈족 반유목 씨족들의 이동과 정착 패턴을 기록하는데, 이는 창세기의 족장 이야기와 사회적 배경이 일치합니다. 이것이 족장의 존재를 직접 증명하지는 않지만, 성경 이름과 관습의 역사적 뿌리를 보여줍니다.</p>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">누지(Nuzi) 관습과 창세기 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>이라크 북부 누지(Nuzi, Yorgan Tepe)에서 발굴된 BC 15-14세기 쐐기문자 판들(약 4,000점)에는 고대근동의 법률적·사회적 관습이 기록되어 있습니다. 창세기의 여러 관습과 유사성이 발견됩니다: ① 자녀가 없을 때 종을 양자로 삼아 상속자로 지명하는 관습(창 15:2-3의 엘리에셀) ② 친족 혼인 관련 계약 관습. 단, 누지 문서와 창세기의 유사성이 과장되었다는 비판(Thompson, Van Seters, 1970년대)도 있으며, 일부 유사성은 더 넓은 고대근동 문화의 일반적 관습으로 보아야 한다는 견해도 있습니다.</p>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">역사성 평가 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>족장 내러티브의 역사성은 "있었는가/없었는가"의 이분법보다 더 복잡합니다. 구체적인 이름, 장소, 관습이 역사적 배경을 갖고 있으며, 이 이야기들이 완전히 후대의 문학적 창작이라고 보기는 어렵습니다. 동시에 이 내러티브들은 신학적 목적(하나님의 약속과 선택, 이스라엘의 정체성)에 따라 구성되었습니다. 역사적 아브라함이 정확히 언제, 어디에서 살았는지 고고학이 확인해줄 수는 없지만, 이 이야기들이 역사적 뿌리를 갖는다는 것은 부정하기 어렵습니다.</p>
+  </div>
+</div>
+</section>
+
+<!-- S6 요나서 -->
+<section id="s6" class="section">
+<div class="section-title">요나서</div>
+<p class="section-sub">역사적 보고인가, 예언적 이야기인가? 장르 논쟁과 신학적 의미.</p>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('s6','s6t1',this)">장르 논쟁</button>
+  <button class="tab-btn" onclick="switchTab('s6','s6t2',this)">내부 증거</button>
+  <button class="tab-btn" onclick="switchTab('s6','s6t3',this)">신학적 의미</button>
+</div>
+<div id="s6t1" class="tab-panel active">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;">세 가지 장르 입장</p>
+    <div class="position-grid" style="margin:0;">
+      <div class="pos-card">
+        <div class="pos-label">역사적 보고설</div>
+        <div class="pos-title">실제 사건 기록</div>
+        <div class="pos-body">요나 벤 아밋다이는 왕하 14:25에 등장하는 실제 선지자. 큰 물고기는 하나님의 기적. 니느웨의 회개는 역사적 사건. 예수의 인용(마 12:40)이 역사성 지지.</div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-label">다수 학자 견해</div>
+        <div class="pos-title">예언적 이야기 / 교훈 설화</div>
+        <div class="pos-body">문학적 특성(반복 구조, 과장법, 풍자)이 역사 보고보다 이야기에 가까움. 신학적 메시지를 전달하기 위한 픽션. 고대근동에 유사 장르 존재.</div>
+      </div>
+      <div class="pos-card neutral">
+        <div class="pos-label">소수 견해</div>
+        <div class="pos-title">알레고리 / 우화</div>
+        <div class="pos-body">요나 = 이스라엘, 니느웨 = 이방 민족, 물고기 = 바빌론 포로기의 상징. 그러나 이 읽기는 텍스트보다 지나치게 나아간다는 비판이 있음.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="s6t2" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;">예언적 이야기설의 내부 증거</p>
+    <ul style="padding-left:18px;line-height:2;font-size:.93rem;">
+      <li><strong>니느웨의 규모:</strong> "삼 일 길이나 되는 극히 큰 성읍"(욘 3:3) — 역사적 니느웨는 최전성기에도 15km 길이였습니다. 하루면 충분히 이동 가능한 크기입니다.</li>
+      <li><strong>왕의 익명성:</strong> 니느웨 왕이 이름 없이 등장 — 실제 역사 기술이라면 아시리아 왕의 이름을 포함했을 가능성이 높습니다.</li>
+      <li><strong>즉각적 전국 회개:</strong> 니느웨 전체(왕부터 짐승까지)의 하루 만의 회개 — 역사적 아시리아 기록에 흔적 없음.</li>
+      <li><strong>문학적 구조:</strong> 1장과 3장의 대칭적 구성(폭풍/회개), 2장과 4장의 시편과 탄식 — 정교한 문학적 구조.</li>
+    </ul>
+    <div class="info-box">이 증거들은 요나서가 역사 기록의 형식보다 교훈적 이야기의 형식에 더 가깝다는 것을 시사합니다. 그러나 이것만으로 역사성을 완전히 부정할 수는 없습니다.</div>
+  </div>
+</div>
+<div id="s6t3" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;">장르와 무관한 핵심 신학 메시지</p>
+    <p>요나서의 핵심 신학적 메시지는 <strong>야훼의 보편적 구원 의지</strong>입니다: 이스라엘의 적국 앗수르의 수도도 하나님의 자비의 대상입니다. 이 메시지는 요나서가 역사 보고이든 예언적 이야기이든 동일하게 유효합니다.</p>
+    <div class="highlight-box" style="margin-top:12px;">
+      <strong>마태복음 12:40에 관하여:</strong> 예수는 "요나가 삼 일 낮과 밤을 큰 물고기 배 속에 있었던 것 같이 인자도 삼 일 낮과 밤을 땅 속에 있으리라"고 말씀합니다. 이것이 역사성을 증명하는가? 예수는 왕상 10:1의 스바 여왕과 마찬가지로 요나를 사용하셨는데, 두 경우 모두 이야기의 교훈에 초점을 맞춥니다. 예수의 인용이 반드시 요나서의 역사적 문자성을 보증하는 것인지는 별도의 신학적 논의가 필요합니다.
+    </div>
+    <p style="margin-top:12px;">요나서가 예언적 이야기로 읽힌다 해도 신앙적 의미는 약해지지 않습니다. 오히려 하나님의 보편적 은혜라는 날카로운 신학적 메시지가 더 선명하게 부각될 수 있습니다.</p>
+  </div>
+</div>
+</section>
+
+<!-- S7 DtrH -->
+<section id="s7" class="section">
+<div class="section-title">신명기 역사서 (DtrH)</div>
+<p class="section-sub">마르틴 노트의 테제 — 여호수아부터 열왕기까지 어떻게 읽어야 하는가.</p>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">노트(Noth)의 테제 (1943) <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>독일 학자 마르틴 노트(Martin Noth)는 1943년 《전승사적 연구(Überlieferungsgeschichtliche Studien)》에서 신명기부터 열왕기까지(신-수-삿-삼-왕)가 단일 편집자(신명기 역사가, "Deuteronomist")에 의해 구성된 통합 작품이라고 주장했습니다. 이 편집자는 바빌론 포로기(BC 586년 이후)에 더 오래된 자료들을 신명기 신학으로 편집하여 "왜 이스라엘이 포로가 되었는가"에 답하려 했습니다.</p>
+    <div class="highlight-box">핵심 논증: 신명기~열왕기는 공통된 어휘, 문체, 신학적 도식(순종→복, 불순종→심판), 반복되는 형식구를 공유합니다. 이 일관성은 단일 편집 의도를 강하게 시사합니다.</div>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">DtrH의 신학적 도식 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>신명기 역사가는 이스라엘의 역사를 단순한 연대기가 아닌 신학적 패턴으로 해석합니다:</p>
+    <ul style="padding-left:18px;margin:8px 0;line-height:2;">
+      <li>야훼 명령에 <strong>순종</strong> → 군사적 성공, 번영</li>
+      <li>야훼 명령에 <strong>불순종</strong>(우상숭배, 혼합종교) → 패배, 억압, 최종적으로 포로</li>
+    </ul>
+    <p>이 도식은 정복 기사(여호수아서)에서 특히 선명합니다. 아이 전투의 패배(수 7장)는 아간의 죄로 설명되며, 완전한 순종이 회복되자 즉시 승리합니다. 이 패턴은 역사적 기술보다 신학적 해석에 가깝습니다.</p>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">이중 편집론 — 프랭크 무어 크로스(Frank Moore Cross, 1973) <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>하버드 신학자 크로스는 《가나안 신화와 히브리 서사시(Canaanite Myth and Hebrew Epic, 1973)》에서 DtrH가 두 단계로 편집되었다고 주장합니다:</p>
+    <ul style="padding-left:18px;margin:8px 0;line-height:2;">
+      <li><strong>DtrH1</strong>: 요시야 개혁 시대(BC 620년대) — 다윗 왕조와 예루살렘 성전 중심의 개혁을 신학적으로 뒷받침</li>
+      <li><strong>DtrH2</strong>: 포로기(BC 586년 이후) — 왜 왕국이 멸망했는가에 대한 신학적 반성과 미래 희망</li>
+    </ul>
+    <p>이 이중 편집론은 노트의 단일 편집론보다 텍스트 내부의 긴장들을 더 잘 설명한다는 평가를 받습니다.</p>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">역사성에 대한 함의 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <p>DtrH 이론은 여호수아서의 정복 기사가 신학적으로 이상화되었을 가능성을 시사합니다. "온 땅을 취하고 모든 주민을 진멸했다"는 표현(수 10:40)은 신명기 역사가의 신학적 도식을 반영하며, 사사기(삿 1장)는 같은 땅에 여전히 많은 가나안 족속이 살아있다고 다르게 묘사합니다.</p>
+    <p style="margin-top:10px;">이 긴장을 설명하는 방식: ① 여호수아서는 신학적 이상화, 사사기는 역사적 현실 ② 두 책 모두 동일한 사건의 다른 측면 ③ 사사기 1장이 여호수아서보다 더 오래된 자료. 중요한 것은 이 차이가 성경 안에 이미 존재한다는 점입니다.</p>
+  </div>
+</div>
+</section>
+
+<!-- S8 기억과 역사 -->
+<section id="s8" class="section">
+<div class="section-title">기억과 역사</div>
+<p class="section-sub">얀 아스만의 문화기억 이론으로 성경 역사 기사를 새롭게 이해하다.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;">
+  <div class="card" style="margin:0;">
+    <p style="font-size:.95rem;font-weight:800;color:var(--bh);margin-bottom:8px;">얀 아스만의 문화기억론</p>
+    <p style="font-size:.87rem;line-height:1.65;">독일 이집트학자 얀 아스만(Jan Assmann)은 《문화기억(Das kulturelle Gedächtnis, 1992)》에서 인간 집단의 기억을 두 층위로 구분합니다. <strong>소통기억(communicative memory)</strong>은 살아있는 사람들이 공유하는 최근 3세대(80-100년) 이내의 기억입니다. <strong>문화기억(cultural memory)</strong>은 그 이상의 먼 과거 — 공동체 정체성을 형성하는 신화적·원형적 사건들의 기억입니다. 문화기억은 반드시 역사적 정확성을 추구하지 않으며, 공동체가 "우리는 누구인가"를 답하는 데 기여합니다.</p>
+  </div>
+  <div class="card" style="margin:0;">
+    <p style="font-size:.95rem;font-weight:800;color:var(--bh);margin-bottom:8px;">기억사 (Mnemohistory)</p>
+    <p style="font-size:.87rem;line-height:1.65;">아스만은 《이집트인 모세(Moses the Egyptian, 1997)》에서 "기억사"(mnemohistory) 개념을 제안합니다. 기억사는 "무엇이 실제로 일어났는가"(역사)가 아니라, "그 사건이 이후 공동체에서 어떻게 기억되고 재구성되었는가"를 연구합니다. 모세 이야기는 이스라엘 정체성의 핵심이 되었으나, 그 과정에서 다양한 전승들이 통합되고 해석되었습니다. 이는 출애굽 역사의 "최소 사건"이 공동체 기억 속에서 "최대 서사"로 발전하는 것을 설명합니다.</p>
+  </div>
+  <div class="card" style="margin:0;">
+    <p style="font-size:.95rem;font-weight:800;color:var(--bh);margin-bottom:8px;">성경과 집단 정체성</p>
+    <p style="font-size:.87rem;line-height:1.65;">출애굽은 이스라엘의 <strong>"창립 서사"(founding narrative)</strong>입니다. 유월절(Passover)은 매년 "우리는 이집트에서 노예였다"를 재연하게 합니다(신 26:5-9). 아스만의 관점에서 이 예전적 재연은 역사적 사건을 살아있는 문화기억으로 유지합니다. 역사적 정확성과 기억의 기능적 역할은 서로 독립적입니다 — 공동체는 역사를 "기억"함으로써 정체성을 형성하지만, 그 기억의 역사적 정확도가 반드시 기능의 선행 조건은 아닙니다. 그러나 이것이 역사적 핵심의 부재를 정당화하지는 않습니다.</p>
+  </div>
+</div>
+</section>
+
+<!-- S9 역사성과 신학 -->
+<section id="s9" class="section">
+<div class="section-title">역사성과 신학</div>
+<p class="section-sub">역사적 탐구는 신앙을 위협하는가, 강화하는가? 세 가지 신학적 입장.</p>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('s9','s9t1',this)">역사 없는 신앙?</button>
+  <button class="tab-btn" onclick="switchTab('s9','s9t2',this)">최소주의의 한계</button>
+  <button class="tab-btn" onclick="switchTab('s9','s9t3',this)">신학적 역사서술</button>
+</div>
+<div id="s9t1" class="tab-panel active">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;">신앙은 얼마나 많은 역사를 필요로 하는가?</p>
+    <p>바울은 고전 15:14-17에서 "그리스도께서 만일 다시 살아나지 못하셨으면 우리가 전파하는 것도 헛것이요 또 너희 믿음도 헛것이며..." 라고 합니다. 이 논리를 출애굽에 적용하면: 이집트에서 하나님이 이스라엘을 구원하지 않으셨다면, 이 구원 사건 위에 세워진 야훼 신앙 전체가 흔들립니다.</p>
+    <div class="highlight-box" style="margin-top:12px;">
+      <strong>피터 엔스(Peter Enns)의 성육신적 모델:</strong> 성경은 신적 영감과 인간적 표현이 결합된 성육신적 문서입니다. 신적 진리가 특정 문화·역사적 형태를 취하는 것처럼, 성경의 역사 기사도 고대적 서술 방식을 취합니다. 이는 역사성을 부정하는 것이 아니라, 역사 기술의 고대적 방식을 이해하는 것입니다.
+    </div>
+    <p style="margin-top:12px;"><strong>신앙이 요구하는 최소 역사적 핵심:</strong> 완벽한 세부사항의 역사적 정확성이 아니라, 하나님이 실제 역사 속 인간을 구원하시는 분이라는 핵심 주장. 출애굽의 역사성은 "600,000명인가 6,000명인가"의 문제가 아니라, "하나님이 노예를 해방시키는 사건이 실제로 일어났는가"의 문제입니다.</p>
+  </div>
+</div>
+<div id="s9t2" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;">역사적 최소주의(Minimalism)의 신학적 문제</p>
+    <p>핀켈스타인과 실버만 같은 역사적 최소주의자들은 다윗 왕국을 소규모 부족 연합 정도로 축소하고, 출애굽을 완전한 신화로 봅니다. 이는 학문적으로 도전적인 입장이지만 신학적으로도 중요한 함의를 갖습니다.</p>
+    <div class="warn-box">⚠️ <strong>최소주의의 방법론적 문제:</strong> 텍스트를 역사적 증거로 전혀 활용하지 않는 것도 과잉 반응입니다. 고대 문서들은 완벽한 역사 기록이 아니더라도 역사적 정보를 담고 있습니다.</div>
+    <p style="margin-top:12px;"><strong>데버(Dever)의 비판:</strong> "최소주의자들은 역사 쓰기를 스스로 금지하고 있다. 그들은 고고학적 증거를 인정하지만 텍스트를 거부한다. 그러나 역사가는 모든 가용한 증거를 통합해야 한다." (<em>What Did the Biblical Writers Know?</em>, 2001)</p>
+    <p style="margin-top:14px;"><strong>최소주의가 틀렸음이 입증된 사례: 텔 단 석비(Tel Dan Stele)</strong></p>
+    <div class="info-box">1993-94년 이스라엘 북부 텔 단(Tel Dan)에서 발굴된 BC 9세기 아람어 비문에 <span class="heb">בֵּית דָּוִד</span>(Bytdwd, "다윗의 집")이 등장합니다. 이는 다윗 왕조를 언급하는 최초의 외부 기록으로, "다윗은 신화적 인물"이라는 최소주의자들의 핵심 주장을 정면으로 반박합니다.</div>
+    <p style="margin-top:10px;"><strong>단어 분리점 논쟁:</strong> 코펜하겐 학파(필립 데이비스 등) 최소주의자들은 <span class="heb">בֵּית</span>(집)과 <span class="heb">דָּוִד</span>(다윗) 사이에 단어 분리점(word divider)이 없다는 이유로, 이를 인명 "다윗"이 아니라 고유 지명이나 신명(Dwd)일 수 있다고 주장했습니다. 그러나 학계의 주류는 이를 "다윗 왕조(House of David)"로 판정했으며, 이 논쟁은 최소주의의 방법론적 과잉이 어떻게 작동하는지를 보여주는 전형적 사례가 되었습니다.</p>
+    <p style="margin-top:12px;"><strong>신학적 함의:</strong> 성경의 하나님은 역사 속에서 일하시는 분입니다(계시의 역사성). 만약 성경의 역사 기사에 실질적 역사적 기반이 없다면, 하나님의 행위 자체가 허구가 됩니다. 해방신학, 흑인신학이 출애굽 내러티브를 현실 억압에 맞서는 신학적 자원으로 사용할 수 있는 것도 이 이야기가 실재하는 역사적 해방 사건을 담기 때문입니다.</p>
+  </div>
+</div>
+<div id="s9t3" class="tab-panel">
+  <div class="card">
+    <p style="font-weight:700;color:var(--bh);margin-bottom:10px;">신학적 역사서술 (Theological Historiography)</p>
+    <p>게르하르트 폰 라트(Gerhard von Rad)는 이스라엘의 역사관을 <strong>구원 역사(Heilsgeschichte, Salvation History)</strong>라고 부릅니다. 이스라엘은 역사 속 하나님의 행위를 신앙의 고백 형태로 서술했습니다. 이것이 성경이 역사를 쓰는 방식입니다: 객관적 연대기가 아닌 해석된 역사, 신학적 목적을 갖는 역사.</p>
+    <div class="highlight-box" style="margin-top:12px;">
+      <strong>N.T. 라이트(Wright):</strong> "역사적 탐구는 신앙의 적이 아니다. 오히려 신앙은 역사 속에서 하나님이 행하셨다는 주장을 하기 때문에, 역사적 탐구를 환영해야 한다." 역사적 탐구는 신앙을 위협하는 것이 아니라, 신앙이 진지하게 받아들이는 역사적 현실을 검토하는 것입니다.
+    </div>
+    <p style="margin-top:12px;"><strong>결론:</strong> 성경은 역사적 사건을 전제하되, 그 사건의 신학적 의미를 해석하여 공동체에게 전달합니다. 역사성의 정도와 신학적 서술 방식을 구분하여 읽는 것이 성숙한 성경 읽기입니다. 모든 세부사항이 역사적으로 검증 가능해야 한다는 요구도, 모든 역사적 핵심을 포기하는 것도 극단입니다.</p>
+  </div>
+</div>
+</section>
+
+<!-- S10 주요학자 -->
+<section id="s10" class="section">
+<div class="section-title">주요학자</div>
+<p class="section-sub">성경 역사성 논쟁을 이끌어온 8인의 학자들.</p>
+<div class="person-grid">
+  <div class="person-card">
+    <div class="person-emoji">🏛️</div>
+    <div class="person-name">이스라엘 핀켈스타인</div>
+    <div class="person-role">Israel Finkelstein (b. 1949)</div>
+    <div class="person-work">텔아비브대학교 고고학과 명예교수</div>
+    <div class="person-work">《성경이 발굴되다》 (Silberman 공저, 2001)</div>
+    <div class="person-desc">역사적 최소주의의 대표 학자. "낮은 연대기(Low Chronology)"를 제안, 솔로몬 시대의 메기도·하솔·게셀 6방 성문이 실제로는 오므리 왕조 시대 것이라고 주장(텔아비브 학파). 이스라엘 민족의 가나안 자생 발생 이론과 다윗 왕국의 소규모 부족 사회 재평가로 유명. 히브리대학 학파(마자르)와의 연대기 논쟁이 21세기 성서고고학의 핵심 쟁점.</div>
+  </div>
+  <div class="person-card">
+    <div class="person-emoji">🔍</div>
+    <div class="person-name">윌리엄 G. 데버</div>
+    <div class="person-role">William G. Dever (b. 1933)</div>
+    <div class="person-work">애리조나대학교 고대근동 고고학 명예교수</div>
+    <div class="person-work">《성경 저자들은 무엇을 알았나》 (2001)</div>
+    <div class="person-desc">최소주의와 최대주의 사이의 "합리적 중도." 성경 기록의 역사적 핵심은 인정하지만 기적적 요소에는 고고학적 접근. "세속 학자지만 성경 역사의 현실성을 옹호"로 유명.</div>
+  </div>
+  <div class="person-card">
+    <div class="person-emoji">📖</div>
+    <div class="person-name">케네스 A. 키친</div>
+    <div class="person-role">Kenneth A. Kitchen (b. 1932)</div>
+    <div class="person-work">리버풀대학교 이집트학 명예교수</div>
+    <div class="person-work">《구약의 신뢰성에 관하여》 (2003)</div>
+    <div class="person-desc">보수적 이집트학자. 방대한 고대근동 비교 자료로 성경 데이터의 역사적 진정성을 옹호. 출애굽의 이집트적 배경, 초기 연대 지지. 최소주의에 강력히 반론.</div>
+  </div>
+  <div class="person-card">
+    <div class="person-emoji">🌿</div>
+    <div class="person-name">제임스 K. 호프마이어</div>
+    <div class="person-role">James K. Hoffmeier (b. 1951)</div>
+    <div class="person-work">트리니티복음주의신학교 교수</div>
+    <div class="person-work">《이집트의 이스라엘》 (1997)</div>
+    <div class="person-desc">이집트학과 성경학 교차 연구. 출애굽 전통의 이집트적 배경과 언어적 증거를 정밀 분석. 이집트 신명(divine name), 관습, 지명의 진정성 옹호.</div>
+  </div>
+  <div class="person-card">
+    <div class="person-emoji">⛏️</div>
+    <div class="person-name">캐슬린 케년</div>
+    <div class="person-role">Kathleen Kenyon (1906-1978)</div>
+    <div class="person-work">런던대학교, 여리고 발굴(1952-1958)</div>
+    <div class="person-work">《여리고를 발굴하다》 (Digging Up Jericho, 1957)</div>
+    <div class="person-desc">층위학(stratigraphy) 방법론을 혁신한 영국 고고학자. 여리고 LBA 성벽 부재 결론은 성경 정복 기사와 고고학의 긴장을 촉발시킨 20세기 가장 논쟁적 발굴 결과 중 하나.</div>
+  </div>
+  <div class="person-card">
+    <div class="person-emoji">🏺</div>
+    <div class="person-name">브라이언트 G. 우드</div>
+    <div class="person-role">Bryant G. Wood</div>
+    <div class="person-work">성경고고학연구재단(ABR) 디렉터</div>
+    <div class="person-work">"이스라엘이 여리고를 정복했는가?" (BAR 16/2, 1990)</div>
+    <div class="person-desc">케년의 도자기 편년 재분석으로 BC 1400년대 파괴층 주장. 보수적 복음주의 고고학의 대표적 입장. 주류 고고학계와의 논쟁 지속.</div>
+  </div>
+  <div class="person-card">
+    <div class="person-emoji">⚖️</div>
+    <div class="person-name">에릭 A. 사이버트</div>
+    <div class="person-role">Eric A. Seibert</div>
+    <div class="person-work">Messiah University 구약학 교수</div>
+    <div class="person-work">《불편한 신적 행동》 (Disturbing Divine Behavior, 2009)</div>
+    <div class="person-desc">구약의 폭력적 신 이미지를 인간의 신학적 오해로 해석. "예수 기준(Christological criterion)"으로 구약 본문을 읽는 방법론 제안. 헤렘 명령의 윤리 문제를 정면으로 다룸.</div>
+  </div>
+  <div class="person-card">
+    <div class="person-emoji">✝️</div>
+    <div class="person-name">크리스토퍼 J.H. 라이트</div>
+    <div class="person-role">Christopher J.H. Wright (b. 1947)</div>
+    <div class="person-work">Langham Partnership 국제 디렉터</div>
+    <div class="person-work">《내가 이해하지 못하는 하나님》 (2008)</div>
+    <div class="person-desc">복음주의 구약윤리학자. 헤렘을 특정 역사적 맥락의 신적 심판으로 제한하며, 보편적 원리로의 확장을 거부. 성경 윤리의 점진적 계시론과 그리스도 중심적 해석을 결합.</div>
+  </div>
+  <div class="person-card">
+    <div class="person-emoji">🏺</div>
+    <div class="person-name">아미하이 마자르</div>
+    <div class="person-role">Amihai Mazar (b. 1942)</div>
+    <div class="person-work">히브리대학교 고고학 명예교수</div>
+    <div class="person-work">《고대 이스라엘의 고고학》 (Archaeology of the Land of the Bible, 1990)</div>
+    <div class="person-desc">히브리대학 학파의 대표자. "수정된 전통 연대기(Modified Conventional Chronology)"를 제안하여 핀켈스타인의 낮은 연대기와 전통적 높은 연대기의 중간 입장을 견지. 6방 성문을 솔로몬 시대로 보는 견해를 옹호하며, 21세기 성서고고학 연대기 논쟁의 핵심 축을 형성.</div>
+  </div>
+</div>
+</section>
+
+<!-- S11 용어사전 -->
+<section id="s11" class="section">
+<div class="section-title">용어사전</div>
+<p class="section-sub">성경 역사성 논쟁에서 필수적으로 알아야 할 학술 용어들.</p>
+<div class="card" style="padding:0 28px;">
+  <div class="gloss-item" style="padding-top:20px;">
+    <div class="gloss-term">역사비평학</div>
+    <div class="gloss-orig">Historical Criticism</div>
+    <div class="gloss-def">성경 텍스트를 역사적 맥락에서 분석하는 학문적 방법론의 총칭. 자료비평, 양식비평, 편집비평, 전승사비평 등을 포함. 텍스트의 저자, 시기, 사회적 기능, 편집 과정을 탐구한다.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">자료비평 / JEDP</div>
+    <div class="gloss-orig">Source Criticism / Documentary Hypothesis</div>
+    <div class="gloss-def">벨하우젠(Wellhausen)의 이론으로, 오경이 야훼주의(J), 엘로힘주의(E), 신명기(D), 제사장(P)의 네 독립 자료로 편집되었다는 주장. 20세기 성서학의 표준 패러다임이었으나 현재는 수정·비판이 활발하다.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">양식비평</div>
+    <div class="gloss-orig">Form Criticism (Formgeschichte)</div>
+    <div class="gloss-def">궁켈(Gunkel)이 창시. 텍스트 개별 단위(전설, 사가, 법령, 찬가 등)의 장르를 분류하고, 그것이 사용된 "삶의 자리(Sitz im Leben)"를 탐구한다. 구전 전승의 형태적 특성을 중시.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">편집비평</div>
+    <div class="gloss-orig">Redaction Criticism (Redaktionsgeschichte)</div>
+    <div class="gloss-def">최종 편집자가 원자료를 선택·배열·수정한 방식과 그 신학적 의도를 분석. 신명기 역사서(DtrH) 이론이 OT 분야의 가장 중요한 편집비평적 성과다.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">신명기 역사서</div>
+    <div class="gloss-orig">Deuteronomistic History (DtrH)</div>
+    <div class="gloss-def">노트(Noth, 1943)의 이론. 신명기~열왕기하가 단일(또는 이중) 신명기 신학적 편집자에 의해 구성된 통합 작품이라는 주장. 순종→복, 불순종→심판의 도식이 특징.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">층위학</div>
+    <div class="gloss-orig">Stratigraphy</div>
+    <div class="gloss-def">지층을 분석하여 고고학적 유적의 연대와 순서를 결정하는 방법론. 케년이 팔레스타인 발굴에 정밀 층위학을 도입. 동일 유적의 층(layer)마다 다른 시기의 문화를 나타낸다.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">도자기 편년</div>
+    <div class="gloss-orig">Pottery Typology</div>
+    <div class="gloss-def">도자기 형태·양식의 시간적 변화를 분석하여 유적의 연대를 추정. 고대근동 고고학에서 가장 중요한 편년 도구 중 하나. 케년과 우드의 여리고 논쟁은 본질적으로 도자기 편년 해석의 차이.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">헤렘 / <span class="heb">חֵרֶם</span></div>
+    <div class="gloss-orig">Herem / Sacred Ban</div>
+    <div class="gloss-def">전쟁 포획물(사람, 동물, 재물)을 전적으로 야훼께 드리는 행위. 이는 재분배가 불가능한 "신성한 파괴"를 의미한다. 가나안 정복 기사에서 주민 진멸의 근거로 사용. 인접 문화(모압의 메사 비석)에도 유사 개념이 존재한다.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">아피루 / 하비루</div>
+    <div class="gloss-orig">Apiru / Habiru ('Apiru)</div>
+    <div class="gloss-def">이집트·메소포타미아 문헌(BC 2000-1200)에 등장하는 사회적 하층 계급. 도시 국가 체제 밖의 노예·용병·이주 노동자. 히브리(Ibri)와 어원적·사회적 유사성이 있으나 직접 동일시는 논쟁 중.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">엘레프 / <span class="heb">אֶלֶף</span></div>
+    <div class="gloss-orig">Aleph / Thousand</div>
+    <div class="gloss-def">히브리어로 기본적으로 "천(1,000)"을 의미. 그러나 군사 분대(military unit), 씨족장(clan leader)을 의미하는 용례도 있다(삿 6:15, 미 5:2). 출 12:37의 "육백 엘레프 장정"을 "600 군사 단위"로 재해석하면 총 이주 인원이 대폭 줄어든다.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">문화기억</div>
+    <div class="gloss-orig">Cultural Memory (kulturelles Gedächtnis)</div>
+    <div class="gloss-def">얀 아스만(Jan Assmann)의 개념. 공동체가 정체성 형성을 위해 보존·재구성하는 먼 과거의 기억. 소통기억(현재 3세대)과 달리 문화기억은 신화적·의례적 형태로 보존되며, 역사적 정확성보다 공동체적 기능이 우선한다.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">최소주의 / 최대주의</div>
+    <div class="gloss-orig">Minimalism / Maximalism</div>
+    <div class="gloss-def">성경 역사 기사의 신뢰성에 대한 두 극단. 최소주의(Finkelstein, Thompson 등)는 텍스트를 역사적 증거로 거의 활용하지 않으며, 최대주의(Kitchen 등)는 성경 기록을 높은 역사적 신뢰도로 수용. 대부분의 학자들은 그 사이에 위치한다.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">텔 (Tell)</div>
+    <div class="gloss-orig">Tell / Tel</div>
+    <div class="gloss-def">아랍어 "tell"(언덕)에서 온 말로, 수천 년간의 거주 흔적이 층층이 쌓여 형성된 인공 언덕. 고대 도시 유적이 여기에 해당. 가나안의 주요 유적(Tel Megiddo, Tel Hazor 등)이 이 형태.</div>
+  </div>
+  <div class="gloss-item">
+    <div class="gloss-term">신학적 역사서술</div>
+    <div class="gloss-orig">Theological Historiography</div>
+    <div class="gloss-def">역사적 사건을 신학적 목적(하나님의 행위, 이스라엘의 정체성)에 따라 선택·해석·서술하는 방식. 성경 역사서술의 핵심 특징. 현대 역사학의 "객관성" 추구와 다르며, 이를 이해하는 것이 성경의 역사 기사를 올바르게 읽는 출발점이다.</div>
+  </div>
+  <div class="gloss-item" style="padding-bottom:20px;">
+    <div class="gloss-term">메르넵타 비석</div>
+    <div class="gloss-orig">Merneptah Stele (BC 1208)</div>
+    <div class="gloss-def">이집트 파라오 메르넵타(BC 1213-1203)의 가나안 원정을 기록한 화강암 비석. "이스라엘은 황폐해졌으며 그 씨가 없어졌다"(Israel is wasted, its seed is no more)는 문구가 포함되어, 이스라엘이 BC 1208년 이전에 가나안에 존재했음을 증명하는 최초의 외부 기록.</div>
+  </div>
+</div>
+</section>
+
+<!-- S12 토론 논제 -->
+<section id="s12" class="section">
+<div class="section-title">토론 논제</div>
+<p class="section-sub">6개의 열린 토론 주제 — 정답이 없는 질문들과 씨름하세요.</p>
+
+<div class="disc-card">
+  <div class="disc-num">논제 01</div>
+  <div class="disc-q">출애굽의 역사적 핵심이 없다면 유대교-기독교 신앙은 성립 가능한가?</div>
+  <div class="disc-hint">고전 15:14-17에서 바울은 부활의 역사성을 신앙의 전제로 제시합니다. 이 논리를 출애굽에 적용하면? "역사적 핵심"의 최소 정의는 무엇인가? 2만 명의 이주로도 충분한가, 아니면 기적적 대탈출이 요구되는가? 해방신학과 흑인신학에서 출애굽이 갖는 의미도 함께 논의해보세요.</div>
+</div>
+<div class="disc-card">
+  <div class="disc-num">논제 02</div>
+  <div class="disc-q">가나안 정복의 헤렘 명령은 오늘날 어떻게 독해되어야 하는가?</div>
+  <div class="disc-hint">사이버트의 "예수 기준"(하나님의 실제 명령이 아닌 인간적 오해), 라이트의 "특정 역사적 심판"(보편화 불가), 코판의 "과장법"(ANE 전쟁 문학의 수사) 중 어떤 접근이 가장 설득력 있는가? 이 논제는 성경의 점진적 계시론, 정경의 통일성, 신구약 관계 등 더 넓은 해석학적 질문과 연결됩니다.</div>
+</div>
+<div class="disc-card">
+  <div class="disc-num">논제 03</div>
+  <div class="disc-q">고고학적 증거의 부재는 역사적 부재를 의미하는가?</div>
+  <div class="disc-hint">"부재의 증거(absence of evidence)와 증거의 부재(evidence of absence)"는 논리적으로 다릅니다. 시나이에서 대규모 이동 흔적이 없다는 것은 무엇을 의미하는가? 유목민의 고고학적 가시성(archaeological visibility) 문제를 고려하세요. 반대로, 어느 수준의 부재가 역사적 부재의 충분한 근거가 되는가?</div>
+</div>
+<div class="disc-card">
+  <div class="disc-num">논제 04</div>
+  <div class="disc-q">역사비평학은 신앙에 위협인가, 도구인가?</div>
+  <div class="disc-hint">역사비평학은 방법론적으로 중립한가? 아니면 초자연적 사건을 배제하는 전제를 내포하는가? 신앙을 가진 학자들(Hoffmeier, Wright 등)이 역사비평 방법론을 생산적으로 활용하는 사례를 검토하세요. 방법론과 세계관의 관계를 어떻게 설정할 것인가?</div>
+</div>
+<div class="disc-card">
+  <div class="disc-num">논제 05</div>
+  <div class="disc-q">요나서를 예언적 이야기(didactic narrative)로 읽으면 신학적으로 더 풍부해지는가, 빈약해지는가?</div>
+  <div class="disc-hint">역사적 보고로 읽을 때와 예언적 이야기로 읽을 때 신학적 메시지(보편적 구원, 선교, 이스라엘의 배타주의 비판)가 어떻게 달라지는가? 마 12:40에서 예수의 요나 인용은 어떻게 해석되는가? 장르가 진리 주장(truth claim)에 영향을 미치는가?</div>
+</div>
+<div class="disc-card">
+  <div class="disc-num">논제 06</div>
+  <div class="disc-q">아스만의 "문화기억" 이론은 신앙 공동체에서 역사성을 대체할 수 있는가?</div>
+  <div class="disc-hint">기억의 기능적 역할(공동체 정체성 형성)과 역사적 사실성은 독립적으로 작동할 수 있는가? "역사적으로 일어나지 않았지만 신앙적으로 참인 이야기"가 가능한가? 만약 가능하다면, 성경 신앙의 어느 범위까지 이 논리를 적용할 수 있는가? 부활과의 유비를 통해 논의해보세요.</div>
+</div>
+</section>
+
+<!-- S13 레퍼런스 -->
+<section id="s13" class="section">
+<div class="section-title">레퍼런스</div>
+<p class="section-sub">이 자료가 참고한 주요 학술 문헌 목록입니다.</p>
+
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">출애굽과 고고학 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <ul class="ref-list">
+      <li><span class="ref-author">Hoffmeier, James K.</span> <span class="ref-title">Israel in Egypt: The Evidence for the Authenticity of the Exodus Tradition.</span> Oxford: Oxford University Press, 1997.</li>
+      <li><span class="ref-author">Kitchen, Kenneth A.</span> <span class="ref-title">On the Reliability of the Old Testament.</span> Grand Rapids: Eerdmans, 2003.</li>
+      <li><span class="ref-author">Humphreys, Colin J.</span> <span class="ref-title">The Miracles of Exodus: A Scientist's Discovery of the Extraordinary Natural Causes of the Biblical Stories.</span> New York: HarperSanFrancisco, 2003.</li>
+      <li><span class="ref-author">Mendenhall, George E.</span> "The Census Lists of Numbers 1 and 26." <span class="ref-title">Journal of Biblical Literature</span> 77 (1958): 52-66.</li>
+    </ul>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">이스라엘 역사와 고고학 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <ul class="ref-list">
+      <li><span class="ref-author">Finkelstein, Israel, and Neil Asher Silberman.</span> <span class="ref-title">The Bible Unearthed: Archaeology's New Vision of Ancient Israel and the Origin of Its Sacred Texts.</span> New York: Free Press, 2001.</li>
+      <li><span class="ref-author">Dever, William G.</span> <span class="ref-title">What Did the Biblical Writers Know and When Did They Know It? What Archaeology Can Tell Us about the Reality of Ancient Israel.</span> Grand Rapids: Eerdmans, 2001.</li>
+      <li><span class="ref-author">Provan, Iain, V. Philips Long, and Tremper Longman III.</span> <span class="ref-title">A Biblical History of Israel.</span> Louisville: Westminster John Knox Press, 2003.</li>
+      <li><span class="ref-author">Wood, Bryant G.</span> "Did the Israelites Conquer Jericho? A New Look at the Archaeological Evidence." <span class="ref-title">Biblical Archaeology Review</span> 16/2 (1990): 44-58.</li>
+      <li><span class="ref-author">Kenyon, Kathleen M.</span> <span class="ref-title">Digging Up Jericho.</span> New York: Praeger, 1957.</li>
+    </ul>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">역사비평과 DtrH <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <ul class="ref-list">
+      <li><span class="ref-author">Noth, Martin.</span> <span class="ref-title">The Deuteronomistic History.</span> Trans. Jane Doull et al. Sheffield: JSOT Press, 1981. [독일어 초판: 1943]</li>
+      <li><span class="ref-author">Cross, Frank Moore.</span> <span class="ref-title">Canaanite Myth and Hebrew Epic: Essays in the History of the Religion of Israel.</span> Cambridge: Harvard University Press, 1973.</li>
+      <li><span class="ref-author">Longman, Tremper III, and Raymond B. Dillard.</span> <span class="ref-title">An Introduction to the Old Testament.</span> 2nd ed. Grand Rapids: Zondervan, 2006.</li>
+    </ul>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">헤렘 신학 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <ul class="ref-list">
+      <li><span class="ref-author">Seibert, Eric A.</span> <span class="ref-title">Disturbing Divine Behavior: Troubling Old Testament Images of God.</span> Minneapolis: Fortress Press, 2009.</li>
+      <li><span class="ref-author">Wright, Christopher J. H.</span> <span class="ref-title">The God I Don't Understand: Reflections on Tough Questions of Faith.</span> Grand Rapids: Zondervan, 2008.</li>
+      <li><span class="ref-author">Copan, Paul.</span> <span class="ref-title">Is God a Moral Monster? Making Sense of the Old Testament God.</span> Grand Rapids: Baker Books, 2011.</li>
+    </ul>
+  </div>
+</div>
+<div class="acc-item">
+  <button class="acc-btn" onclick="toggleAcc(this)">기억과 역사 / 역사성과 신학 <span class="arrow">▼</span></button>
+  <div class="acc-body">
+    <ul class="ref-list">
+      <li><span class="ref-author">Assmann, Jan.</span> <span class="ref-title">Cultural Memory and Early Civilization: Writing, Remembrance, and Political Imagination.</span> Cambridge: Cambridge University Press, 2011. [독일어 초판: Das kulturelle Gedächtnis, 1992]</li>
+      <li><span class="ref-author">Assmann, Jan.</span> <span class="ref-title">Moses the Egyptian: The Memory of Egypt in Western Monotheism.</span> Cambridge: Harvard University Press, 1997.</li>
+      <li><span class="ref-author">von Rad, Gerhard.</span> <span class="ref-title">Old Testament Theology.</span> Vol. 1. Trans. D. M. G. Stalker. New York: Harper & Row, 1962.</li>
+      <li><span class="ref-author">Enns, Peter.</span> <span class="ref-title">Inspiration and Incarnation: Evangelicals and the Problem of the Old Testament.</span> Grand Rapids: Baker Academic, 2005.</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- S14 퀴즈 -->
+<section id="s14" class="section">
+<div class="section-title">퀴즈</div>
+<p class="section-sub">12문항 — 학습한 내용을 점검해보세요.</p>
+
+<div class="quiz-card">
+  <div class="q-num">문제 1</div>
+  <div class="q-text">벨하우젠(Wellhausen)의 자료비평(JEDP 가설)이 주장하는 것은?</div>
+  <div class="q-options">
+    <button class="q-opt" data-val="a" onclick="answerQuiz('s14',1,'a','b','모세가 직접 기록한 것이 아니라 후대 편집의 산물이라는 점은 맞지만, JEDP 네 자료를 구분한 것이 벨하우젠의 핵심 주장입니다.')">a. 모세가 이집트 자료를 기반으로 오경을 기록했다</button>
+    <button class="q-opt" data-val="b" onclick="answerQuiz('s14',1,'b','b','✓ 정확합니다. JEDP(야훼주의, 엘로힘주의, 신명기, 제사장)의 네 자료가 편집된 것이 벨하우젠의 문서가설의 핵심입니다.')">b. 오경이 야훼주의(J)·엘로힘주의(E)·신명기(D)·제사장(P) 자료로 편집됨</button>
+    <button class="q-opt" data-val="c" onclick="answerQuiz('s14',1,'c','b','오경의 포로기 편집설은 일부 맞지만, 벨하우젠은 네 자료의 구분과 편집 과정을 주장한 것이 핵심입니다.')">c. 오경 전체가 바빌론 포로기에 에스라에 의해 최초로 기록됨</button>
+    <button class="q-opt" data-val="d" onclick="answerQuiz('s14',1,'d','b','바빌론 신화와 성경의 유사성은 별도 연구 분야(비교종교학)이며, JEDP 가설의 내용이 아닙니다.')">d. 창세기는 바빌론 신화에서 직접 차용한 문학 작품</button>
+  </div>
+</div>
+
+<div class="quiz-card">
+  <div class="q-num">문제 2</div>
+  <div class="q-text">출애굽의 "초기 연대"(BC 1446)의 주요 성서적 근거는?</div>
+  <div class="q-options">
+    <button class="q-opt" data-val="a" onclick="answerQuiz('s14',2,'a','a','✓ 정확합니다. 왕상 6:1에서 "이스라엘 자손이 이집트를 떠난 지 480년"이라고 기록하며, 솔로몬 즉위 4년(BC 966)에서 역산하면 BC 1446이 됩니다.')">a. 열왕기상 6:1의 480년 계산 (솔로몬 성전 착공 연대 역산)</button>
+    <button class="q-opt" data-val="b" onclick="answerQuiz('s14',2,'b','a','출 1:11의 "라암셋" 성은 후기 연대(BC 1250)의 핵심 근거입니다. 람세스 2세가 건설한 Pi-Ramesses를 가리킵니다.')">b. 출애굽기 1:11의 "라암셋"과 "비돔" 성 건설</button>
+    <button class="q-opt" data-val="c" onclick="answerQuiz('s14',2,'c','a','메르넵타 비석(BC 1208)은 가나안에 이스라엘이 이미 존재했음을 보여주는 것으로, 출애굽의 상한선(terminus ante quem)을 제공합니다. 초기 연대의 직접 근거는 아닙니다.')">c. 메르넵타 비석(BC 1208)의 이스라엘 언급</button>
+    <button class="q-opt" data-val="d" onclick="answerQuiz('s14',2,'d','a','아마르나 편지(BC 14세기)의 하비루 기사는 초기 연대를 간접적으로 지지할 수 있지만, 핵심 성서적 근거는 아닙니다.')">d. 아마르나 편지(Amarna Letters)의 하비루(Habiru) 기사</button>
+  </div>
+</div>
+
+<div class="quiz-card">
+  <div class="q-num">문제 3</div>
+  <div class="q-text">출 12:37의 히브리어 <span class="heb">אֶלֶף</span>(엘레프)의 대안적 해석은?</div>
+  <div class="q-options">
+    <button class="q-opt" data-val="a" onclick="answerQuiz('s14',3,'a','c','엘레프는 기본적으로 "천(1,000)"을 의미하지만, 대안 해석이 존재합니다.')">a. 정확히 1,000명을 가리키는 기수</button>
+    <button class="q-opt" data-val="b" onclick="answerQuiz('s14',3,'b','c','엘레프는 가나안 지파 수와 관계없습니다.')">b. 이스라엘 열두 지파의 배수</button>
+    <button class="q-opt" data-val="c" onclick="answerQuiz('s14',3,'c','c','✓ 정확합니다. 멘든홀(Mendenhall)과 기타 학자들은 엘레프를 군사 분대(military unit) 또는 씨족 단위로 해석합니다. 이 경우 "600 단위"가 되어 총 이주 인원이 역사적으로 훨씬 합리적인 수치가 됩니다.')">c. 군사 분대(military unit) 또는 씨족 단위 — "600 단위의 장정"</button>
+    <button class="q-opt" data-val="d" onclick="answerQuiz('s14',3,'d','c','이 해석은 근거가 없습니다.')">d. 출발한 날짜(40일의 기간)를 나타내는 단위</button>
+  </div>
+</div>
+
+<div class="quiz-card">
+  <div class="q-num">문제 4</div>
+  <div class="q-text">마르틴 노트(Martin Noth)의 신명기 역사서(DtrH) 테제의 핵심은?</div>
+  <div class="q-options">
+    <button class="q-opt" data-val="a" onclick="answerQuiz('s14',4,'a','b','신명기는 DtrH의 서문 역할을 하지만, 테제의 핵심은 신명기~열왕기의 통합 구성입니다.')">a. 신명기가 독립 문서로 다른 성경과 무관하게 기록됨</button>
+    <button class="q-opt" data-val="b" onclick="answerQuiz('s14',4,'b','b','✓ 정확합니다. 노트는 신명기~열왕기하가 단일 편집자(신명기 역사가)의 통합 작품이며, 포로기의 신학적 반성을 담는다고 주장합니다.')">b. 신명기~열왕기하가 단일 신명기적 편집자의 통합 작품으로 포로기에 구성됨</button>
+    <button class="q-opt" data-val="c" onclick="answerQuiz('s14',4,'c','b','역대기는 신명기 역사서에 포함되지 않습니다. 역대기는 별도의 역사서입니다.')">c. 열왕기와 역대기가 동일한 신명기 역사가에 의해 편집됨</button>
+    <button class="q-opt" data-val="d" onclick="answerQuiz('s14',4,'d','b','여호수아서의 역사적 신뢰성은 DtrH 테제의 핵심이 아닙니다.')">d. 여호수아서가 구약 역사서 중 가장 역사적으로 신뢰할 수 있음</button>
+  </div>
+</div>
+
+<div class="quiz-card">
+  <div class="q-num">문제 5</div>
+  <div class="q-text">캐슬린 케년(Kathleen Kenyon)의 여리고 발굴(1952-1958) 주요 결론은?</div>
+  <div class="q-options">
+    <button class="q-opt" data-val="a" onclick="answerQuiz('s14',5,'a','c','케년은 여호수아 시대 성벽이 보존되어 있다는 결론을 내리지 않았습니다.')">a. 여호수아 시대(LBA)의 성벽이 잘 보존되어 있음</button>
+    <button class="q-opt" data-val="b" onclick="answerQuiz('s14',5,'b','c','케년은 BC 1400년대 파괴층을 확인하지 않았습니다. 이것은 우드의 주장입니다.')">b. BC 1400년대의 성벽 붕괴층이 명확히 확인됨</button>
+    <button class="q-opt" data-val="c" onclick="answerQuiz('s14',5,'c','c','✓ 정확합니다. 케년은 후기 청동기 시대(LBA, BC 1550-1200) 여리고에 주요 도시와 성벽이 사실상 존재하지 않았다고 결론지었습니다. 주요 파괴층은 MBA IIA(~BC 1550) 것이었습니다.')">c. 후기 청동기 시대(LBA) 여리고의 도시와 성벽 붕괴 증거가 없음</button>
+    <button class="q-opt" data-val="d" onclick="answerQuiz('s14',5,'d','c','케년은 이스라엘 정착 흔적을 발견한 것이 아니라 LBA 여리고의 부재를 발견했습니다.')">d. 초기 이스라엘의 정착 흔적이 최초로 발견됨</button>
+  </div>
+</div>
+
+<div class="quiz-card">
+  <div class="q-num">문제 6</div>
+  <div class="q-text">브라이언트 우드(Bryant Wood)가 BC 1400년대 여리고 정복 가능성을 제시한 주요 방법은?</div>
+  <div class="q-options">
+    <button class="q-opt" data-val="a" onclick="answerQuiz('s14',6,'a','b','우드는 새로운 성벽을 발견한 것이 아닙니다.')">a. 케년이 발견하지 못한 새로운 성벽 구조 발굴</button>
+    <button class="q-opt" data-val="b" onclick="answerQuiz('s14',6,'b','b','✓ 정확합니다. 우드는 케년이 MBA IIA로 분류한 City IV의 도자기를 재분석하여 LBA 초기(~BC 1400)로 재편년해야 한다고 주장했습니다. 또한 가득 찬 곡식 항아리를 짧은 포위의 증거로 제시했습니다.')">b. 케년의 도자기 편년(pottery typology) 재분석을 통한 연대 재해석</button>
+    <button class="q-opt" data-val="c" onclick="answerQuiz('s14',6,'c','b','이집트 문서가 여리고 함락을 기록한 것은 없습니다.')">c. 여리고 함락을 언급하는 이집트 비석 발견</button>
+    <button class="q-opt" data-val="d" onclick="answerQuiz('s14',6,'d','b','탄소-14 연대측정으로 이 결론이 도출된 것이 아닙니다.')">d. 탄소-14 연대측정을 통한 파괴층 확인</button>
+  </div>
+</div>
+
+<div class="quiz-card">
+  <div class="q-num">문제 7</div>
+  <div class="q-text">얀 아스만(Jan Assmann)의 "문화기억(cultural memory)" 이론에서 역사는 어떻게 정의되는가?</div>
+  <div class="q-options">
+    <button class="q-opt" data-val="a" onclick="answerQuiz('s14',7,'a','a','✓ 정확합니다. 아스만의 문화기억은 공동체가 정체성 형성을 위해 선택하고 재구성한 먼 과거의 기억입니다. 역사적 정확성보다 공동체적 기능이 우선합니다.')">a. 공동체 정체성 형성을 위해 선택·재구성된 집단적 기억</button>
+    <button class="q-opt" data-val="b" onclick="answerQuiz('s14',7,'b','a','이것은 아스만이 구분한 "소통기억(communicative memory)"에 더 가깝습니다.')">b. 살아있는 증인들이 직접 경험하고 공유하는 사건</button>
+    <button class="q-opt" data-val="c" onclick="answerQuiz('s14',7,'c','a','이것은 실증주의적 역사학의 정의이며, 아스만의 문화기억 개념과 다릅니다.')">c. 고고학적 증거로 객관적으로 확인된 과거 사건</button>
+    <button class="q-opt" data-val="d" onclick="answerQuiz('s14',7,'d','a','이것은 역사철학의 한 입장이지만 아스만의 문화기억 이론의 정의가 아닙니다.')">d. 권력 관계에 의해 기록된 지배 계층의 서사</button>
+  </div>
+</div>
+
+<div class="quiz-card">
+  <div class="q-num">문제 8</div>
+  <div class="q-text">에릭 사이버트(Eric Seibert)의 헤렘(진멸 명령) 해석 입장은?</div>
+  <div class="q-options">
+    <button class="q-opt" data-val="a" onclick="answerQuiz('s14',8,'a','c','이것은 전통적 입장이며 사이버트의 주장이 아닙니다.')">a. 헤렘은 하나님의 실제 명령이며 역사적으로 실행됨</button>
+    <button class="q-opt" data-val="b" onclick="answerQuiz('s14',8,'b','c','코판(Copan)이 이 입장에 가깝습니다.')">b. 헤렘은 ANE 전쟁 문학의 과장법이므로 문자적 실행 없음</button>
+    <button class="q-opt" data-val="c" onclick="answerQuiz('s14',8,'c','c','✓ 정확합니다. 사이버트는 "예수 기준(Christological criterion)"을 제안하여, 예수의 하나님 이해와 충돌하는 구약 본문은 하나님에 대한 인간적 오해를 반영한다고 주장합니다.')">c. 헤렘 본문은 하나님의 실제 명령이 아닌 인간의 신학적 오해를 반영</button>
+    <button class="q-opt" data-val="d" onclick="answerQuiz('s14',8,'d','c','이것은 라이트(Wright)의 입장에 가깝습니다.')">d. 헤렘은 특정 역사적 맥락의 심판으로 보편화 불가</button>
+  </div>
+</div>
+
+<div class="quiz-card">
+  <div class="q-num">문제 9</div>
+  <div class="q-text">크리스토퍼 라이트(Christopher Wright)가 헤렘을 해석하는 방식은?</div>
+  <div class="q-options">
+    <button class="q-opt" data-val="a" onclick="answerQuiz('s14',9,'a','b','이것은 세대주의 신학의 입장에 가깝지만 라이트의 주장이 아닙니다.')">a. 신약에서 완전히 폐기된 구약 시대의 전쟁 윤리</button>
+    <button class="q-opt" data-val="b" onclick="answerQuiz('s14',9,'b','b','✓ 정확합니다. 라이트는 헤렘이 가나안의 특정 역사적 맥락에서 하나님의 유일한 심판 행위였으며, 이는 반복될 수 없는 특수한 사건이라고 해석합니다.')">b. 특정 역사적 맥락의 신적 심판으로 보편화·반복 불가</button>
+    <button class="q-opt" data-val="c" onclick="answerQuiz('s14',9,'c','b','이것은 일부 극단적 입장이며 라이트의 주장이 아닙니다.')">c. 모든 시대 이단에 적용 가능한 신학 원리</button>
+    <button class="q-opt" data-val="d" onclick="answerQuiz('s14',9,'d','b','사이버트의 입장이 이에 더 가깝습니다.')">d. 하나님의 실제 명령이 아닌 고대 이스라엘의 문화적 투영</button>
+  </div>
+</div>
+
+<div class="quiz-card">
+  <div class="q-num">문제 10</div>
+  <div class="q-text">역사적 최소주의(Minimalism)의 대표적 학자는?</div>
+  <div class="q-options">
+    <button class="q-opt" data-val="a" onclick="answerQuiz('s14',10,'a','a','✓ 정확합니다. 핀켈스타인과 실버만은 《성경이 발굴되다》(2001)에서 이스라엘 민족의 가나안 자생 발생을 주장하며 역사적 최소주의의 대표적 입장을 제시했습니다.')">a. 이스라엘 핀켈스타인 &amp; 닐 실버만</button>
+    <button class="q-opt" data-val="b" onclick="answerQuiz('s14',10,'b','a','키친은 최대주의에 가까운 보수적 이집트학자입니다.')">b. 케네스 키친 (Kenneth Kitchen)</button>
+    <button class="q-opt" data-val="c" onclick="answerQuiz('s14',10,'c','a','호프마이어는 출애굽 전통의 이집트적 진정성을 옹호하는 보수적 학자입니다.')">c. 제임스 호프마이어 (James Hoffmeier)</button>
+    <button class="q-opt" data-val="d" onclick="answerQuiz('s14',10,'d','a','데버는 최소주의와 최대주의 사이의 중도 입장입니다.')">d. 윌리엄 데버 (William Dever)</button>
+  </div>
+</div>
+
+<div class="quiz-card">
+  <div class="q-num">문제 11</div>
+  <div class="q-text">요나서를 예언적 이야기(didactic narrative)로 읽는 내부 증거는?</div>
+  <div class="q-options">
+    <button class="q-opt" data-val="a" onclick="answerQuiz('s14',11,'a','b','히브리어 문체는 요나서의 장르를 판별하는 결정적 기준이 아닙니다.')">a. 후기 포로기 히브리어 어휘가 사용됨</button>
+    <button class="q-opt" data-val="b" onclick="answerQuiz('s14',11,'b','b','✓ 정확합니다. 역사적 니느웨는 최전성기에도 하루 이내에 통행 가능한 크기였습니다. "삼 일 길"은 극적 과장으로, 예언적 이야기 장르의 특성을 보여줍니다.')">b. 니느웨의 규모("삼 일 길")가 역사적 니느웨와 맞지 않음</button>
+    <button class="q-opt" data-val="c" onclick="answerQuiz('s14',11,'c','b','요나 벤 아밋다이는 왕하 14:25에 등장하는 실제 선지자입니다. 선지자 이름의 특이성은 비역사성의 근거가 아닙니다.')">c. 요나라는 이름이 성경 어디에도 등장하지 않는 가상의 인물</button>
+    <button class="q-opt" data-val="d" onclick="answerQuiz('s14',11,'d','b','물고기의 존재 자체는 기적의 문제이지 장르를 결정하는 근거가 아닙니다.')">d. 큰 물고기가 생물학적으로 불가능한 크기임</button>
+  </div>
+</div>
+
+<div class="quiz-card">
+  <div class="q-num">문제 12</div>
+  <div class="q-text">성경 역사서술(biblical historiography)의 특징을 가장 잘 설명한 것은?</div>
+  <div class="q-options">
+    <button class="q-opt" data-val="a" onclick="answerQuiz('s14',12,'a','b','성경은 현대 학술 역사학의 방법론(객관성, 자료 비교, 다원적 시각)과 다른 방식으로 역사를 서술합니다.')">a. 현대 학술 역사학과 동일한 객관적 방법론으로 기록됨</button>
+    <button class="q-opt" data-val="b" onclick="answerQuiz('s14',12,'b','b','✓ 정확합니다. 성경은 역사적 사건을 전제하되, 하나님의 행위와 이스라엘의 정체성을 해석하는 신학적 목적에 따라 사건을 선택·해석·서술합니다. 이것이 "신학적 역사서술"의 특징입니다.')">b. 신학적 목적이 서술 방식을 결정하는 해석적·신학적 역사</button>
+    <button class="q-opt" data-val="c" onclick="answerQuiz('s14',12,'c','b','성경은 연대기적 목록이 아니며, 선택과 해석이 핵심입니다.')">c. 사건을 빠짐없이 기록한 완전한 연대기</button>
+    <button class="q-opt" data-val="d" onclick="answerQuiz('s14',12,'d','b','성경은 신화와 역사를 분리하지 않는다는 면도 있지만, 이것이 핵심 특징은 아닙니다. 신학적 해석이 역사 서술을 이끈다는 것이 더 정확합니다.')">d. 신화와 역사를 구분 없이 혼합한 원시적 장르</button>
+  </div>
+</div>
+</section>
+
+<footer>
+  <p>Made by Isaac with Claude | 성경 속 역사성 논쟁 교육자료 — 대학생 버전</p>
+  <p style="margin-top:6px;"><a href="index.html">← 버전 선택으로</a></p>
+</footer>
+
+<script>
+function setActive(a){
+  document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
+  a.classList.add('active');
+}
+function switchTab(sec,panel,btn){
+  document.querySelectorAll('#'+sec+' .tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#'+sec+' .tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(panel).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleAcc(btn){
+  const body=btn.nextElementSibling;
+  const arrow=btn.querySelector('.arrow');
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  if(arrow) arrow.style.transform=isOpen?'':'rotate(180deg)';
+}
+function flipCard(card){card.classList.toggle('flipped');}
+function answerQuiz(sec,qNum,chosen,correct,feedbackHtml){
+  const card=document.querySelectorAll('#'+sec+' .quiz-card')[qNum-1];
+  card.querySelectorAll('.q-opt').forEach(btn=>{
+    btn.disabled=true;
+    if(btn.dataset.val===correct) btn.classList.add('correct');
+    if(btn.dataset.val===chosen && chosen!==correct) btn.classList.add('wrong');
+  });
+  let fb=card.querySelector('.q-feedback');
+  if(!fb){fb=document.createElement('div');fb.className='q-feedback';card.appendChild(fb);}
+  fb.innerHTML=feedbackHtml;
+  if(!window._scores) window._scores={};
+  if(!window._scores[sec]) window._scores[sec]={correct:0,total:0};
+  if(!card.dataset.answered){
+    card.dataset.answered='1';
+    window._scores[sec].total++;
+    if(chosen===correct) window._scores[sec].correct++;
+    const totalCards=document.querySelectorAll('#'+sec+' .quiz-card').length;
+    if(window._scores[sec].total===totalCards) showScore(sec);
+  }
+}
+function showScore(sec){
+  const s=window._scores[sec];
+  let box=document.querySelector('#'+sec+' .score-box');
+  if(!box){box=document.createElement('div');box.className='score-box';document.getElementById(sec).appendChild(box);}
+  const pct=Math.round(s.correct/s.total*100);
+  let msg=pct===100?'완벽합니다! 🎉':pct>=80?'훌륭합니다! 👏':pct>=60?'잘 하셨습니다.':'다시 학습해 보세요.';
+  box.innerHTML='<div class="score-num">'+s.correct+' / '+s.total+'</div><p>'+msg+' ('+pct+'%)</p>';
+}
+</script>
+</body>
+</html>

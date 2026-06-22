@@ -1113,4 +1113,9 @@ window.addEventListener('scroll',()=>{
   let cur='';
   sections.forEach(s=>{if(s.getBoundingClientRect().top<=120) cur=s.id;});
   navLinks.forEach(a=>{
-    a.classList.toggle('active',a.getAttribute('href')==='#
+    a.classList.toggle('active',a.getAttribute('href')==='#'+cur);
+  });
+});
+</script>
+</body>
+</html>

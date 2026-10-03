@@ -43,7 +43,7 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
-         background: var(--bg); color: var(--text); line-height: 1.7; }
+         background: var(--bg); color: var(--text); line-height: 1.7; word-break: keep-all; overflow-wrap: break-word; }
 
   .site-header { background: linear-gradient(135deg, #4a2d0e 0%, #8b5e3c 100%);
     color: #fff; padding: 48px 24px 36px; text-align: center; }
@@ -101,10 +101,10 @@
   .arrow { font-size: .75rem; color: var(--muted); transition: transform .25s; }
 
   .flip-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(190px,1fr)); gap: 14px; margin-bottom: 20px; }
-  .flip-card { height: 195px; cursor: pointer; perspective: 1000px; }
-  .flip-inner { width: 100%; height: 100%; transition: transform .5s; transform-style: preserve-3d; position: relative; }
+  .flip-card { min-height: 195px; display: grid; cursor: pointer; perspective: 1000px; }
+  .flip-inner { width: 100%; display: grid; transition: transform .5s; transform-style: preserve-3d; position: relative; }
   .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
-  .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+  .flip-front, .flip-back { grid-area: 1/1; min-width: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden;
     border-radius: var(--radius); display: flex; flex-direction: column;
     align-items: center; justify-content: center; padding: 16px; text-align: center; }
   .flip-front { background: var(--card); border: 2px solid var(--bh-xlight); }
@@ -547,7 +547,7 @@
     <div class="person-name">이스라엘 핑켈스타인</div>
     <div class="person-role">고고학자 / 텔아비브대</div>
     <div class="person-work">"The Bible Unearthed" (2001, 공저)</div>
-    <p class="person-desc">수정주의적 입장의 대표 학자. 출애굽·통일왕국의 규모에 회의적이며, 성경의 많은 부분이 바빌론 포로 이후 신학적 목적으로 편집되었다고 주장합니다. 성경의 역사적 핵심은 인정하지만 서술의 과장에 비판적입니다.</p>
+    <p class="person-desc">출애굽·통일왕국의 규모에 회의적인 학자. 다윗은 실제 인물로 보지만, 성경의 많은 부분이 BC 7세기(요시야 왕 시대)에 신학적 목적으로 쓰이고 다듬어졌다고 주장합니다. 성경의 역사적 핵심은 인정하지만 서술의 과장에 비판적입니다.</p>
   </div>
   <div class="person-card">
     <div class="person-emoji">📚</div>
@@ -575,10 +575,10 @@
   <div class="q-num">문제 1</div>
   <div class="q-text">성경의 역사성을 논할 때 가장 먼저 고려해야 할 것은?</div>
   <div class="q-options">
-    <button class="q-opt" onclick="checkQ(1,'a','b')">① 고고학 발굴 결과와의 일치 여부</button>
-    <button class="q-opt" onclick="checkQ(1,'b','b')">② 해당 본문의 장르와 신학적 목적</button>
-    <button class="q-opt" onclick="checkQ(1,'c','b')">③ 저자가 사건을 직접 목격했는지 여부</button>
-    <button class="q-opt" onclick="checkQ(1,'d','b')">④ 현대 역사학의 기준에 맞는지 여부</button>
+    <button class="q-opt" onclick="checkQ(1,'a','a')">① 해당 본문의 장르와 신학적 목적</button>
+    <button class="q-opt" onclick="checkQ(1,'b','a')">② 고고학 발굴 결과와의 일치 여부</button>
+    <button class="q-opt" onclick="checkQ(1,'c','a')">③ 저자가 사건을 직접 목격했는지 여부</button>
+    <button class="q-opt" onclick="checkQ(1,'d','a')">④ 현대 역사학의 기준에 맞는지 여부</button>
   </div>
   <div class="q-feedback" style="display:none;"></div>
 </div>
@@ -587,10 +587,10 @@
   <div class="q-num">문제 2</div>
   <div class="q-text">이집트 공식 기록에 출애굽 사건이 없는 이유로 가장 타당한 설명은?</div>
   <div class="q-options">
-    <button class="q-opt" onclick="checkQ(2,'a','c')">① 출애굽은 역사적 근거가 전혀 없는 신화이기 때문에</button>
-    <button class="q-opt" onclick="checkQ(2,'b','c')">② 이집트 문명이 이 시기 문자를 사용하지 않았기 때문에</button>
-    <button class="q-opt" onclick="checkQ(2,'c','c')">③ 이집트는 자국의 패배나 노예 탈출을 공식 기록에 남기지 않는 경향이 있기 때문에</button>
-    <button class="q-opt" onclick="checkQ(2,'d','c')">④ 해당 파라오의 기록이 모두 소실되었기 때문에</button>
+    <button class="q-opt" onclick="checkQ(2,'a','d')">① 출애굽은 역사적 근거가 전혀 없는 신화이기 때문에</button>
+    <button class="q-opt" onclick="checkQ(2,'b','d')">② 이집트 문명이 이 시기 문자를 사용하지 않았기 때문에</button>
+    <button class="q-opt" onclick="checkQ(2,'c','d')">③ 해당 파라오의 기록이 모두 소실되었기 때문에</button>
+    <button class="q-opt" onclick="checkQ(2,'d','d')">④ 이집트는 자국의 패배나 노예 탈출을 공식 기록에 남기지 않는 경향이 있기 때문에</button>
   </div>
   <div class="q-feedback" style="display:none;"></div>
 </div>
@@ -613,7 +613,7 @@
   <div class="q-options">
     <button class="q-opt" onclick="checkQ(4,'a','c')">① 여호수아 시대(BC 1200년대) 성벽이 붕괴된 흔적이 발견되었다</button>
     <button class="q-opt" onclick="checkQ(4,'b','c')">② 여리고 도시 자체가 역사적으로 존재하지 않았음이 확인되었다</button>
-    <button class="q-opt" onclick="checkQ(4,'c','c')">③ 여호수아 시대로 추정되는 시기에 대규모 성벽이 없었을 가능성이 높다</button>
+    <button class="q-opt" onclick="checkQ(4,'c','c')">③ 후기 청동기(여호수아 시대 추정) 지층에서 성벽의 붕괴 흔적이 확인되지 않았다</button>
     <button class="q-opt" onclick="checkQ(4,'d','c')">④ 여리고 발굴은 아직 이루어지지 않아 알 수 없다</button>
   </div>
   <div class="q-feedback" style="display:none;"></div>
@@ -623,10 +623,10 @@
   <div class="q-num">문제 5</div>
   <div class="q-text">헤렘(חֵרֶם) 전쟁 명령의 신학적 기능으로 가장 적절한 것은?</div>
   <div class="q-options">
-    <button class="q-opt" onclick="checkQ(5,'a','c')">① 이스라엘의 군사적 우월성을 과시하기 위함이다</button>
-    <button class="q-opt" onclick="checkQ(5,'b','c')">② 전쟁 포로를 처리하는 법적 기준을 제시하기 위함이다</button>
-    <button class="q-opt" onclick="checkQ(5,'c','c')">③ 이방 신들과의 완전한 단절과 야훼께 대한 전적인 헌신을 표현하기 위함이다</button>
-    <button class="q-opt" onclick="checkQ(5,'d','c')">④ 가나안 민족이 도덕적으로 열등함을 보여주기 위함이다</button>
+    <button class="q-opt" onclick="checkQ(5,'a','a')">① 이방 신들과의 완전한 단절과 야훼께 대한 전적인 헌신을 표현하기 위함이다</button>
+    <button class="q-opt" onclick="checkQ(5,'b','a')">② 전쟁 포로를 처리하는 법적 기준을 제시하기 위함이다</button>
+    <button class="q-opt" onclick="checkQ(5,'c','a')">③ 이스라엘의 군사적 우월성을 과시하기 위함이다</button>
+    <button class="q-opt" onclick="checkQ(5,'d','a')">④ 가나안 민족이 도덕적으로 열등함을 보여주기 위함이다</button>
   </div>
   <div class="q-feedback" style="display:none;"></div>
 </div>
@@ -635,10 +635,10 @@
   <div class="q-num">문제 6</div>
   <div class="q-text">족장 내러티브를 '민족 정체성 내러티브'로 이해할 때 핵심은?</div>
   <div class="q-options">
-    <button class="q-opt" onclick="checkQ(6,'a','b')">① 아브라함이 BC 2000년대에 실존했음을 증명한다</button>
-    <button class="q-opt" onclick="checkQ(6,'b','b')">② 개인의 이야기가 이스라엘 민족 전체의 정체성·소명·하나님과의 관계를 표현한다</button>
-    <button class="q-opt" onclick="checkQ(6,'c','b')">③ 족장 이야기는 메소포타미아 신화를 복사한 것이므로 비역사적이다</button>
-    <button class="q-opt" onclick="checkQ(6,'d','b')">④ 족장 내러티브는 고고학으로 완전히 검증되었다</button>
+    <button class="q-opt" onclick="checkQ(6,'a','d')">① 아브라함이 BC 2000년대에 실존했음을 증명한다</button>
+    <button class="q-opt" onclick="checkQ(6,'b','d')">② 족장 내러티브는 고고학으로 완전히 검증되었다</button>
+    <button class="q-opt" onclick="checkQ(6,'c','d')">③ 족장 이야기는 메소포타미아 신화를 복사한 것이므로 비역사적이다</button>
+    <button class="q-opt" onclick="checkQ(6,'d','d')">④ 개인의 이야기가 이스라엘 민족 전체의 정체성·소명·하나님과의 관계를 표현한다</button>
   </div>
   <div class="q-feedback" style="display:none;"></div>
 </div>
@@ -650,7 +650,7 @@
     <button class="q-opt" onclick="checkQ(7,'a','c')">① 극도로 정제된 문학적 구조와 아이러니</button>
     <button class="q-opt" onclick="checkQ(7,'b','c')">② 니느웨 전체가 하루 만에 회개하는 비현실적 서술</button>
     <button class="q-opt" onclick="checkQ(7,'c','c')">③ 요나 벤 아미타이가 성경 어디에도 등장하지 않기 때문에</button>
-    <button class="q-opt" onclick="checkQ(7,'d','c')">④ 하나님의 보편적 자비라는 일관된 신학 메시지</button>
+    <button class="q-opt" onclick="checkQ(7,'d','c')">④ 식물이 하룻밤 사이 자라고 죽는 장치적 요소</button>
   </div>
   <div class="q-feedback" style="display:none;"></div>
 </div>
@@ -659,10 +659,10 @@
   <div class="q-num">문제 8</div>
   <div class="q-text">"증거의 부재가 곧 부재의 증거는 아니다"는 원칙이 역사성 논쟁에서 의미하는 바는?</div>
   <div class="q-options">
-    <button class="q-opt" onclick="checkQ(8,'a','b')">① 고고학 증거가 없으면 성경을 무조건 믿어야 한다</button>
-    <button class="q-opt" onclick="checkQ(8,'b','b')">② 발굴되지 않은 지역이 많고 고대 흔적은 쉽게 사라지므로, 고고학적 침묵만으로 사건을 부정할 수 없다</button>
-    <button class="q-opt" onclick="checkQ(8,'c','b')">③ 성경의 역사성은 고고학으로 검증할 수 없으므로 무의미하다</button>
-    <button class="q-opt" onclick="checkQ(8,'d','b')">④ 고고학자들이 성경의 역사성에 편향되어 있다</button>
+    <button class="q-opt" onclick="checkQ(8,'a','a')">① 발굴되지 않은 지역이 많고 고대 흔적은 쉽게 사라지므로, 고고학적 침묵만으로 사건을 부정할 수 없다</button>
+    <button class="q-opt" onclick="checkQ(8,'b','a')">② 고고학 증거가 없으면 성경을 무조건 믿어야 한다</button>
+    <button class="q-opt" onclick="checkQ(8,'c','a')">③ 성경의 역사성은 고고학으로 검증할 수 없으므로 무의미하다</button>
+    <button class="q-opt" onclick="checkQ(8,'d','a')">④ 고고학자들이 성경의 역사성에 편향되어 있다</button>
   </div>
   <div class="q-feedback" style="display:none;"></div>
 </div>
@@ -671,10 +671,10 @@
   <div class="q-num">문제 9</div>
   <div class="q-text">윌리엄 데버(William Dever)의 고고학적 입장을 가장 잘 설명한 것은?</div>
   <div class="q-options">
-    <button class="q-opt" onclick="checkQ(9,'a','c')">① 성경의 모든 역사적 기록은 고고학적으로 정확하게 확인된다</button>
-    <button class="q-opt" onclick="checkQ(9,'b','c')">② 출애굽·정복 기사는 완전한 신화이며 역사적 근거가 전혀 없다</button>
-    <button class="q-opt" onclick="checkQ(9,'c','c')">③ 이스라엘의 역사적 실존은 확인되나, 출애굽·정복 서술은 과장 또는 신학적 재구성일 수 있다</button>
-    <button class="q-opt" onclick="checkQ(9,'d','c')">④ 고고학은 성경의 역사성과 무관한 독립적 학문이다</button>
+    <button class="q-opt" onclick="checkQ(9,'a','b')">① 성경의 모든 역사적 기록은 고고학적으로 정확하게 확인된다</button>
+    <button class="q-opt" onclick="checkQ(9,'b','b')">② 이스라엘의 역사적 실존은 확인되나, 출애굽·정복 서술은 과장 또는 신학적 재구성일 수 있다</button>
+    <button class="q-opt" onclick="checkQ(9,'c','b')">③ 출애굽·정복 기사는 완전한 신화이며 역사적 근거가 전혀 없다</button>
+    <button class="q-opt" onclick="checkQ(9,'d','b')">④ 고고학은 성경의 역사성과 무관한 독립적 학문이다</button>
   </div>
   <div class="q-feedback" style="display:none;"></div>
 </div>
@@ -683,10 +683,10 @@
   <div class="q-num">문제 10</div>
   <div class="q-text">역사성과 신앙의 관계에 대해 이 자료가 주장하는 입장은?</div>
   <div class="q-options">
-    <button class="q-opt" onclick="checkQ(10,'a','c')">① 성경의 모든 역사적 세부사항이 정확해야 신앙이 성립한다</button>
-    <button class="q-opt" onclick="checkQ(10,'b','c')">② 역사성은 신앙과 무관하므로 신경 쓸 필요가 없다</button>
-    <button class="q-opt" onclick="checkQ(10,'c','c')">③ 역사적 핵심은 실재하며, 세부 서술의 신학적 재구성이 신학적 진리를 무효화하지 않는다</button>
-    <button class="q-opt" onclick="checkQ(10,'d','c')">④ 고고학이 성경의 역사성을 반증했으므로 알레고리로만 읽어야 한다</button>
+    <button class="q-opt" onclick="checkQ(10,'a','d')">① 성경의 모든 역사적 세부사항이 정확해야 신앙이 성립한다</button>
+    <button class="q-opt" onclick="checkQ(10,'b','d')">② 역사성은 신앙과 무관하므로 신경 쓸 필요가 없다</button>
+    <button class="q-opt" onclick="checkQ(10,'c','d')">③ 고고학이 성경의 역사성을 반증했으므로 알레고리로만 읽어야 한다</button>
+    <button class="q-opt" onclick="checkQ(10,'d','d')">④ 역사적 핵심은 실재하며, 세부 서술의 신학적 재구성이 신학적 진리를 무효화하지 않는다</button>
   </div>
   <div class="q-feedback" style="display:none;"></div>
 </div>
@@ -725,18 +725,18 @@ function toggleAcc(btn) {
 }
 
 const answered = {};
-const ANSWERS = {1:'b',2:'c',3:'b',4:'c',5:'c',6:'b',7:'c',8:'b',9:'c',10:'c'};
+const ANSWERS = {1:'a',2:'d',3:'b',4:'c',5:'a',6:'d',7:'c',8:'a',9:'b',10:'d'};
 const feedbacks = {
-  1:{a:'고고학은 중요하지만, 역사성 논의의 출발점은 본문의 장르와 목적입니다.',b:'정확합니다! 같은 사건이라도 장르에 따라 역사적 주장의 성격이 달라집니다.',c:'저자의 목격 여부도 중요하지만, 더 근본적인 출발점은 해당 본문의 장르입니다.',d:'현대 역사학의 기준은 고대 성경 본문에 그대로 적용하기 어렵습니다. 장르가 먼저입니다.'},
-  2:{a:'이것은 극단적 최소주의 입장입니다. 대부분의 학자들은 역사적 핵심이 있다고 봅니다.',b:'이집트는 이 시기 수천 년의 문자 기록 전통을 이미 가지고 있었습니다.',c:'맞습니다! 고대 이집트는 파라오의 위대한 승리만 기록하는 경향이 있었습니다. 패배나 노예 탈출은 공식 비문에 남기지 않았습니다.',d:'해당 시기의 이집트 기록들이 상당량 남아 있습니다. 완전한 소실은 설명이 되지 않습니다.'},
+  1:{a:'정확합니다! 같은 사건이라도 장르에 따라 역사적 주장의 성격이 달라집니다.',b:'고고학은 중요하지만, 역사성 논의의 출발점은 본문의 장르와 목적입니다.',c:'저자의 목격 여부도 중요하지만, 더 근본적인 출발점은 해당 본문의 장르입니다.',d:'현대 역사학의 기준은 고대 성경 본문에 그대로 적용하기 어렵습니다. 장르가 먼저입니다.'},
+  2:{a:'이것은 극단적 최소주의 입장입니다. 대부분의 학자들은 역사적 핵심이 있다고 봅니다.',b:'이집트는 이 시기 수천 년의 문자 기록 전통을 이미 가지고 있었습니다.',c:'해당 시기의 이집트 기록들이 상당량 남아 있습니다. 완전한 소실은 설명이 되지 않습니다.',d:'맞습니다! 고대 이집트는 파라오의 위대한 승리만 기록하는 경향이 있었습니다. 패배나 노예 탈출은 공식 비문에 남기지 않았습니다.'},
   3:{a:'성경에는 역사적 사건도 담겨 있습니다. 신학적 역사는 역사를 배제하지 않습니다.',b:'정확합니다! 역사적 핵심과 신학적 해석이 함께 있는 것이 신학적 역사의 특징입니다.',c:'신학적 역사는 성경을 현대 방법론으로 "재해석"하는 것이 아니라, 성경 자체의 서술 방식을 이해하는 것입니다.',d:'신학적 역사 개념은 역사와 신학을 분리하는 것이 아니라, 그 긴밀한 결합을 인정합니다.'},
-  4:{a:'캐슬린 케년의 발굴은 이 시기 대규모 성벽 붕괴의 증거를 찾지 못했습니다.',b:'여리고 도시는 역사적으로 실존했으며, 청동기를 포함해 오랜 거주 역사가 있습니다.',c:'맞습니다! 1952~58년 발굴 결과, 후기 청동기(여호수아 시대 추정) 지층에서 대규모 성벽 흔적이 발견되지 않았습니다.',d:'여리고(텔 에스-술탄)는 19세기부터 여러 차례 발굴된 가장 잘 연구된 유적 중 하나입니다.'},
-  5:{a:'헤렘은 군사적 우월성 과시가 아닌 종교적 개념입니다.',b:'헤렘은 법적 기준이 아닌 신학적·종교적 개념입니다.',c:'맞습니다! 히브리어 חֵרֶם은 "봉헌된 것"을 뜻하며, 이방 신들과의 단절과 야훼께 대한 전적 헌신을 표현합니다.',d:'헤렘은 특정 민족의 도덕성 판단보다 이스라엘과 이방 종교의 분리에 초점이 있습니다.'},
-  6:{a:'민족 정체성 내러티브로 읽는 것이 아브라함의 역사적 실존을 부정하지는 않습니다.',b:'맞습니다! 족장 개인의 이야기가 이스라엘 민족 전체의 부름·정체성·하나님과의 관계를 표현하는 방식이 핵심입니다.',c:'성경과 메소포타미아 문학 사이에 유사점이 있지만, 단순한 복사가 아닌 신학적 전환이 있습니다.',d:'족장 내러티브는 여전히 역사성 논쟁 중이며 "완전히 검증"되었다고 보기 어렵습니다.'},
-  7:{a:'요나서의 정교한 문학 구조(아이러니, 대조, 반전)는 실제로 문학적 독해의 근거로 사용됩니다.',b:'니느웨의 즉각적이고 전면적인 회개는 문학적 독해를 지지하는 요소 중 하나입니다.',c:'정확합니다! 요나 벤 아미타이는 열왕기하 14:25에 실존 예언자로 언급됩니다. 이 사실은 오히려 역사적 독해를 지지하는 근거입니다.',d:'하나님의 보편적 자비 메시지는 세 가지 독해 방식 모두에서 확인되는 신학적 핵심입니다.'},
-  8:{a:'고고학 증거가 없다는 것 자체가 성경을 무조건 믿어야 한다는 주장의 근거가 되지는 않습니다.',b:'맞습니다! 발굴되지 않은 지역이 광대하고, 고대 유목 생활의 흔적은 거의 남지 않기 때문에 고고학적 침묵만으로 사건을 부정하는 것은 무리입니다.',c:'고고학과 성경 역사성의 관계는 의미 있는 연구 분야이며, 실제로 많은 것들이 확인되고 있습니다.',d:'개별 학자의 편향이 이 원칙의 핵심은 아닙니다.'},
-  9:{a:'데버는 성경의 규모와 세부사항에 대해 상당한 회의를 갖고 있습니다.',b:'이것은 핑켈스타인 같은 최소주의자의 입장에 더 가깝습니다.',c:'맞습니다! 데버는 철기 시대 이스라엘의 실존성을 강력히 지지하면서도, 출애굽과 정복 기사의 규모는 과장되었거나 신학적으로 재구성되었을 수 있다고 봅니다.',d:'데버는 오히려 고고학과 성경 연구의 긴밀한 대화를 주장하는 학자입니다.'},
-  10:{a:'이것은 "강한 무오성" 입장으로, 이 자료의 신학적 역사 관점과 다릅니다.',b:'역사성 논쟁은 신앙의 근거와 연결되므로 완전히 무관할 수 없습니다.',c:'맞습니다! 역사적 핵심에 기반하되, 신학적 목적에 의한 재구성이 신학적 진리를 훼손하지 않는다는 것이 이 자료의 입장입니다.',d:'이것은 이 자료가 비판하는 극단적 최소주의의 결론입니다.'}
+  4:{a:'캐슬린 케년의 발굴은 이 시기 대규모 성벽 붕괴의 증거를 찾지 못했습니다.',b:'여리고 도시는 역사적으로 실존했으며, 청동기를 포함해 오랜 거주 역사가 있습니다.',c:'맞습니다! 1952~58년 발굴 결과, 후기 청동기(여호수아 시대 추정) 지층에서 성벽의 붕괴 흔적(파괴층)이 확인되지 않았습니다.',d:'여리고(텔 에스-술탄)는 19세기부터 여러 차례 발굴된 가장 잘 연구된 유적 중 하나입니다.'},
+  5:{a:'맞습니다! 히브리어 חֵרֶם은 "봉헌된 것"을 뜻하며, 이방 신들과의 단절과 야훼께 대한 전적 헌신을 표현합니다.',b:'헤렘은 법적 기준이 아닌 신학적·종교적 개념입니다.',c:'헤렘은 군사적 우월성 과시가 아닌 종교적 개념입니다.',d:'헤렘은 특정 민족의 도덕성 판단보다 이스라엘과 이방 종교의 분리에 초점이 있습니다.'},
+  6:{a:'민족 정체성 내러티브로 읽는 것이 아브라함의 역사적 실존을 부정하지는 않습니다.',b:'족장 내러티브는 여전히 역사성 논쟁 중이며 "완전히 검증"되었다고 보기 어렵습니다.',c:'성경과 메소포타미아 문학 사이에 유사점이 있지만, 단순한 복사가 아닌 신학적 전환이 있습니다.',d:'맞습니다! 족장 개인의 이야기가 이스라엘 민족 전체의 부름·정체성·하나님과의 관계를 표현하는 방식이 핵심입니다.'},
+  7:{a:'요나서의 정교한 문학 구조(아이러니, 대조, 반전)는 실제로 문학적 독해의 근거로 사용됩니다.',b:'니느웨의 즉각적이고 전면적인 회개는 문학적 독해를 지지하는 요소 중 하나입니다.',c:'정확합니다! 요나 벤 아미타이는 열왕기하 14:25에 실존 예언자로 언급됩니다. 이 사실은 오히려 역사적 독해를 지지하는 근거입니다.',d:'식물이 하룻밤 사이 자라고 죽는 장면은 문학적 독해를 지지하는 학자들이 드는 장치적 요소 중 하나입니다.'},
+  8:{a:'맞습니다! 발굴되지 않은 지역이 광대하고, 고대 유목 생활의 흔적은 거의 남지 않기 때문에 고고학적 침묵만으로 사건을 부정하는 것은 무리입니다.',b:'고고학 증거가 없다는 것 자체가 성경을 무조건 믿어야 한다는 주장의 근거가 되지는 않습니다.',c:'고고학과 성경 역사성의 관계는 의미 있는 연구 분야이며, 실제로 많은 것들이 확인되고 있습니다.',d:'개별 학자의 편향이 이 원칙의 핵심은 아닙니다.'},
+  9:{a:'데버는 성경의 규모와 세부사항에 대해 상당한 회의를 갖고 있습니다.',b:'맞습니다! 데버는 철기 시대 이스라엘의 실존성을 강력히 지지하면서도, 출애굽과 정복 기사의 규모는 과장되었거나 신학적으로 재구성되었을 수 있다고 봅니다.',c:'이것은 톰슨·렘케 등 코펜하겐 학파 최소주의자의 입장에 더 가깝습니다.',d:'데버는 오히려 고고학과 성경 연구의 긴밀한 대화를 주장하는 학자입니다.'},
+  10:{a:'이것은 "강한 무오성" 입장으로, 이 자료의 신학적 역사 관점과 다릅니다.',b:'역사성 논쟁은 신앙의 근거와 연결되므로 완전히 무관할 수 없습니다.',c:'이것은 이 자료가 비판하는 극단적 최소주의의 결론입니다.',d:'맞습니다! 역사적 핵심에 기반하되, 신학적 목적에 의한 재구성이 신학적 진리를 훼손하지 않는다는 것이 이 자료의 입장입니다.'}
 };
 
 function checkQ(qNum, chosen, correctAns) {

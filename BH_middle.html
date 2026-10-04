@@ -36,7 +36,7 @@
     --bg: #f9fafb;
     --card: #ffffff;
     --text: #1a1a2e;
-    --muted: #6c757d;
+    --muted: #5c636a;
     --border: #dee2e6;
     --radius: 12px;
     --shadow: 0 2px 12px rgba(0,0,0,0.08);
@@ -161,11 +161,17 @@
     .position-grid { grid-template-columns: 1fr; }
     .person-grid { grid-template-columns: 1fr; }
   }
+  /* 상단 바: 알약 버튼은 한 줄로 유지하고, 경로 문구는 좁은 화면에서 숨긴다 */
+  .top-bar a { white-space: nowrap; flex-shrink: 0; }
+  .top-bar > span:last-child { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  @media (max-width: 480px) { .top-bar > span:nth-last-child(-n+2) { display: none; } }
+  /* nav로 이동했을 때 섹션 제목이 고정 nav 밑에 가리지 않게 */
+  section[id] { scroll-margin-top: 60px; }
 </style>
 </head>
 <body>
 
-<div style="background:#4a2d0e;padding:10px 20px;display:flex;align-items:center;gap:10px;">
+<div class="top-bar" style="background:#4a2d0e;padding:10px 20px;display:flex;align-items:center;gap:10px;">
   <a href="https://faithreason.kr/Faith_Reason/" style="color:#fff;text-decoration:none;font-size:.83rem;font-weight:600;display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:4px 12px;">← 전체 시리즈</a>
   <span style="color:rgba(255,255,255,.35);font-size:.8rem;">|</span>
   <a href="index.html" style="color:#fff;text-decoration:none;font-size:.83rem;font-weight:600;
@@ -198,7 +204,7 @@
 
 <!-- S0 도입 -->
 <section id="s0" class="section">
-<div class="section-title">📋 도입</div>
+<h2 class="section-title">📋 도입</h2>
 <p class="section-sub">성경의 역사성 논쟁을 탐구하기 전, 핵심 질문부터 살펴봅니다.</p>
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('s0','s0t1',this)">역사책인가?</button>
@@ -240,7 +246,7 @@
 
 <!-- S1 해석 원리 -->
 <section id="s1" class="section">
-<div class="section-title">🔧 해석 원리: 장르가 먼저다</div>
+<h2 class="section-title">🔧 해석 원리: 장르가 먼저다</h2>
 <p class="section-sub">성경의 다양한 글쓰기 방식(장르)을 이해해야 역사성 질문에 정확하게 접근할 수 있습니다. 카드를 탭해 보세요.</p>
 <div class="flip-grid">
   <div class="flip-card" onclick="this.classList.toggle('flipped')">
@@ -307,7 +313,7 @@
 
 <!-- S2 출애굽 -->
 <section id="s2" class="section">
-<div class="section-title">📜 출애굽의 역사성</div>
+<h2 class="section-title">📜 출애굽의 역사성</h2>
 <p class="section-sub">이집트 탈출 이야기 — 고고학은 침묵하는데, 신앙은 어디에 서야 할까요?</p>
 
 <div class="card">
@@ -346,7 +352,7 @@
 
 <!-- S3 가나안 정복 -->
 <section id="s3" class="section">
-<div class="section-title">⚔️ 가나안 정복과 헤렘 전쟁</div>
+<h2 class="section-title">⚔️ 가나안 정복과 헤렘 전쟁</h2>
 <p class="section-sub">성벽이 무너진 여리고, 진멸 명령 — 고고학과 신학 사이에서 어떻게 이해할 수 있을까요?</p>
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('s3','s3t1',this)">여리고 고고학</button>
@@ -394,7 +400,7 @@
 
 <!-- S4 족장 내러티브 -->
 <section id="s4" class="section">
-<div class="section-title">🏕️ 족장 내러티브</div>
+<h2 class="section-title">🏕️ 족장 내러티브</h2>
 <p class="section-sub">아브라함·이삭·야곱 — 이들은 역사적 인물인가, 민족 기원 이야기의 주인공인가?</p>
 <div class="acc-item">
   <button class="acc-btn" onclick="toggleAcc(this)">📅 족장들의 시대적 배경 <span class="arrow">▼</span></button>
@@ -423,7 +429,7 @@
 
 <!-- S5 요나서 -->
 <section id="s5" class="section">
-<div class="section-title">🐋 요나서: 역사인가, 이야기인가?</div>
+<h2 class="section-title">🐋 요나서: 역사인가, 이야기인가?</h2>
 <p class="section-sub">가장 뜨거운 역사성 논쟁 중 하나 — 세 가지 독해 방식을 살펴봅니다.</p>
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('s5','s5t1',this)">역사적 독해</button>
@@ -471,7 +477,7 @@
 
 <!-- S6 고고학 -->
 <section id="s6" class="section">
-<div class="section-title">🏺 고고학과 성경</div>
+<h2 class="section-title">🏺 고고학과 성경</h2>
 <p class="section-sub">고고학은 성경의 적인가 친구인가? 확인된 것과 침묵하는 것을 구분해 봅니다.</p>
 
 <div class="card" style="margin-bottom:16px;">
@@ -509,7 +515,7 @@
 
 <!-- S7 역사와 신앙 -->
 <section id="s7" class="section">
-<div class="section-title">🙏 역사성과 신앙</div>
+<h2 class="section-title">🙏 역사성과 신앙</h2>
 <p class="section-sub">역사성이 흔들려도 신앙이 서 있을 수 있는가? 이 질문을 정직하게 다뤄 봅니다.</p>
 
 <div class="card" style="border-top:4px solid var(--bh);">
@@ -532,7 +538,7 @@
 
 <!-- S8 학자들 -->
 <section id="s8" class="section">
-<div class="section-title">🧑‍🎓 주요 학자</div>
+<h2 class="section-title">🧑‍🎓 주요 학자</h2>
 <p class="section-sub">역사성 논쟁을 이끄는 네 명의 학자를 소개합니다.</p>
 <div class="person-grid">
   <div class="person-card">
@@ -568,7 +574,7 @@
 
 <!-- S9 퀴즈 -->
 <section id="s9" class="section">
-<div class="section-title">❓ 확인 퀴즈</div>
+<h2 class="section-title">❓ 확인 퀴즈</h2>
 <p class="section-sub">10문제로 오늘 배운 내용을 점검해 보세요.</p>
 
 <div class="quiz-card" id="q1">
@@ -772,12 +778,21 @@ function checkQ(qNum, chosen, correctAns) {
     const h = a.getAttribute('href');
     if (h && h.charAt(0) === '#') map[h.slice(1)] = a;
   });
+  // 현재 섹션의 링크가 nav 화면 밖에 있으면 nav만 가로로 움직여 보이게 한다(페이지 세로 스크롤은 건드리지 않음)
+  function showInNav(a) {
+    let box = a.parentElement;
+    while (box && box !== document.body && !(/(auto|scroll)/.test(getComputedStyle(box).overflowX) && box.scrollWidth > box.clientWidth + 1)) box = box.parentElement;
+    if (!box || box === document.body) return;
+    const r = a.getBoundingClientRect(), b = box.getBoundingClientRect();
+    if (r.left < b.left + 8 || r.right > b.right - 8) box.scrollLeft += (r.left - b.left) - (b.width - r.width) / 2;
+  }
   if (!('IntersectionObserver' in window)) return;
   const obs = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting && map[e.target.id]) {
         navLinks.forEach(function (a) { a.classList.remove('active'); });
         map[e.target.id].classList.add('active');
+        showInNav(map[e.target.id]);
       }
     });
   }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
